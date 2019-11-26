@@ -5,6 +5,7 @@
  */
 package legend_of_xor.Game.Tiles;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Textures;
@@ -13,31 +14,30 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class Ex_test implements Tile {
+public class dirt implements Tile {
+
+    public static final String NAMEID = dirt.class.getName().split("\\.")[3];//name of tile must be unique
+
+    private final int TILESX = 1; //how many tiles there are in the sprite sheet
+    private final int TILESY = 1;
+
+    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 1;
 
     BufferedImage image;
-    private static final String NAME_ID = "ex";
-    double frame = 0;
 
-    public Ex_test() {
+    public dirt() {
         image = Textures.getBlockTexture(this);
     }
 
     @Override
     public String getNameID() {
-        return NAME_ID;
+        return NAMEID;
     }
 
     @Override
     public BufferedImage getTileImage() {
-
-        int xSize = image.getWidth();
-        int ySize = (int) (image.getWidth() * 2.5);
-        frame += 0.1;
-        if (frame > 24) {
-            frame = 0;
-        }
-        return image.getSubimage(0, (int) Math.floor(frame) * ySize, xSize, ySize);
+        return image;
     }
 
     @Override
@@ -46,13 +46,13 @@ public class Ex_test implements Tile {
     }
 
     @Override
-    public double getYScale() {
-        return 60;
+    public double getXScale() {
+        return TILESX * TILE_X_SCALE;
     }
 
     @Override
-    public double getXScale() {
-        return 1;
+    public double getYScale() {
+        return TILESY * TILE_Y_SCALE;
     }
 
 }

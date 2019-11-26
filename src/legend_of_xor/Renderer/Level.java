@@ -11,8 +11,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Game.Tiles.Dirt;
-import legend_of_xor.Game.Tiles.Ex_test;
+import legend_of_xor.Game.Tiles.dirt;
+import legend_of_xor.Game.Tiles.explosion;
 import legend_of_xor.Game.Tiles.rainbow;
 import legend_of_xor.Veiwer.Frame;
 
@@ -59,7 +59,7 @@ public class Level {
         for (int y = 0; y < 22; y++) {
             temp[y] = new Tile[40];
             for (int x = 0; x < 40; x++) {
-                temp[y][x] = new rainbow();
+                temp[y][x] = new explosion();
             }
         }
 

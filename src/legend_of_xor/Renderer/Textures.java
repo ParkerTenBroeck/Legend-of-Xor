@@ -68,6 +68,7 @@ public class Textures {
 
         Image image = null;
         try {
+            System.out.println(tile.getNameID());
             image = ImageIO.read(new File("src//textures//blocks//" + tile.getNameID()+ ".png"));
 
             image = image.getScaledInstance((int) (tilePixelSizeX * tile.getXScale()),

@@ -16,24 +16,32 @@ import legend_of_xor.Renderer.Textures;
  */
 public class rainbow implements Tile {
 
+    public static final String NAMEID = rainbow.class.getName().split("\\.")[3];//name of tile must be unique
+
+    private final int TILESX = 1; //how many tiles there are in the sprite sheet
+    private final int TILESY = 10;
+
+    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 1;
+
     BufferedImage image;
-    
+
     public rainbow() {
         image = Textures.getBlockTexture(this);
     }
 
     @Override
     public String getNameID() {
-        return "rainbow";
+        return NAMEID;
     }
 
     @Override
     public BufferedImage getTileImage() {
-        
+
         long time = System.currentTimeMillis();
-        
-        int frame = (int)((time / 50) % 10);
-        
+
+        int frame = (int) ((time / 50) % 10);
+
         return image.getSubimage(0, image.getWidth() * frame, image.getWidth(), image.getWidth());
     }
 
@@ -43,13 +51,13 @@ public class rainbow implements Tile {
     }
 
     @Override
-    public double getYScale() {
-        return 1 * 10;
+    public double getXScale() {
+        return TILESX * TILE_X_SCALE;
     }
 
     @Override
-    public double getXScale() {
-        return 1;
+    public double getYScale() {
+        return TILESY * TILE_Y_SCALE;
     }
 
 }

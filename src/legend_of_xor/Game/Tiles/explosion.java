@@ -13,19 +13,19 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class TEMPLATE implements Tile {
+public class explosion implements Tile {
 
-    public static final String NAMEID = TEMPLATE.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = explosion.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
+    private final int TILESY = 24;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_Y_SCALE = 2.385;
 
     BufferedImage image;
 
-    public TEMPLATE() {
+    public explosion() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -36,7 +36,12 @@ public class TEMPLATE implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
-        return image;
+
+        int xSize = image.getWidth();
+        int ySize = (int) (image.getWidth() * 2.5);
+
+       // return null;
+        return image.getSubimage(0, (int)((System.currentTimeMillis() / 50) % 24) * ySize, xSize, ySize);
     }
 
     @Override
