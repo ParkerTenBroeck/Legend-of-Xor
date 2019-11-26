@@ -22,6 +22,8 @@ public class explosion implements Tile {
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 2.385;
+    
+        private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
 
     BufferedImage image;
 
@@ -37,16 +39,20 @@ public class explosion implements Tile {
     @Override
     public BufferedImage getTileImage() {
 
-        int xSize = image.getWidth();
-        int ySize = (int) (image.getWidth() * 2.5);
+        int xSize = (int)(Textures.getTilePixelSizeX() * TILE_X_SCALE);
+        int ySize = (int)(Textures.getTilePixelSizeY() * TILE_Y_SCALE);
 
-       // return null;
         return image.getSubimage(0, (int)((System.currentTimeMillis() / 50) % 24) * ySize, xSize, ySize);
     }
 
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+        @Override
+    public byte getOrigin(){
+        return ORIGIN;
     }
 
     @Override

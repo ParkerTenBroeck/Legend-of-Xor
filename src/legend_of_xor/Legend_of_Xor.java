@@ -29,9 +29,8 @@ public class Legend_of_Xor {
         Frame frame = new Frame(1280 / 2, 720 / 2);
 
         Level.loadNewLevel("Main");
-        
-        System.out.println(TEMPLATE.NAMEID);
 
+        
         Timer timer = new Timer(17, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,6 +41,7 @@ public class Legend_of_Xor {
             }
         });
         timer.start();
+       
     }
 
 }

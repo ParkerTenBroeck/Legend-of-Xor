@@ -10,5 +10,8 @@ package legend_of_xor;
  * @author parke
  */
 public class Controlls {
+
+    private static int controlType = 0;
+    
     
 }

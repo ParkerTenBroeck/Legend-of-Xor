@@ -5,6 +5,7 @@
  */
 package legend_of_xor.Renderer;
 
+import Level_Generator.LevelGenerator;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -49,24 +50,13 @@ public class Level {
         background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = background.createGraphics();
 
-        graphics.setColor(new Color(0xFF, 0xFF, 0xFF));
+        graphics.setColor(new Color(0x89CFF0));
         graphics.fillRect(0, 0, background.getWidth(), background.getHeight());
 
         graphics.dispose();
 
-        Tile[][] temp = new Tile[22][];
+        smallTiles = LevelGenerator.makeLevel(tilesX * 10000, tilesY);
 
-        for (int y = 0; y < 22; y++) {
-            temp[y] = new Tile[40];
-            for (int x = 0; x < 40; x++) {
-                temp[y][x] = new explosion();
-            }
-        }
-
-        //temp2[6][0] = new Ex_test();
-        //temp2[7][0] = null;
-        smallTiles = temp;
-          //smallTiles = new Tile[][]{{new Dirt()}, {new Ex_test()}, {}, {}};
     }
 
     public static void setSmallTiles(Tile[][] smallTiles) {
@@ -77,14 +67,22 @@ public class Level {
         return background;
     }
 
-    public static Image getSmallTileImage(int xPos, int yPos) {
+    public static Tile getSmallTile(int xPos, int yPos) {
         if (smallTiles == null) {
-            return Textures.nullImage();
+            return null;
         }
         try {
-            return smallTiles[yPos][xPos].getTileImage();
+            return smallTiles[yPos][xPos];
         } catch (Exception e) {
-            return Textures.nullImage();
+            return null;
         }
+    }
+
+    public static Image getSmallTileImage(int xPos, int yPos) {
+        Tile temp = getSmallTile(xPos, yPos);
+        if (temp != null) {
+            return temp.getTileImage();
+        }
+        return null;
     }
 }

@@ -16,8 +16,8 @@ public interface Tile {
     public String getNameID();
 
     public BufferedImage getTileImage();
-
-    public void update();
+    
+    public byte getOrigin();
 
     /**
      * Gets the X scale of the image
@@ -34,4 +34,6 @@ public interface Tile {
      *
      */
     public double getYScale();
+    
+    public void update();
 }
