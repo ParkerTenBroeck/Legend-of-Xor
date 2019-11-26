@@ -7,6 +7,8 @@ package Level_Generator;
 
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.dirt;
+import legend_of_xor.Game.Tiles.explosion;
+import legend_of_xor.Game.Tiles.grass;
 import legend_of_xor.Game.Tiles.rainbow;
 
 /**
@@ -28,9 +30,16 @@ public class LevelGenerator {
             noise = (gen.noise(scale) + 1) * 5;
             scale += 3;
 
-            for (int y = ySize - 1; y >= ySize - (int)noise; y--) {
+            for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
 
-                temp[y][x] = new rainbow();
+                if (y == (ySize - (int) noise)) {
+                    temp[y][x] = new grass();
+                } else {
+                    temp[y][x] = new dirt();
+                }
+                if ((y) == ((ySize - (int) noise))) {
+                    temp[y - 1][x] = new explosion();
+                }
             }
         }
         return temp;

@@ -9,7 +9,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import static java.util.Collections.list;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import javax.imageio.ImageIO;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Frame;
@@ -28,7 +30,6 @@ public class Textures {
     private static int tilePixelSizeX = 32;
     private static int tilePixelSizeY = 32;
 
-    
     public static int getXRes() {
         return xRes;
     }
@@ -59,9 +60,17 @@ public class Textures {
 
     public static BufferedImage getBlockTexture(Tile tile) {
         try {
-            if (tile.getNameID().equals(blockTextures.getFirst()[0])) {
-                return (BufferedImage) blockTextures.getFirst()[1];
+
+            ListIterator list_Iter = blockTextures.listIterator(0);
+
+            while (list_Iter.hasNext()) {
+                Object[] temp = (Object[]) list_Iter.next();
+
+                if (tile.getNameID().equals(temp[0])) {
+                    return (BufferedImage) temp[1];
+                }
             }
+
         } catch (Exception e) {
 
         }
@@ -69,7 +78,7 @@ public class Textures {
         Image image = null;
         try {
             System.out.println(tile.getNameID());
-            image = ImageIO.read(new File("src//textures//blocks//" + tile.getNameID()+ ".png"));
+            image = ImageIO.read(new File("src//textures//blocks//" + tile.getNameID() + ".png"));
 
             image = image.getScaledInstance((int) (tilePixelSizeX * tile.getXScale()),
                     (int) (tilePixelSizeY * tile.getYScale()),
@@ -79,8 +88,8 @@ public class Textures {
             image = Textures.nullImage();
             e.printStackTrace();
         }
-        
-        blockTextures.add(new Object[]{tile.getNameID(), toBufferedImage(image)});
+
+        blockTextures.addFirst(new Object[]{tile.getNameID(), toBufferedImage(image)});
         return toBufferedImage(image);
     }
 

@@ -5,6 +5,7 @@
  */
 package legend_of_xor.Game.Tiles;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Textures;
@@ -13,21 +14,21 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class explosion implements Tile {
+public class grass implements Tile {
 
-    public static final String NAMEID = explosion.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = grass.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 24;
+    private final int TILESY = 1;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 2.385;
+    private final double TILE_Y_SCALE = 1;
     
-        private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
+        private final byte ORIGIN = 0;//0 upper left,1 upper right,2 bottom left,3 bottom right
 
     BufferedImage image;
 
-    public explosion() {
+    public grass() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -38,21 +39,17 @@ public class explosion implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
+        return image;
+    }
 
-        int xSize = (int)(Textures.getTilePixelSizeX() * TILE_X_SCALE);
-        int ySize = (int)(Textures.getTilePixelSizeY() * TILE_Y_SCALE);
-
-        return image.getSubimage(0, (int)(((System.currentTimeMillis()) / 50) % 24) * ySize, xSize, ySize);
+    @Override
+    public byte getOrigin() {
+        return ORIGIN;
     }
 
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-        @Override
-    public byte getOrigin(){
-        return ORIGIN;
     }
 
     @Override
@@ -64,4 +61,5 @@ public class explosion implements Tile {
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
     }
+
 }
