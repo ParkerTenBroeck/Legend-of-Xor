@@ -33,8 +33,9 @@ public class LevelGenerator {
                     temp[y][x] = new grass();
                     if (Math.random() < 0.07) {
 
-                       //  temp[y][x] = new explosion();
                         tree(temp, x, y - 1);
+                    } else if (Math.random() < 0.06) {
+                        temp[y - 1][x] = new torch();
                     }
                 } else {
                     temp[y][x] = new dirt();

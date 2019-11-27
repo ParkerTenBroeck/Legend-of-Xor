@@ -47,7 +47,7 @@ public class Camera {
 
         Frame.setImage(image);
         
-        xPos -= 0.1;
+        //xPos -= 0.1;
 
     }
 
