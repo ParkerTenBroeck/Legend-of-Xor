@@ -14,12 +14,12 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class rainbow implements Tile {
+public class fire implements Tile {
 
-    public static final String NAMEID = rainbow.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = fire.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 15;
+    private final int TILESY = 8;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
@@ -28,7 +28,7 @@ public class rainbow implements Tile {
 
     BufferedImage image;
 
-    public rainbow() {
+    public fire() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -39,22 +39,21 @@ public class rainbow implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
-
         long time = System.currentTimeMillis();
 
-        int frame = (int) ((time / 50) % 15);
+        int frame = (int) ((time / 50) % 8);
 
         return image.getSubimage(0, image.getWidth() * frame, image.getWidth(), image.getWidth());
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public byte getOrigin() {
+        return ORIGIN;
     }
 
     @Override
-    public byte getOrigin() {
-        return ORIGIN;
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

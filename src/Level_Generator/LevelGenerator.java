@@ -32,6 +32,8 @@ public class LevelGenerator {
                 if (y == (ySize - (int) noise)) {
                     temp[y][x] = new grass();
                     if (Math.random() < 0.07) {
+
+                       //  temp[y][x] = new explosion();
                         tree(temp, x, y - 1);
                     }
                 } else {
@@ -40,7 +42,7 @@ public class LevelGenerator {
                 if ((y - 3) > ((ySize - (int) noise))) {
                     temp[y][x] = new stone();
                     if (Math.random() < 0.04) {
-                        temp[y][x] = new rainbow();
+                        temp[y][x] = new ore();
                     }
                 }
             }
@@ -49,28 +51,28 @@ public class LevelGenerator {
     }
 
     public static void tree(Tile[][] tiles, int xPos, int yPos) {//x and y are the bottom trunk
-        
-        try{
-        tiles[yPos][xPos] = new wood();
-        tiles[yPos - 1][xPos] = new wood();
-        tiles[yPos - 2][xPos] = new wood();
-        tiles[yPos - 3][xPos] = new wood();
 
-        tiles[yPos - 3][xPos] = new leaf();
-        tiles[yPos - 3][xPos + 1] = new leaf();
-        tiles[yPos - 3][xPos - 1] = new leaf();
-        tiles[yPos - 3][xPos + 2] = new leaf();
-        tiles[yPos - 3][xPos - 2] = new leaf();
-        tiles[yPos - 2][xPos + 1] = new leaf();
-        tiles[yPos - 2][xPos - 1] = new leaf();
-        tiles[yPos - 2][xPos + 2] = new leaf();
-        tiles[yPos - 2][xPos - 2] = new leaf();
-        
-        tiles[yPos - 4][xPos + 1] = new leaf();
-        tiles[yPos - 4][xPos] = new leaf();
-        tiles[yPos - 4][xPos - 1] = new leaf();
-        }catch(Exception e){
-            
+        try {
+            tiles[yPos][xPos] = new wood();
+            tiles[yPos - 1][xPos] = new wood();
+            tiles[yPos - 2][xPos] = new wood();
+            tiles[yPos - 3][xPos] = new wood();
+
+            tiles[yPos - 3][xPos] = new leaf();
+            tiles[yPos - 3][xPos + 1] = new leaf();
+            tiles[yPos - 3][xPos - 1] = new leaf();
+            tiles[yPos - 3][xPos + 2] = new leaf();
+            tiles[yPos - 3][xPos - 2] = new leaf();
+            tiles[yPos - 2][xPos + 1] = new leaf();
+            tiles[yPos - 2][xPos - 1] = new leaf();
+            tiles[yPos - 2][xPos + 2] = new leaf();
+            tiles[yPos - 2][xPos - 2] = new leaf();
+
+            tiles[yPos - 4][xPos + 1] = new leaf();
+            tiles[yPos - 4][xPos] = new leaf();
+            tiles[yPos - 4][xPos - 1] = new leaf();
+        } catch (Exception e) {
+
         }
 
     }

@@ -8,7 +8,11 @@ package legend_of_xor.Veiwer;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import javax.swing.Timer;
+import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -17,34 +21,40 @@ import legend_of_xor.Renderer.Textures;
  */
 public class Frame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Frame
-     */
+    private static BufferedImage image;
+
     public Frame(int xSize, int ySize) {
         initComponents();
         Textures.setResolutuin(xSize, ySize);
         this.setSize(new Dimension(xSize, ySize));
         jPanel1.setSize(new Dimension(xSize, ySize));
         Textures.setResolutuin(xSize, ySize);
-        
+
         System.out.println(jPanel1.getWidth());
         this.show();
+
+        Timer imageDrawer = new Timer(1000 / 60, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (image != null && jPanel1 != null) {
+                    Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
+                    Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
+                    g2d.drawImage(i, 0, 0, null);
+                    g2d.dispose();
+                }
+            }
+        });
+        imageDrawer.start();
     }
 
     public static void setImage(BufferedImage image) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                if (image != null && jPanel1 != null) {
-                    Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
-                   Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
-                    g2d.drawImage(i, 0, 0, null);
-                    g2d.dispose();
-
-                }
-
-            }
-        });
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+        Frame.image = image;
 
     }
 

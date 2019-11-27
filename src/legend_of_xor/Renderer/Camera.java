@@ -42,8 +42,8 @@ public class Camera {
         g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
         drawSmallTiles(g2d, image);
 
-      //  drawSmallTiles(g2d, image);
-      //  drawSmallTiles(g2d, image);
+        drawSmallTiles(g2d, image);
+        drawSmallTiles(g2d, image);
 
         Frame.setImage(image);
         

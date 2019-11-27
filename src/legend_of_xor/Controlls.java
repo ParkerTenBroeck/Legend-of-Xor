@@ -5,6 +5,8 @@
  */
 package legend_of_xor;
 
+import legend_of_xor.Veiwer.Frame;
+
 /**
  *
  * @author parke
@@ -13,5 +15,7 @@ public class Controlls {
 
     private static int controlType = 0;
     
-    
+    private static void init(Frame frame){
+        
+    }
 }
