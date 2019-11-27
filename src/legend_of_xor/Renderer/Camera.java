@@ -46,8 +46,8 @@ public class Camera {
         drawSmallTiles(g2d, image);
 
         Frame.setImage(image);
-        
-        //xPos -= 0.1;
+
+        xPos -= 0.07;
 
     }
 
@@ -90,6 +90,9 @@ public class Camera {
                 return 0;
             case 3:
                 return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
+            case 4:
+                return (int)-((tile.getTileImage().getWidth() / 2));
+
             default:
         }
         return -1;
@@ -104,6 +107,8 @@ public class Camera {
             case 2:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
             case 3:
+                return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
+            case 4:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
             default:
         }
