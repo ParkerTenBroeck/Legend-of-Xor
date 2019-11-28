@@ -16,8 +16,12 @@ public interface Tile {
     public String getNameID();
 
     public BufferedImage getTileImage();
-    
-    public byte getOrigin();
+
+    public enum Origin {
+        UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER
+    }
+
+    public Origin getOrigin();
 
     /**
      * Gets the X scale of the image
@@ -34,6 +38,6 @@ public interface Tile {
      *
      */
     public double getYScale();
-    
+
     public void update();
 }

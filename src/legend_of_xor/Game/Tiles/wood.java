@@ -23,8 +23,8 @@ public class wood implements Tile {
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
-    
-        private final byte ORIGIN = 0;//0 upper left,1 upper right,2 bottom left,3 bottom right
+
+    private final Origin ORIGIN = Origin.UPPER_LEFT;
 
     BufferedImage image;
 
@@ -43,7 +43,7 @@ public class wood implements Tile {
     }
 
     @Override
-    public byte getOrigin() {
+    public Origin getOrigin() {
         return ORIGIN;
     }
 

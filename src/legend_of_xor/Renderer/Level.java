@@ -45,7 +45,7 @@ public class Level {
         tilesX = 40;
         tilesY = 22;
 
-        Camera.init(0, 0, tilesX, tilesY);
+        Camera.init(0, 4, tilesX, tilesY);
 
         background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = background.createGraphics();

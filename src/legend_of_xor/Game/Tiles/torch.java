@@ -24,7 +24,7 @@ public class torch implements Tile {
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 2.5;
 
-    private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
+    private final Origin ORIGIN = Origin.UPPER_LEFT;
 
     BufferedImage image;
 
@@ -42,16 +42,15 @@ public class torch implements Tile {
         long time = System.currentTimeMillis();
 
         int frame = (int) ((time / 50) % 91);
-        
-        int startingY = (int) ((image.getHeight() / (double)TILESY) * frame);
+
+        int startingY = (int) ((image.getHeight() / (double) TILESY) * frame);
 
         return image.getSubimage(0, startingY, image.getWidth(), image.getHeight() / TILESY);
-
 
     }
 
     @Override
-    public byte getOrigin() {
+    public Origin getOrigin() {
         return ORIGIN;
     }
 

@@ -14,21 +14,21 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class leaf implements Tile {
+public class small_tree implements Tile {
 
-    public static final String NAMEID = leaf.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = small_tree.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
     private final int TILESY = 1;
 
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_X_SCALE = 3;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 3;
 
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
+    private final Origin ORIGIN = Origin.CENTER_BOTTOM;
 
     BufferedImage image;
 
-    public leaf() {
+    public small_tree() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -39,17 +39,18 @@ public class leaf implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
-        return image;
-    }
 
-    @Override
-    public Origin getOrigin() {
-        return ORIGIN;
+        return image;
     }
 
     @Override
     public void update() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Origin getOrigin() {
+        return ORIGIN;
     }
 
     @Override

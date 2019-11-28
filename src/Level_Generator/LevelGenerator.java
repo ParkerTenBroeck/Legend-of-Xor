@@ -32,9 +32,18 @@ public class LevelGenerator {
 
                 if (y == (ySize - (int) noise)) {
                     temp[y][x] = new grass();
-                    if (Math.random() < 0.07) {
-                        temp[y - 1][x] = new tree();
-                        //tree(temp, x, y - 1);
+                    if (Math.random() < 0.2) {
+                        try{
+                        if(temp[y-1][x-1] == null && temp[y-1][x-2] == null){
+                            if(temp[y][x-1] != null && temp[y][x-2] != null ){
+                                temp[y - 1][x - 1] = new big_tree();
+                            }
+                        }else{
+                        temp[y - 1][x] = new small_tree();
+                        }
+                        }catch(Exception e){
+                            
+                        }
                     } else if (Math.random() < 0.06) {
                         temp[y - 1][x] = new torch();
                     } else {

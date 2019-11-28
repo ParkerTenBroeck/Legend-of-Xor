@@ -23,7 +23,7 @@ public class explosion implements Tile {
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 2.385;
     
-        private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
+    private final Origin ORIGIN = Origin.BOTTOM_LEFT;
 
     BufferedImage image;
 
@@ -51,7 +51,7 @@ public class explosion implements Tile {
     }
     
         @Override
-    public byte getOrigin(){
+    public Origin getOrigin(){
         return ORIGIN;
     }
 

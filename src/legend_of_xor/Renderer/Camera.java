@@ -82,15 +82,15 @@ public class Camera {
 
     private static int calcOrgX(Tile tile) {
         switch (tile.getOrigin()) {
-            case 0:
+            case UPPER_LEFT:
                 return 0;
-            case 1:
+            case UPPER_RIGHT:
                 return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
-            case 2:
+            case BOTTOM_LEFT:
                 return 0;
-            case 3:
+            case BOTTOM_RIGHT:
                 return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
-            case 4:
+            case CENTER_BOTTOM:
                 return (int)(-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
 
             default:
@@ -100,15 +100,15 @@ public class Camera {
 
     private static int calcOrgY(Tile tile) {
         switch (tile.getOrigin()) {
-            case 0:
+            case UPPER_LEFT:
                 return 0;
-            case 1:
+            case UPPER_RIGHT:
                 return 0;
-            case 2:
+            case BOTTOM_LEFT:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
-            case 3:
+            case BOTTOM_RIGHT:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
-            case 4:
+            case CENTER_BOTTOM:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
             default:
         }
