@@ -7,11 +7,8 @@ package legend_of_xor;
 
 /**
  *
- * @author parke
+ * @author Parker
  */
-public class Controlls {
-
-    private static int controlType = 0;
-    
+public class KeyboardLisenter {
     
 }
