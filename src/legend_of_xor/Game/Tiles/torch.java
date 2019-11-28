@@ -14,21 +14,21 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class rainbow implements Tile {
+public class torch implements Tile {
 
-    public static final String NAMEID = rainbow.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = torch.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 15;
+    private final int TILESY = 91;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_Y_SCALE = 2.5;
 
-    private final byte ORIGIN = 0;//0 upper left,1 upper right,2 bottom left,3 bottom right
+    private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
 
     BufferedImage image;
 
-    public rainbow() {
+    public torch() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -39,22 +39,25 @@ public class rainbow implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
-
         long time = System.currentTimeMillis();
 
-        int frame = (int) ((time / 50) % 15);
+        int frame = (int) ((time / 50) % 91);
+        
+        int startingY = (int) ((image.getHeight() / (double)TILESY) * frame);
 
-        return image.getSubimage(0, image.getWidth() * frame, image.getWidth(), image.getWidth());
-    }
+        return image.getSubimage(0, startingY, image.getWidth(), image.getHeight() / TILESY);
 
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public byte getOrigin() {
         return ORIGIN;
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

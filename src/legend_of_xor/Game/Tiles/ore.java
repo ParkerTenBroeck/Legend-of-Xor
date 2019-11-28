@@ -14,9 +14,9 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class rainbow implements Tile {
+public class ore implements Tile {
 
-    public static final String NAMEID = rainbow.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = ore.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
     private final int TILESY = 15;
@@ -28,7 +28,7 @@ public class rainbow implements Tile {
 
     BufferedImage image;
 
-    public rainbow() {
+    public ore() {
         image = Textures.getBlockTexture(this);
     }
 

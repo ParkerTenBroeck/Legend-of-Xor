@@ -5,6 +5,8 @@
  */
 package legend_of_xor;
 
+import legend_of_xor.Veiwer.Frame;
+
 /**
  *
  * @author Parker

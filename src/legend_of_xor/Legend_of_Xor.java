@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
 import legend_of_xor.Game.Tiles.TEMPLATE;
@@ -30,18 +31,31 @@ public class Legend_of_Xor {
 
         Level.loadNewLevel("Main");
 
-        
-        Timer timer = new Timer(17, new ActionListener() {
+        Timer renderer = new Timer(1000 / 60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long last = System.nanoTime();
                 Camera.DrawScreen();
                 long newt = System.nanoTime();
-                System.out.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                if(newt - last > 0.017 * 1_000_000_000){
+                System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                }
             }
         });
-        timer.start();
-       
+        renderer.start();
+        
+        Timer updates = new Timer(1000/ 20, new ActionListener(){
+           @Override
+           public void actionPerformed(ActionEvent e){
+               try {
+                   Thread.sleep(19);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Legend_of_Xor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+               }
+           }
+        });
+        updates.start();
+
     }
 
 }

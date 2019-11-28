@@ -14,21 +14,21 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class rainbow implements Tile {
+public class tree implements Tile {
 
-    public static final String NAMEID = rainbow.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = tree.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 15;
+    private final int TILESY = 1;
 
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_X_SCALE = 3;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 3;
 
-    private final byte ORIGIN = 0;//0 upper left,1 upper right,2 bottom left,3 bottom right
+    private final byte ORIGIN = 4;//0 upper left,1 upper right,2 bottom left,3 bottom right, 4 bottom center
 
     BufferedImage image;
 
-    public rainbow() {
+    public tree() {
         image = Textures.getBlockTexture(this);
     }
 
@@ -40,11 +40,7 @@ public class rainbow implements Tile {
     @Override
     public BufferedImage getTileImage() {
 
-        long time = System.currentTimeMillis();
-
-        int frame = (int) ((time / 50) % 15);
-
-        return image.getSubimage(0, image.getWidth() * frame, image.getWidth(), image.getWidth());
+        return image;
     }
 
     @Override
