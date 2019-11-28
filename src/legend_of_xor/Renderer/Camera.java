@@ -91,7 +91,7 @@ public class Camera {
             case 3:
                 return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
             case 4:
-                return (int)-((tile.getTileImage().getWidth() / 2));
+                return (int)(-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
 
             default:
         }

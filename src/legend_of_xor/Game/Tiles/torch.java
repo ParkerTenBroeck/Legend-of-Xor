@@ -22,7 +22,7 @@ public class torch implements Tile {
     private final int TILESY = 91;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 5;
+    private final double TILE_Y_SCALE = 2.5;
 
     private final byte ORIGIN = 3;//0 upper left,1 upper right,2 bottom left,3 bottom right
 
