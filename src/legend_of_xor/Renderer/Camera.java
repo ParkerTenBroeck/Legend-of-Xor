@@ -5,14 +5,12 @@
  */
 package legend_of_xor.Renderer;
 
+import com.sun.org.apache.xerces.internal.util.FeatureState;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
+import static legend_of_xor.Controls.*;
 
 /**
  *
@@ -49,8 +47,19 @@ public class Camera {
     }
 
     public static void update() {
-        xPos -= 0.07;
-        //yPos -= 0.06;
+        if(isDownPressed()){
+            yPos -= 0.2;
+        }
+        if(isUpPressed()){
+            yPos += 0.2; 
+        }
+        if(isLeftPressed()){
+            xPos += 0.2;
+        }
+        if(isRightPressed()){
+            xPos -= 0.2;
+        }
+    
     }
 
     static public BufferedImage drawSmallTiles(Graphics2D g2d, BufferedImage image) {

@@ -4,78 +4,90 @@ import java.awt.event.*;
 
 public class Controls {
 
-    private static enum controlType {KEYBOARD, CONTROLLER}
-    
+    private static enum controlType {
+        KEYBOARD, CONTROLLER
+    }
+
     //Keyboard Keys variables
-    private static char jumpKey = 'w', rightKey = 'd', leftKey = 'a', attackKey = 'j', blockKey = 'k', magicKey = ' ';
-            
-    
+    protected static char jumpKey = ' ', rightKey = 'd', leftKey = 'a', upKey = 'w', downKey = 's', attackKey = 'j', blockKey = 'k', magicKey = 0;
+
     //Controller button variables
-    
-    private static controlType controlTypeInUse = controlType.CONTROLLER;
-    
-    public void setControlType(controlType type){
+    private static controlType controlTypeInUse = controlType.KEYBOARD;
+
+    public void setControlType(controlType type) {
         controlTypeInUse = type;
     }
-    
-    public static boolean isLeftPressed(){
-        switch(controlTypeInUse){
+
+    public static boolean isLeftPressed() {
+        switch (controlTypeInUse) {
             case KEYBOARD:
-                
-                break;
+                return KeyboardLisenter.leftPressed;
             case CONTROLLER:
                 break;
-            default: return false;
+            default:
+                return false;
         }
         return false;
     }
-    
+
+    public static boolean isRightPressed() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.rightPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    public static boolean isUpPressed() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.upPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    public static boolean isDownPressed() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.downPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
     //---------METHODS FOR USER CHANGING AND GETTING THE CONTROLS------------
-    public static void setJumpKey(char key){
+    public static void setJumpKey(char key) {
         jumpKey = key;
     }
-    
-    public static void setRightKey(char key){
+
+    public static void setRightKey(char key) {
         rightKey = key;
     }
-    
-    public static void setLeftKey(char key){
+
+    public static void setLeftKey(char key) {
         leftKey = key;
     }
-    
-    public static void setAttackKey(char key){
+
+    public static void setAttackKey(char key) {
         attackKey = key;
     }
-    
-    public static void setBlockKey(char key){
+
+    public static void setBlockKey(char key) {
         blockKey = key;
     }
-    
-    public static void setMagicKey(char key){
+
+    public static void setMagicKey(char key) {
         magicKey = key;
-    }
-    
-    public static char getJumpKey(){
-        return jumpKey;
-    }
-    
-    public static char getRightKey(){
-        return rightKey;
-    }
-    
-    public static char getLeftKey(){
-        return leftKey;
-    }
-    
-    public static char getAttackKey(){
-        return attackKey;
-    }
-    
-    public static char getBlockKey(){
-        return blockKey;
-    }
-    
-    public static char getMagicKey(){
-        return jumpKey;
     }
 }
