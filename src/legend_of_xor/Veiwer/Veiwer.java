@@ -21,27 +21,27 @@ import legend_of_xor.Renderer.Textures;
  * @author parke
  */
 public class Veiwer extends javax.swing.JFrame {
-
+    
     private static BufferedImage image;
-
+    
     public Veiwer(int xSize, int ySize) {
-KeyboardLisenter.init(this);
+        KeyboardLisenter.init(this);
         initComponents();
         Textures.setResolutuin(xSize, ySize);
         this.setSize(new Dimension(xSize, ySize));
         jPanel1.setSize(new Dimension(xSize, ySize));
         Textures.setResolutuin(xSize, ySize);
-
+        
         System.out.println(jPanel1.getWidth());
         this.show();
-
-        Timer imageDrawer = new Timer(1000 / 60, new ActionListener() {
+        
+        Timer imageDrawer = new Timer(1000 / 30, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                
                 javax.swing.SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-
+                        
                         if (image != null && jPanel1 != null) {
                             Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
                             Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
@@ -54,7 +54,7 @@ KeyboardLisenter.init(this);
         });
         imageDrawer.start();
     }
-
+    
     public static void setImage(BufferedImage image) {
 //        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //            @Override
@@ -63,7 +63,7 @@ KeyboardLisenter.init(this);
 //            }
 //        });
         Veiwer.image = image;
-
+        
     }
 
     /**
@@ -111,9 +111,9 @@ KeyboardLisenter.init(this);
 
     static public int getXSize() {
         return jPanel1.getSize().width;
-
+        
     }
-
+    
     static public int getYSize() {
         return jPanel1.getSize().height;
     }

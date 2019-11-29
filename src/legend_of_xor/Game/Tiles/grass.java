@@ -44,7 +44,7 @@ public class grass implements Tile {
 
         int frame = (int) ((time / 200) % 14);
 
-        int offest = (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE) * frame;
+        int offest = 0;//(int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE) * frame;
 
         return image.getSubimage(0, offest, (int) (Textures.getTilePixelSizeX() * TILE_X_SCALE), (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE));
     }
