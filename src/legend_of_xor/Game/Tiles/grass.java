@@ -19,12 +19,12 @@ public class grass implements Tile {
     public static final String NAMEID = grass.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
+    private final int TILESY = 14;
 
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_X_SCALE = 1.25;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 1.25;
 
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
+    private final Origin ORIGIN = Origin.CENTER;
 
     BufferedImage image;
 
@@ -39,7 +39,14 @@ public class grass implements Tile {
 
     @Override
     public BufferedImage getTileImage() {
-        return image;
+
+        long time = System.currentTimeMillis();
+
+        int frame = (int) ((time / 200) % 14);
+
+        int offest = (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE) * frame;
+
+        return image.getSubimage(0, offest, (int) (Textures.getTilePixelSizeX() * TILE_X_SCALE), (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE));
     }
 
     @Override

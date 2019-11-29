@@ -18,7 +18,7 @@ public interface Tile {
     public BufferedImage getTileImage();
 
     public enum Origin {
-        UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER
+        UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER_TOP, CENTER
     }
 
     public Origin getOrigin();

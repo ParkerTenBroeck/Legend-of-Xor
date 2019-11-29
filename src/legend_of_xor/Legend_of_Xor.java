@@ -37,22 +37,18 @@ public class Legend_of_Xor {
                 long last = System.nanoTime();
                 Camera.DrawScreen();
                 long newt = System.nanoTime();
-                if(newt - last > 0.017 * 1_000_000_000){
-                System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                if (newt - last > 0.017 * 1_000_000_000) {
+                    System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                 }
             }
         });
         renderer.start();
-        
-        Timer updates = new Timer(1000/ 20, new ActionListener(){
-           @Override
-           public void actionPerformed(ActionEvent e){
-               try {
-                   Thread.sleep(19);
-               } catch (InterruptedException ex) {
-                   Logger.getLogger(Legend_of_Xor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-               }
-           }
+
+        Timer updates = new Timer(1000 / 20, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Camera.update();
+            }
         });
         updates.start();
 

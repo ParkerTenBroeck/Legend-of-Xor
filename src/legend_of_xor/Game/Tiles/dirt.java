@@ -21,10 +21,10 @@ public class dirt implements Tile {
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
     private final int TILESY = 1;
 
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_X_SCALE = 1.4;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 1.4;
     
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
+    private final Origin ORIGIN = Origin.CENTER_TOP;
 
     BufferedImage image;
 

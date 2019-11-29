@@ -36,12 +36,18 @@ public class Frame extends javax.swing.JFrame {
         Timer imageDrawer = new Timer(1000 / 60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (image != null && jPanel1 != null) {
-                    Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
-                    Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
-                    g2d.drawImage(i, 0, 0, null);
-                    g2d.dispose();
-                }
+
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+
+                        if (image != null && jPanel1 != null) {
+                            Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
+                            Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
+                            g2d.drawImage(i, 0, 0, null);
+                            g2d.dispose();
+                        }
+                    }
+                });
             }
         });
         imageDrawer.start();

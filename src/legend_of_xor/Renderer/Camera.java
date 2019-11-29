@@ -42,13 +42,15 @@ public class Camera {
         g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
         drawSmallTiles(g2d, image);
 
-        drawSmallTiles(g2d, image);
-        drawSmallTiles(g2d, image);
-
+        //drawSmallTiles(g2d, image);
+        //drawSmallTiles(g2d, image);
         Frame.setImage(image);
 
-        xPos -= 0.07;
+    }
 
+    public static void update() {
+        xPos -= 0.07;
+        //yPos -= 0.06;
     }
 
     static public BufferedImage drawSmallTiles(Graphics2D g2d, BufferedImage image) {
@@ -59,9 +61,9 @@ public class Camera {
         int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTilePixelSizeX());
         int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTilePixelSizeY());
 
-        for (int x = -1; x < Level.getTilesX(); x++) {
+        for (int y = Level.getTilesY() + 1; y >= -1; y--) {
 
-            for (int y = -1; y < Level.getTilesY(); y++) {
+            for (int x = -1; x < Level.getTilesX(); x++) {
 
                 if (Level.getSmallTileImage(x + xTileOffset, y + yTileOffset) != null) {
 
@@ -91,7 +93,11 @@ public class Camera {
             case BOTTOM_RIGHT:
                 return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
             case CENTER_BOTTOM:
-                return (int)(-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+            case CENTER_TOP:
+                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+            case CENTER:
+                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
 
             default:
         }
@@ -110,6 +116,10 @@ public class Camera {
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
             case CENTER_BOTTOM:
                 return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
+            case CENTER_TOP:
+                return 0;
+            case CENTER:
+                return (int) (-(tile.getTileImage().getHeight() / 2)) + Textures.getTilePixelSizeY() / 2;
             default:
         }
         return -1;
