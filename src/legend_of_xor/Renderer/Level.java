@@ -15,7 +15,7 @@ import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.dirt;
 import legend_of_xor.Game.Tiles.explosion;
 import legend_of_xor.Game.Tiles.rainbow;
-import legend_of_xor.Veiwer.Frame;
+import legend_of_xor.Veiwer.Veiwer;
 
 /**
  *

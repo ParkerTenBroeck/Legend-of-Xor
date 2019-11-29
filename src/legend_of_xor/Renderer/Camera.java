@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Veiwer.Frame;
+import legend_of_xor.Veiwer.Veiwer;
 
 /**
  *
@@ -44,7 +44,7 @@ public class Camera {
 
         //drawSmallTiles(g2d, image);
         //drawSmallTiles(g2d, image);
-        Frame.setImage(image);
+        Veiwer.setImage(image);
 
     }
 

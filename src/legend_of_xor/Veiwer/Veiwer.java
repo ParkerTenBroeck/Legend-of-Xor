@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.Timer;
+import legend_of_xor.KeyboardLisenter;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Textures;
 
@@ -19,11 +20,12 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class Frame extends javax.swing.JFrame {
+public class Veiwer extends javax.swing.JFrame {
 
     private static BufferedImage image;
 
-    public Frame(int xSize, int ySize) {
+    public Veiwer(int xSize, int ySize) {
+KeyboardLisenter.init(this);
         initComponents();
         Textures.setResolutuin(xSize, ySize);
         this.setSize(new Dimension(xSize, ySize));
@@ -60,7 +62,7 @@ public class Frame extends javax.swing.JFrame {
 //
 //            }
 //        });
-        Frame.image = image;
+        Veiwer.image = image;
 
     }
 

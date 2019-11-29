@@ -15,7 +15,7 @@ import javax.swing.Timer;
 import legend_of_xor.Game.Tiles.TEMPLATE;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Level;
-import legend_of_xor.Veiwer.Frame;
+import legend_of_xor.Veiwer.Veiwer;
 
 /**
  *
@@ -27,7 +27,7 @@ public class Legend_of_Xor {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Frame frame = new Frame(1280 / 2, 720 / 2);
+        Veiwer frame = new Veiwer(1280 / 2, 720 / 2);
 
         Level.loadNewLevel("Main");
 

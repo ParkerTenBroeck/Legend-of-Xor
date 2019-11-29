@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import javax.imageio.ImageIO;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Veiwer.Frame;
+import legend_of_xor.Veiwer.Veiwer;
 
 /**
  *
