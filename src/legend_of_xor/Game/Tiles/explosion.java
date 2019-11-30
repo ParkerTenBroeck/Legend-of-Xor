@@ -24,6 +24,8 @@ public class explosion implements Tile {
     private final double TILE_Y_SCALE = 2.385;
     
     private final Origin ORIGIN = Origin.BOTTOM_LEFT;
+    
+    private final boolean SOLID = false;
 
     BufferedImage image;
 
@@ -63,5 +65,10 @@ public class explosion implements Tile {
     @Override
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

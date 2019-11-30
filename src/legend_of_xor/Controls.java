@@ -42,6 +42,22 @@ public class Controls {
         return false;
     }
 
+    public static boolean isLeftMousePressed() {
+        return KeyboardLisenter.leftMouse;
+    }
+
+    public static boolean isRightMousePressed() {
+        return KeyboardLisenter.rightMouse;
+    }
+
+    public static int getMouseTileX() {
+        return KeyboardLisenter.mouseXTile;
+    }
+
+    public static int getMouseTileY() {
+        return KeyboardLisenter.mouseYTile;
+    }
+
     public static boolean isUpPressed() {
         switch (controlTypeInUse) {
             case KEYBOARD:

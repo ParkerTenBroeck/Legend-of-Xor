@@ -6,11 +6,14 @@
 package legend_of_xor.Veiwer;
 
 import java.awt.Dimension;
+import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import javax.swing.JFrame;
 import javax.swing.Timer;
 import legend_of_xor.KeyboardLisenter;
 import legend_of_xor.Renderer.Camera;
@@ -21,40 +24,45 @@ import legend_of_xor.Renderer.Textures;
  * @author parke
  */
 public class Veiwer extends javax.swing.JFrame {
-    
+
     private static BufferedImage image;
-    
+
     public Veiwer(int xSize, int ySize) {
-        KeyboardLisenter.init(this);
         initComponents();
+        KeyboardLisenter.init(jPanel1, this);
         Textures.setResolutuin(xSize, ySize);
         this.setSize(new Dimension(xSize, ySize));
         jPanel1.setSize(new Dimension(xSize, ySize));
         Textures.setResolutuin(xSize, ySize);
-        
+
         System.out.println(jPanel1.getWidth());
         this.show();
-        
-        Timer imageDrawer = new Timer(1000 / 30, new ActionListener() {
+
+        jPanel1.setDoubleBuffered(true);
+
+        Timer imageDrawer = new Timer(1000 / 60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
-                javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        
-                        if (image != null && jPanel1 != null) {
-                            Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
-                            Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
-                            g2d.drawImage(i, 0, 0, null);
-                            g2d.dispose();
-                        }
-                    }
-                });
+
+                //    javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                // public void run() {
+                if (image != null && jPanel1 != null) {
+                    Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
+                    Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
+                    g2d.drawImage(i, 0, 0, null);
+                    //Graphics g2d = i.getGraphics();
+                    //jPanel1.paint(g2d);
+                    // g2d.dispose();
+                    //jPanel1.repaint();
+                    //jPanel1.repaint();
+                }
+                //  }
+                // });
             }
         });
         imageDrawer.start();
     }
-    
+
     public static void setImage(BufferedImage image) {
 //        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //            @Override
@@ -63,7 +71,7 @@ public class Veiwer extends javax.swing.JFrame {
 //            }
 //        });
         Veiwer.image = image;
-        
+
     }
 
     /**
@@ -111,9 +119,9 @@ public class Veiwer extends javax.swing.JFrame {
 
     static public int getXSize() {
         return jPanel1.getSize().width;
-        
+
     }
-    
+
     static public int getYSize() {
         return jPanel1.getSize().height;
     }

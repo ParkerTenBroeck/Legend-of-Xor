@@ -25,6 +25,8 @@ public class dirt implements Tile {
     private final double TILE_Y_SCALE = 1.4;
     
     private final Origin ORIGIN = Origin.CENTER_TOP;
+    
+    private final boolean SOLID = true;
 
     BufferedImage image;
 
@@ -60,6 +62,11 @@ public class dirt implements Tile {
     @Override
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

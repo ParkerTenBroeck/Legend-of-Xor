@@ -25,6 +25,8 @@ public class ore implements Tile {
     private final double TILE_Y_SCALE = 1;
 
     private final Origin ORIGIN = Origin.UPPER_LEFT;
+    
+    private final boolean SOLID = true;
 
     BufferedImage image;
 
@@ -65,6 +67,11 @@ public class ore implements Tile {
     @Override
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

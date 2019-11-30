@@ -14,12 +14,15 @@ import java.awt.image.BufferedImage;
 public interface Tile {
 
     public String getNameID();
+   
+    public boolean isSolid();
 
     public BufferedImage getTileImage(int xPos, int yPos);
 
     public enum Origin {
         UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER_TOP, CENTER
     }
+    
 
     public Origin getOrigin();
 
@@ -28,6 +31,7 @@ public interface Tile {
      *
      * Must be Tile X scale * Tiles X
      *
+     * @return 
      */
     public double getXScale();
 

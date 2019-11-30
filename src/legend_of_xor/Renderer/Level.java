@@ -14,6 +14,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.dirt;
 import legend_of_xor.Game.Tiles.explosion;
+import legend_of_xor.Game.Tiles.grass;
 import legend_of_xor.Game.Tiles.rainbow;
 import legend_of_xor.Veiwer.Veiwer;
 
@@ -45,7 +46,7 @@ public class Level {
         tilesX = 40;
         tilesY = 22;
 
-        Camera.init(0, 4, tilesX, tilesY);
+        Camera.init(0, 0, tilesX, tilesY);
 
         background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = background.createGraphics();
@@ -55,7 +56,7 @@ public class Level {
 
         graphics.dispose();
 
-        smallTiles = LevelGenerator.makeLevel(tilesX * 10000, tilesY);
+        smallTiles = LevelGenerator.makeLevel(tilesX * 10, tilesY );
 
     }
 
@@ -81,5 +82,13 @@ public class Level {
             return temp.getTileImage(xPos, yPos);
         }
         return null;
+    }
+
+    static void setSmallTiles(Tile tile, int xPos, int yPos) {
+        try{
+            smallTiles[yPos][xPos] = tile;
+        }catch(Exception e){
+            
+        }
     }
 }

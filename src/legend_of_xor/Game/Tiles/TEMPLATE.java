@@ -22,8 +22,10 @@ public class TEMPLATE implements Tile {
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
-    
+
     private final Origin ORIGIN = Origin.UPPER_LEFT;
+
+    private final boolean SOLID = false;
 
     BufferedImage image;
 
@@ -47,10 +49,10 @@ public class TEMPLATE implements Tile {
     }
 
     @Override
-    public Origin getOrigin(){
+    public Origin getOrigin() {
         return ORIGIN;
     }
-    
+
     @Override
     public double getXScale() {
         return TILESX * TILE_X_SCALE;
@@ -59,5 +61,10 @@ public class TEMPLATE implements Tile {
     @Override
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return SOLID;
     }
 }

@@ -5,12 +5,12 @@
  */
 package legend_of_xor.Renderer;
 
-import com.sun.org.apache.xerces.internal.util.FeatureState;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 import static legend_of_xor.Controls.*;
+import legend_of_xor.Game.Tiles.grass;
 
 /**
  *
@@ -27,6 +27,14 @@ public class Camera {
         Camera.yPos = startingY;
 
         Textures.setTileResolution(tilesX, tilesY);
+    }
+
+    public static double getXPos() {
+        return xPos;
+    }
+
+    public static double getYPos() {
+        return yPos;
     }
 
     static public void DrawScreen() {
@@ -47,19 +55,26 @@ public class Camera {
     }
 
     public static void update() {
-        if(isDownPressed()){
+        if (isLeftMousePressed()) {
+            Level.setSmallTiles(new grass(), getMouseTileX(), getMouseTileY());
+        }
+        if (isRightMousePressed()) {
+            Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
+        }
+        
+        if (isDownPressed()) {
             yPos -= 0.2;
         }
-        if(isUpPressed()){
-            yPos += 0.2; 
+        if (isUpPressed()) {
+            yPos += 0.2;
         }
-        if(isLeftPressed()){
+        if (isLeftPressed()) {
             xPos += 0.2;
         }
-        if(isRightPressed()){
+        if (isRightPressed()) {
             xPos -= 0.2;
         }
-    
+
     }
 
     static public BufferedImage drawSmallTiles(Graphics2D g2d, BufferedImage image) {
@@ -79,7 +94,7 @@ public class Camera {
                     Tile temp = Level.getSmallTile(x + xTileOffset, y + yTileOffset);
 
                     BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
-                    
+
                     int orgX = calcOrgX(temp, i);
                     int orgY = calcOrgY(temp, i);
 

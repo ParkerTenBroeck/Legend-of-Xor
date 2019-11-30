@@ -25,6 +25,8 @@ public class torch implements Tile {
     private final double TILE_Y_SCALE = 2.5;
 
     private final Origin ORIGIN = Origin.CENTER_BOTTOM;
+    
+    private final boolean SOLID = false;
 
     BufferedImage image;
 
@@ -67,6 +69,11 @@ public class torch implements Tile {
     @Override
     public double getYScale() {
         return TILESY * TILE_Y_SCALE;
+    }
+
+    @Override
+    public boolean isSolid() {
+        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

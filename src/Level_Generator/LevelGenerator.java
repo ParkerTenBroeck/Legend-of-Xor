@@ -18,14 +18,14 @@ public class LevelGenerator {
         Tile[][] temp = new Tile[ySize][xSize];
 
         double scale = 0.1;
-        double change = 3;
-        NoiseGenerator gen = new NoiseGenerator(0.45624);
+        double change = 1.5;
+        NoiseGenerator gen = new NoiseGenerator((double) System.currentTimeMillis() / 1000000);
 
         double noise = gen.noise(scale);
 
         for (int x = 0; x < xSize; x++) {
 
-            noise = (gen.noise(scale) + 1) * 6 + ((ySize / 2) - 6);
+            noise = (gen.noise(scale) + 1) * 8 + (ySize - 16);
             scale += change;
 
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
@@ -33,16 +33,16 @@ public class LevelGenerator {
                 if (y == (ySize - (int) noise)) {
                     temp[y][x] = new grass();
                     if (Math.random() < 0.2) {
-                        try{
-                        if(temp[y-1][x-1] == null && temp[y-1][x-2] == null){
-                            if(temp[y][x-1] != null && temp[y][x-2] != null ){
-                                temp[y - 1][x - 1] = new big_tree();
+                        try {
+                            if (temp[y - 1][x - 1] == null && temp[y - 1][x - 2] == null) {
+                                if (temp[y][x - 1] != null && temp[y][x - 2] != null) {
+                                    temp[y - 1][x - 1] = new big_tree();
+                                }
+                            } else {
+                                temp[y - 1][x] = new small_tree();
                             }
-                        }else{
-                        temp[y - 1][x] = new small_tree();
-                        }
-                        }catch(Exception e){
-                            
+                        } catch (Exception e) {
+
                         }
                     } else if (Math.random() < 0.06) {
                         temp[y - 1][x] = new torch();
@@ -60,6 +60,7 @@ public class LevelGenerator {
                 }
             }
         }
+
         return temp;
     }
 
