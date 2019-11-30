@@ -15,7 +15,7 @@ public interface Tile {
 
     public String getNameID();
 
-    public BufferedImage getTileImage();
+    public BufferedImage getTileImage(int xPos, int yPos);
 
     public enum Origin {
         UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER_TOP, CENTER
@@ -36,6 +36,7 @@ public interface Tile {
      *
      * Must be Tile Y scale * Tiles Y
      *
+     * @return 
      */
     public double getYScale();
 

@@ -78,10 +78,12 @@ public class Camera {
 
                     Tile temp = Level.getSmallTile(x + xTileOffset, y + yTileOffset);
 
-                    int orgX = calcOrgX(temp);
-                    int orgY = calcOrgY(temp);
+                    BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
+                    
+                    int orgX = calcOrgX(temp, i);
+                    int orgY = calcOrgY(temp, i);
 
-                    g2d.drawImage(temp.getTileImage(),
+                    g2d.drawImage(i,
                             x * Textures.getTilePixelSizeX() + xPixelOffset + orgX,
                             y * Textures.getTilePixelSizeY() + yPixelOffset + orgY,
                             null);
@@ -91,44 +93,44 @@ public class Camera {
         return image;
     }
 
-    private static int calcOrgX(Tile tile) {
+    private static int calcOrgX(Tile tile, BufferedImage image) {
         switch (tile.getOrigin()) {
             case UPPER_LEFT:
                 return 0;
             case UPPER_RIGHT:
-                return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
+                return (-image.getWidth()) + Textures.getTilePixelSizeX();
             case BOTTOM_LEFT:
                 return 0;
             case BOTTOM_RIGHT:
-                return (-tile.getTileImage().getWidth()) + Textures.getTilePixelSizeX();
+                return (-image.getWidth()) + Textures.getTilePixelSizeX();
             case CENTER_BOTTOM:
-                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(image.getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
             case CENTER_TOP:
-                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(image.getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
             case CENTER:
-                return (int) (-(tile.getTileImage().getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(image.getWidth() / 2)) + Textures.getTilePixelSizeX() / 2;
 
             default:
         }
         return -1;
     }
 
-    private static int calcOrgY(Tile tile) {
+    private static int calcOrgY(Tile tile, BufferedImage image) {
         switch (tile.getOrigin()) {
             case UPPER_LEFT:
                 return 0;
             case UPPER_RIGHT:
                 return 0;
             case BOTTOM_LEFT:
-                return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
+                return (-image.getHeight()) + Textures.getTilePixelSizeY();
             case BOTTOM_RIGHT:
-                return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
+                return (-image.getHeight()) + Textures.getTilePixelSizeY();
             case CENTER_BOTTOM:
-                return (-tile.getTileImage().getHeight()) + Textures.getTilePixelSizeY();
+                return (-image.getHeight()) + Textures.getTilePixelSizeY();
             case CENTER_TOP:
                 return 0;
             case CENTER:
-                return (int) (-(tile.getTileImage().getHeight() / 2)) + Textures.getTilePixelSizeY() / 2;
+                return (int) (-(image.getHeight() / 2)) + Textures.getTilePixelSizeY() / 2;
             default:
         }
         return -1;

@@ -37,7 +37,7 @@ public class explosion implements Tile {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getTileImage(int xPos, int yPos) {
 
         int xSize = (int)(Textures.getTilePixelSizeX() * TILE_X_SCALE);
         int ySize = (int)(Textures.getTilePixelSizeY() * TILE_Y_SCALE);

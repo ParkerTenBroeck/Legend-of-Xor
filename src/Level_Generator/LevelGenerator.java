@@ -50,7 +50,7 @@ public class LevelGenerator {
                         //temp[y-1][x] = new explosion();
                     }
                 } else {
-                    temp[y][x] = new dirt();
+                    temp[y][x] = new grass();
                 }
                 if ((y - 3) > ((ySize - (int) noise))) {
                     temp[y][x] = new stone();

@@ -30,7 +30,7 @@ public class Legend_of_Xor {
         Veiwer frame = new Veiwer(1280 / 2, 720 / 2);
         Level.loadNewLevel("Main");
 
-        Timer renderer = new Timer(1000 / 60, new ActionListener() {
+        Timer renderer = new Timer(1000 / 30, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long last = System.nanoTime();

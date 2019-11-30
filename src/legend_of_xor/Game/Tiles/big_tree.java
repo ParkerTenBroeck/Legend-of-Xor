@@ -38,7 +38,7 @@ public class big_tree implements Tile {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getTileImage(int xPos, int yPos) {
 
         return image;
     }

@@ -38,7 +38,7 @@ public class ore implements Tile {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getTileImage(int xPos, int yPos) {
 
         long time = System.currentTimeMillis();
 

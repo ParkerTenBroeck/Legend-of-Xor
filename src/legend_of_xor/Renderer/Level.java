@@ -68,9 +68,6 @@ public class Level {
     }
 
     public static Tile getSmallTile(int xPos, int yPos) {
-        if (smallTiles == null) {
-            return null;
-        }
         try {
             return smallTiles[yPos][xPos];
         } catch (Exception e) {
@@ -81,7 +78,7 @@ public class Level {
     public static Image getSmallTileImage(int xPos, int yPos) {
         Tile temp = getSmallTile(xPos, yPos);
         if (temp != null) {
-            return temp.getTileImage();
+            return temp.getTileImage(xPos, yPos);
         }
         return null;
     }
