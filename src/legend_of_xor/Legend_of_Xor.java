@@ -46,6 +46,7 @@ public class Legend_of_Xor {
         Timer updates = new Timer(1000 / 20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Level.update();
                 Camera.update();
             }
         });

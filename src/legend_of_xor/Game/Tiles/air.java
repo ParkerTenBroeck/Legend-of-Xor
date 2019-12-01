@@ -14,24 +14,11 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class TEMPLATE implements Tile {
+public class air implements Tile {
 
     public static final String NAMEID = TEMPLATE.class.getName().split("\\.")[3];//name of tile must be unique
 
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
-
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
-
-    private final boolean SOLID = false;
-
-    BufferedImage image;
-
-    public TEMPLATE() {
-        image = Textures.getBlockTexture(this);
+    public air() {
     }
 
     @Override
@@ -41,31 +28,30 @@ public class TEMPLATE implements Tile {
 
     @Override
     public BufferedImage getTileImage(int xPos, int yPos) {
-        return image;
+        return null;
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Origin getOrigin() {
-        return ORIGIN;
+        return Origin.UPPER_LEFT;
     }
 
     @Override
     public double getXScale() {
-        return TILESX * TILE_X_SCALE;
+        return 0;
     }
 
     @Override
     public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
+        return 0;
     }
 
     @Override
     public boolean isSolid() {
-        return SOLID;
+        return false;
     }
 }

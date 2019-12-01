@@ -10,13 +10,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Game.Tiles.dirt;
-import legend_of_xor.Game.Tiles.explosion;
-import legend_of_xor.Game.Tiles.grass;
-import legend_of_xor.Game.Tiles.rainbow;
-import legend_of_xor.Veiwer.Veiwer;
+import legend_of_xor.Game.Tiles.air;
 
 /**
  *
@@ -27,7 +25,7 @@ public class Level {
     private static BufferedImage background;
     private static Tile[][] smallTiles;
     private static Tile[][] largeTiles;
-    private static Entity[][] entities;
+    private static final ArrayList<Entity> entities = new ArrayList();
     private static boolean isTopDown = false;
 
     private static int tilesX;
@@ -39,6 +37,12 @@ public class Level {
 
     public static int getTilesY() {
         return tilesY;
+    }
+
+    public static void update() {
+        for (Entity entity : entities) {
+            entity.update();
+        }
     }
 
     public static void loadNewLevel(String name) {
@@ -56,6 +60,11 @@ public class Level {
 
         graphics.dispose();
 
+        entities.clear();
+        Entity player = new player();
+        entities.add(player);
+        Camera.followEntity(player);
+
         smallTiles = LevelGenerator.makeLevel(tilesX * 10, tilesY * 10);
 
     }
@@ -70,9 +79,13 @@ public class Level {
 
     public static Tile getSmallTile(int xPos, int yPos) {
         try {
-            return smallTiles[yPos][xPos];
+            if (smallTiles[yPos][xPos] != null) {
+                return smallTiles[yPos][xPos];
+            } else {
+                return new air();
+            }
         } catch (Exception e) {
-            return null;
+            return new air();
         }
     }
 
@@ -85,10 +98,14 @@ public class Level {
     }
 
     static void setSmallTiles(Tile tile, int xPos, int yPos) {
-        try{
+        try {
             smallTiles[yPos][xPos] = tile;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
+    }
+
+    static ArrayList<Entity> getEntities() {
+        return entities;
     }
 }

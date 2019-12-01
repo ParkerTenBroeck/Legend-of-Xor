@@ -5,11 +5,9 @@
  */
 package legend_of_xor.Game.Tiles;
 
-import com.sun.prism.paint.Gradient;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
+import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
 

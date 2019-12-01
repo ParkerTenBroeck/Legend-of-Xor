@@ -6,6 +6,7 @@
 package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
+import legend_of_xor.Renderer.Camera.Origin;
 
 /**
  *
@@ -18,10 +19,6 @@ public interface Tile {
     public boolean isSolid();
 
     public BufferedImage getTileImage(int xPos, int yPos);
-
-    public enum Origin {
-        UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER_TOP, CENTER
-    }
     
 
     public Origin getOrigin();

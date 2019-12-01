@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package legend_of_xor.Game.Tiles;
+package legend_of_xor.Game.Entitys;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import legend_of_xor.Game.Tile;
+import legend_of_xor.Game.Entity;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;
 
@@ -15,24 +14,25 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class small_tree implements Tile {
+public class TEMPLATE implements Entity {
 
-    public static final String NAMEID = small_tree.class.getName().split("\\.")[3];//name of tile must be unique
+    public static final String NAMEID = TEMPLATE.class.getName().split("\\.")[3];//name of tile must be unique
 
     private final int TILESX = 1; //how many tiles there are in the sprite sheet
     private final int TILESY = 1;
 
-    private final double TILE_X_SCALE = 3;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 3;
+    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
+    private final double TILE_Y_SCALE = 1;
 
-    private final Origin ORIGIN = Origin.CENTER_BOTTOM;
-    
-    private final boolean SOLID = false;
+    private final Origin ORIGIN = Origin.UPPER_LEFT;
+
+    private double xPos;
+    private double yPos;
 
     BufferedImage image;
 
-    public small_tree() {
-        image = Textures.getBlockTexture(this);
+    public TEMPLATE() {
+        image = Textures.getEntityTexture(this);
     }
 
     @Override
@@ -41,14 +41,13 @@ public class small_tree implements Tile {
     }
 
     @Override
-    public BufferedImage getTileImage(int xPos, int yPos) {
-
+    public BufferedImage getTileImage() {
         return image;
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
@@ -67,8 +66,12 @@ public class small_tree implements Tile {
     }
 
     @Override
-    public boolean isSolid() {
-        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public double getXPos() {
+        return xPos;
     }
 
+    @Override
+    public double getYPos() {
+        return yPos;
+    }
 }

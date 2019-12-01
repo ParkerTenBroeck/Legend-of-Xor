@@ -13,6 +13,7 @@ import static java.util.Collections.list;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import javax.imageio.ImageIO;
+import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 
@@ -23,6 +24,7 @@ import legend_of_xor.Veiwer.Veiwer;
 public class Textures {
 
     static final private LinkedList<Object[]> blockTextures = new LinkedList();
+    static final private LinkedList<Object[]> entityTextreus = new LinkedList();
 
     private static int xRes = 1280; // default resolution
     private static int yRes = 720;
@@ -93,6 +95,41 @@ public class Textures {
         return toBufferedImage(image);
     }
 
+        public static BufferedImage getEntityTexture(Entity entity) {
+        try {
+
+            ListIterator list_Iter = entityTextreus.listIterator(0);
+
+            while (list_Iter.hasNext()) {
+                Object[] temp = (Object[]) list_Iter.next();
+
+                if (entity.getNameID().equals(temp[0])) {
+                    return (BufferedImage) temp[1];
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        Image image = null;
+        try {
+            System.out.println(entity.getNameID());
+            image = ImageIO.read(new File("src//textures//Entities//" + entity.getNameID() + ".png"));
+
+            image = image.getScaledInstance((int) (tilePixelSizeX * entity.getXScale()),
+                    (int) (tilePixelSizeY * entity.getYScale()),
+                    Image.SCALE_AREA_AVERAGING);
+
+        } catch (Exception e) {
+            image = Textures.nullImage();
+            e.printStackTrace();
+        }
+
+        entityTextreus.addFirst(new Object[]{entity.getNameID(), toBufferedImage(image)});
+        return toBufferedImage(image);
+    }
+    
     static Image nullImage() {
         return null;
     }

@@ -9,8 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
-import static legend_of_xor.Controls.*;
-import legend_of_xor.Game.Tiles.grass;
+import legend_of_xor.Game.Entity;
 
 /**
  *
@@ -21,6 +20,13 @@ public class Camera {
     private static double xPos;
     private static double yPos;
     private static float zoom = 1;
+
+    private static boolean followEntity = false;
+    private static Entity entity;
+
+    public enum Origin {
+        UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, CENTER_BOTTOM, CENTER_TOP, CENTER
+    }
 
     public static void init(int startingX, int startingY, int tilesX, int tilesY) {
         Camera.xPos = startingX;
@@ -47,6 +53,7 @@ public class Camera {
 
         g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
         drawSmallTiles(g2d, image);
+        drawEntities(g2d, image);
 
         //drawSmallTiles(g2d, image);
         //drawSmallTiles(g2d, image);
@@ -54,25 +61,15 @@ public class Camera {
 
     }
 
+    public static void followEntity(Entity entity) {
+        followEntity = true;
+        Camera.entity = entity;
+    }
+
     public static void update() {
-        if (isLeftMousePressed()) {
-            Level.setSmallTiles(new grass(), getMouseTileX(), getMouseTileY());
-        }
-        if (isRightMousePressed()) {
-            Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
-        }
-        
-        if (isDownPressed()) {
-            yPos -= 0.2;
-        }
-        if (isUpPressed()) {
-            yPos += 0.2;
-        }
-        if (isLeftPressed()) {
-            xPos += 0.2;
-        }
-        if (isRightPressed()) {
-            xPos -= 0.2;
+        if (followEntity) {
+            xPos = (-entity.getXPos()) + (Level.getTilesX() / 2);
+            yPos = (-entity.getYPos()) + (Level.getTilesY() / 2);
         }
 
     }
@@ -95,8 +92,8 @@ public class Camera {
 
                     BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
 
-                    int orgX = calcOrgX(temp, i);
-                    int orgY = calcOrgY(temp, i);
+                    int orgX = calcOrgX(temp.getOrigin(), i);
+                    int orgY = calcOrgY(temp.getOrigin(), i);
 
                     g2d.drawImage(i,
                             x * Textures.getTilePixelSizeX() + xPixelOffset + orgX,
@@ -108,8 +105,24 @@ public class Camera {
         return image;
     }
 
-    private static int calcOrgX(Tile tile, BufferedImage image) {
-        switch (tile.getOrigin()) {
+    static public BufferedImage drawEntities(Graphics2D g2d, BufferedImage image) {
+
+        int xTileOffset = 0 - (int) Math.floor(xPos);
+        int yTileOffset = 0 - (int) Math.floor(yPos);
+
+        int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTilePixelSizeX());
+        int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTilePixelSizeY());
+
+        for (Entity entity : Level.getEntities()) {
+            g2d.drawImage(entity.getTileImage(),
+                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTilePixelSizeX() + xPixelOffset - 8),
+                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset  - 16), null);
+        }
+        return image;
+    }
+
+    private static int calcOrgX(Origin origin, BufferedImage image) {
+        switch (origin) {
             case UPPER_LEFT:
                 return 0;
             case UPPER_RIGHT:
@@ -130,8 +143,8 @@ public class Camera {
         return -1;
     }
 
-    private static int calcOrgY(Tile tile, BufferedImage image) {
-        switch (tile.getOrigin()) {
+    private static int calcOrgY(Origin origin, BufferedImage image) {
+        switch (origin) {
             case UPPER_LEFT:
                 return 0;
             case UPPER_RIGHT:
