@@ -40,7 +40,7 @@ public class KeyboardLisenter extends Controls {
                 xD = xD * (double)Veiwer.getXSize() / (double)Level.getTilesX();
                 yD = yD * (double)Veiwer.getYSize() / (double)Level.getTilesY();
                 
-               System.out.println(xD);
+             //  System.out.println(xD);
                 
                 mouseXTile = (int) (((me.getX() * Level.getTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
                 mouseYTile = (int) (((me.getY() * Level.getTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);

@@ -56,7 +56,7 @@ public class Level {
 
         graphics.dispose();
 
-        smallTiles = LevelGenerator.makeLevel(tilesX * 10, tilesY );
+        smallTiles = LevelGenerator.makeLevel(tilesX * 10, tilesY * 10);
 
     }
 
