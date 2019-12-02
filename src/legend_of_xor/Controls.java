@@ -51,10 +51,12 @@ public class Controls {
     }
 
     public static int getMouseTileX() {
+        KeyboardLisenter.calculateMouseTilePos();
         return KeyboardLisenter.mouseXTile;
     }
 
     public static int getMouseTileY() {
+        KeyboardLisenter.calculateMouseTilePos();
         return KeyboardLisenter.mouseYTile;
     }
 

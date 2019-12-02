@@ -17,7 +17,11 @@ public class KeyboardLisenter extends Controls {
 
     protected static int mouseXTile, mouseYTile, mouseXReal, mouseYReal;
 
+    protected static JComponent comp;
+
     public static void init(JComponent mouseArea, Frame frame) {
+
+        KeyboardLisenter.comp = mouseArea;
 
         mouseArea.addMouseMotionListener(new MouseMotionListener() {
 
@@ -25,23 +29,21 @@ public class KeyboardLisenter extends Controls {
             public void mouseDragged(MouseEvent me) {
                 mouseXReal = me.getX();
                 mouseYReal = me.getY();
-                mouseXTile = (int) (((me.getX() * Level.getTilesX()) / Veiwer.getXSize()) + -Camera.getXPos());
-                mouseYTile = (int) (((me.getY() * Level.getTilesY()) / Veiwer.getYSize()) + -Camera.getYPos());
+
             }
 
             @Override
             public void mouseMoved(MouseEvent me) {
                 mouseXReal = me.getX();
                 mouseYReal = me.getY();
-                
-                double xD = Math.abs(Camera.getXPos() - (int)Camera.getXPos());
-                double yD = Math.abs(Camera.getYPos() - (int)Camera.getYPos());
-               
-                xD = xD * (double)Veiwer.getXSize() / (double)Level.getTilesX();
-                yD = yD * (double)Veiwer.getYSize() / (double)Level.getTilesY();
-                
-             //  System.out.println(xD);
-                
+
+                double xD = Math.abs(Camera.getXPos() - (int) Camera.getXPos());
+                double yD = Math.abs(Camera.getYPos() - (int) Camera.getYPos());
+
+                xD = xD * (double) Veiwer.getXSize() / (double) Level.getTilesX();
+                yD = yD * (double) Veiwer.getYSize() / (double) Level.getTilesY();
+
+                //  System.out.println(xD);
                 mouseXTile = (int) (((me.getX() * Level.getTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
                 mouseYTile = (int) (((me.getY() * Level.getTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);
             }
@@ -158,6 +160,22 @@ public class KeyboardLisenter extends Controls {
                 }
             }
         });
+    }
+
+    protected static void calculateMouseTilePos() {
+        
+        try{
+
+        double mouseX = comp.getMousePosition().x * (double)Level.getTilesX() / (double)Veiwer.getXSize();
+        double mouseY = comp.getMousePosition().y * (double)Level.getTilesY() / (double)Veiwer.getYSize();
+
+        mouseXTile = (int) (mouseX + -Camera.getXPos());
+        mouseYTile = (int) (mouseY + -Camera.getYPos());
+
+        }catch(Exception e){
+            mouseXTile = -1;
+            mouseYTile = -1;
+        }
     }
 
 }

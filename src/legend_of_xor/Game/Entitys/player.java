@@ -6,6 +6,7 @@
 package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import legend_of_xor.Controls;
 import legend_of_xor.Game.*;
 import legend_of_xor.Renderer.Camera.Origin;
@@ -16,7 +17,7 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class player extends Player implements Entity {
+public class player implements Entity {
 
     public static final String NAMEID = player.class.getName().split("\\.")[3];//name of tile must be unique
 
@@ -52,25 +53,26 @@ public class player extends Player implements Entity {
 
     @Override
     public void update() {
+        
         if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
             if (yVel > 0) {
                 yVel = 0;
                 yPos = Math.ceil(yPos);
             }
         } else {
-            yVel += 0.04;
+            yVel += 0.091;
         }
 
         xPos += xVel;
         yPos += yVel;
 
-        xPos *= 0.90;
+        xPos *= 0.60;
 
         if (Controls.isLeftPressed()) {
-            xVel -= 0.1;
+            xVel -= 0.4;
         }
         if (Controls.isRightPressed()) {
-            xVel += 0.1;
+            xVel += 0.4;
         }
         if (Controls.isUpPressed() && yVel == 0) {
             yVel = -0.7;

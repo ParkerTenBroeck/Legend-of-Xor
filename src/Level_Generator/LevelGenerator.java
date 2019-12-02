@@ -25,7 +25,7 @@ public class LevelGenerator {
 
         for (int x = 0; x < xSize; x++) {
 
-            noise = (gen.noise(scale) + 1) * 8 + (ySize - 16);
+            noise = (gen.noise(scale) + 1) * 8 + (ySize - 50);
             scale += change;
 
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {

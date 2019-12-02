@@ -7,9 +7,14 @@ package legend_of_xor.Renderer;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import static legend_of_xor.Controls.getMouseTileX;
+import static legend_of_xor.Controls.getMouseTileY;
+import static legend_of_xor.Controls.isLeftMousePressed;
+import static legend_of_xor.Controls.isRightMousePressed;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Tiles.grass;
 
 /**
  *
@@ -72,6 +77,13 @@ public class Camera {
             yPos = (-entity.getYPos()) + (Level.getTilesY() / 2);
         }
 
+        if (isLeftMousePressed()) {
+            Level.setSmallTiles(new grass(), getMouseTileX(), getMouseTileY());
+        }
+        if (isRightMousePressed()) {
+            Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
+        }
+
     }
 
     static public BufferedImage drawSmallTiles(Graphics2D g2d, BufferedImage image) {
@@ -116,7 +128,7 @@ public class Camera {
         for (Entity entity : Level.getEntities()) {
             g2d.drawImage(entity.getTileImage(),
                     (int) ((entity.getXPos() - xTileOffset) * Textures.getTilePixelSizeX() + xPixelOffset - 8),
-                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset  - 16), null);
+                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset - 16), null);
         }
         return image;
     }
