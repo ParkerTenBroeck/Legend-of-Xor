@@ -15,6 +15,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
+import legend_of_xor.Game.Tiles.grass;
 
 /**
  *
@@ -59,10 +60,10 @@ public class Level {
         graphics.fillRect(0, 0, background.getWidth(), background.getHeight());
 
         graphics.dispose();
-
+        
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
         
-                entities.clear();
+        entities.clear();
         Entity player = new player();
         entities.add(player);
         Camera.followEntity(player);

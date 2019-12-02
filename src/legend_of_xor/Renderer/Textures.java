@@ -5,10 +5,13 @@
  */
 package legend_of_xor.Renderer;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URL;
 import static java.util.Collections.list;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -81,15 +84,14 @@ public class Textures {
         Image image = null;
         try {
             System.out.println(tile.getNameID());
-            image = ImageIO.read(new File("src//textures//Tiles//" + tile.getNameID() + ".png"));
+            image = ImageIO.read(Textures.class.getResourceAsStream("/Textures/Tiles/" + tile.getNameID() + ".png"));
 
             image = image.getScaledInstance((int) (tileWidth * tile.getXScale()),
                     (int) (tileHeight * tile.getYScale()),
                     Image.SCALE_AREA_AVERAGING);
 
         } catch (Exception e) {
-            image = Textures.nullImage();
-            e.printStackTrace();
+            image = Textures.nullImage((int) (tileWidth * tile.getXScale()), (int) ((tileHeight * tile.getYScale())));
         }
 
         blockTextures.addFirst(new Object[]{tile.getNameID(), toBufferedImage(image)});
@@ -116,23 +118,43 @@ public class Textures {
         Image image = null;
         try {
             System.out.println(entity.getNameID());
-            image = ImageIO.read(new File("src//textures//Entities//" + entity.getNameID() + ".png"));
+            image = ImageIO.read(Textures.class.getResourceAsStream("/Textures/Entities/" + entity.getNameID() + ".png"));
 
             image = image.getScaledInstance((int) (tileWidth * entity.getXScale()),
                     (int) (tileHeight * entity.getYScale()),
                     Image.SCALE_AREA_AVERAGING);
 
         } catch (Exception e) {
-            image = Textures.nullImage();
-            e.printStackTrace();
+            image = Textures.nullImage((int) (tileWidth * entity.getXScale()), (int) ((tileHeight * entity.getYScale())));
         }
 
         entityTextreus.addFirst(new Object[]{entity.getNameID(), toBufferedImage(image)});
         return toBufferedImage(image);
     }
 
-    static Image nullImage() {
-        return null;
+    static Image nullImage(int width, int height) {
+        BufferedImage error = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        Graphics g = error.getGraphics();
+
+        int rectX = width / (tileWidth / 4);
+        int rectY = height / (tileHeight / 4);
+
+        System.out.println(rectX);
+
+        for (int x = 0; x < rectX; x++) {
+            for (int y = 0; y < rectY; y++) {
+
+                if ((x % 2 ^ y % 2) == 1) {
+                    g.setColor(Color.BLACK);
+                } else {
+                    g.setColor(new Color(0xFF00FF));
+                }
+                g.fillRect(x * tileWidth / 4, y * tileHeight / 4, tileWidth / 4, tileHeight / 4);
+            }
+        }
+
+        return error;
     }
 
     public static BufferedImage toBufferedImage(Image img) {
