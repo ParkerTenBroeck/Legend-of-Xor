@@ -28,15 +28,15 @@ public class Level {
     private static final ArrayList<Entity> entities = new ArrayList();
     private static boolean isTopDown = false;
 
-    private static int tilesX;
-    private static int tilesY;
+    private static int levelTilesX;
+    private static int levelTilesY;
 
-    public static int getTilesX() {
-        return tilesX;
+    public static int getLevelTilesX() {
+        return levelTilesX;
     }
 
-    public static int getTilesY() {
-        return tilesY;
+    public static int getLevelTilesY() {
+        return levelTilesY;
     }
 
     public static void update() {
@@ -47,10 +47,10 @@ public class Level {
 
     public static void loadNewLevel(String name) {
 
-        tilesX = 40;
-        tilesY = 22;
+        levelTilesX = 40 * 10;
+        levelTilesY = 22 * 10;
 
-        Camera.init(0, 0, tilesX, tilesY);
+        Camera.init(0, 0, 40, 22);
 
         background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = background.createGraphics();
@@ -65,7 +65,7 @@ public class Level {
         entities.add(player);
         Camera.followEntity(player);
 
-        smallTiles = LevelGenerator.makeLevel(tilesX * 10, tilesY * 10);
+        smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
     }
 

@@ -26,7 +26,7 @@ public class TEMPLATE implements Tile {
 
     private final Origin ORIGIN = Origin.UPPER_LEFT;
 
-    private final boolean SOLID = false;
+    private final boolean SOLID = true;
 
     BufferedImage image;
 

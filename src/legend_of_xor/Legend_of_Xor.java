@@ -27,30 +27,46 @@ public class Legend_of_Xor {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         Veiwer frame = new Veiwer(1280 / 2, 704 / 2);
         Level.loadNewLevel("Main");
 
-        Timer renderer = new Timer(1000 / 60, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                long last = System.nanoTime();
-                Camera.DrawScreen();
-                long newt = System.nanoTime();
-                if (newt - last > 0.017 * 1_000_000_000) {
-                    System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+        Thread renderer = new Thread() {
+            public void run() {
+                while (true) {
+                    long last = System.nanoTime();
+                    Camera.DrawScreen();
+                    long newt = System.nanoTime();
+                    if (newt - last > 0.017 * 1_000_000_000) {
+                        System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                    }
+                    try {
+                        Thread.sleep(16);
+                    } catch (Exception e) {
+
+                    }
                 }
             }
-        });
+        };
+        renderer.setName("rendeer");
         renderer.start();
 
-        Timer updates = new Timer(1000 / 20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Level.update();
-                Camera.update();
+        Thread update = new Thread() {
+            public void run() {
+
+                while (true) {
+                    Level.update();
+                    Camera.update();
+                    try {
+                        Thread.sleep(16);
+                    } catch (Exception e) {
+
+                    }
+                }
             }
-        });
-        updates.start();
+        };
+        update.setName("update");
+        update.start();
 
     }
 

@@ -54,10 +54,10 @@ public class Textures {
         Textures.yRes = yRes;
     }
 
-    public static void setTileResolution(int xTiles, int yTiles) {
+    public static void setTileResolution() {
         blockTextures.clear();
-        tilePixelSizeX = xRes / xTiles;
-        tilePixelSizeY = yRes / yTiles;
+        tilePixelSizeX = xRes / Camera.getCameraTilesX();
+        tilePixelSizeY = yRes / Camera.getCameraTilesY();
     }
 
     public static BufferedImage getBlockTexture(Tile tile) {

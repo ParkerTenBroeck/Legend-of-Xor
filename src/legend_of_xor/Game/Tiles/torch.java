@@ -25,7 +25,7 @@ public class torch implements Tile {
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 2.5;
 
-    private final Origin ORIGIN = Origin.CENTER_BOTTOM;
+    private final Origin ORIGIN = Origin.BOTTOM_CENTER;
     
     private final boolean SOLID = false;
 

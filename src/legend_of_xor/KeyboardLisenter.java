@@ -40,12 +40,12 @@ public class KeyboardLisenter extends Controls {
                 double xD = Math.abs(Camera.getXPos() - (int) Camera.getXPos());
                 double yD = Math.abs(Camera.getYPos() - (int) Camera.getYPos());
 
-                xD = xD * (double) Veiwer.getXSize() / (double) Level.getTilesX();
-                yD = yD * (double) Veiwer.getYSize() / (double) Level.getTilesY();
+                xD = xD * (double) Veiwer.getXSize() / (double) Level.getLevelTilesX();
+                yD = yD * (double) Veiwer.getYSize() / (double) Level.getLevelTilesY();
 
                 //  System.out.println(xD);
-                mouseXTile = (int) (((me.getX() * Level.getTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
-                mouseYTile = (int) (((me.getY() * Level.getTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);
+                mouseXTile = (int) (((me.getX() * Level.getLevelTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
+                mouseYTile = (int) (((me.getY() * Level.getLevelTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);
             }
         });
 
@@ -166,8 +166,8 @@ public class KeyboardLisenter extends Controls {
         
         try{
 
-        double mouseX = comp.getMousePosition().x * (double)Level.getTilesX() / (double)Veiwer.getXSize();
-        double mouseY = comp.getMousePosition().y * (double)Level.getTilesY() / (double)Veiwer.getYSize();
+        double mouseX = comp.getMousePosition().x * (double)Camera.getCameraTilesX() / (double)Veiwer.getXSize();
+        double mouseY = comp.getMousePosition().y * (double)Camera.getCameraTilesY() / (double)Veiwer.getYSize();
 
         mouseXTile = (int) (mouseX + -Camera.getXPos());
         mouseYTile = (int) (mouseY + -Camera.getYPos());

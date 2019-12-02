@@ -53,34 +53,40 @@ public class player implements Entity {
 
     @Override
     public void update() {
-        
+
         if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
             if (yVel > 0) {
                 yVel = 0;
                 yPos = Math.ceil(yPos);
             }
         } else {
-            yVel += 0.091;
+            yVel += 0.031;
         }
 
         xPos += xVel;
         yPos += yVel;
 
-        xPos *= 0.60;
+        if (yPos > Level.getLevelTilesY()) {
+            System.out.println(yPos);
+            yPos = 0;
+        }
+
+        xPos *= 0.70;
 
         if (Controls.isLeftPressed()) {
-            xVel -= 0.4;
+            xVel -= 0.1;
         }
         if (Controls.isRightPressed()) {
-            xVel += 0.4;
+            xVel += 0.1;
         }
         if (Controls.isUpPressed() && yVel == 0) {
             yVel = -0.7;
         }
-        if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-            yPos = Math.floor(yPos - 1);
+        while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+            if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+                yPos = Math.floor(yPos - 1);
+            }
         }
-
     }
 
     @Override
