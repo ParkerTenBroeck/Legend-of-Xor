@@ -27,7 +27,7 @@ public class player implements Entity {
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
 
-    private final Origin ORIGIN = Origin.CENTER;
+    private final Origin ORIGIN = Origin.BOTTOM_CENTER;
 
     private double xPos = 0;
     private double yPos = -4;
@@ -67,7 +67,6 @@ public class player implements Entity {
         yPos += yVel;
 
         if (yPos > Level.getLevelTilesY()) {
-            System.out.println(yPos);
             yPos = 0;
         }
 

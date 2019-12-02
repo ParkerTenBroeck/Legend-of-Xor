@@ -28,7 +28,7 @@ public class Legend_of_Xor {
      */
     public static void main(String[] args) {
         
-        Veiwer frame = new Veiwer(1280 / 2, 704 / 2);
+        Veiwer frame = new Veiwer(1280 / 1, 704 / 1);
         Level.loadNewLevel("Main");
 
         Thread renderer = new Thread() {

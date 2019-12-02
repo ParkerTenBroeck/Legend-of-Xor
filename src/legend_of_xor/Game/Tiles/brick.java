@@ -18,15 +18,15 @@ public class brick implements Tile {
 
     public static final String NAMEID = brick.class.getName().split("\\.")[3];//name of tile must be unique
 
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
+    private final int TILESX = 4; //how many tiles there are in the sprite sheet
+    private final int TILESY = 4;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
 
     private final Origin ORIGIN = Origin.UPPER_LEFT;
 
-    private final boolean SOLID = false;
+    private final boolean SOLID = true;
 
     BufferedImage image;
 
@@ -41,7 +41,9 @@ public class brick implements Tile {
 
     @Override
     public BufferedImage getTileImage(int xPos, int yPos) {
-        return image;
+        return image.getSubimage(Textures.getTilePixelSizeX() * (xPos % TILESY),
+                Textures.getTilePixelSizeY() * (yPos % TILESX),
+                 Textures.getTilePixelSizeX(), Textures.getTilePixelSizeY());
     }
 
     @Override

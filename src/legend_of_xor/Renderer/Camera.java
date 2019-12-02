@@ -14,6 +14,7 @@ import static legend_of_xor.Controls.isRightMousePressed;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Tiles.brick;
 import legend_of_xor.Game.Tiles.grass;
 
 /**
@@ -92,7 +93,7 @@ public class Camera {
         }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTiles(new grass(), getMouseTileX(), getMouseTileY());
+            Level.setSmallTiles(new brick(), getMouseTileX(), getMouseTileY());
         }
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
@@ -140,9 +141,12 @@ public class Camera {
         int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTilePixelSizeY());
 
         for (Entity entity : Level.getEntities()) {
-            g2d.drawImage(entity.getTileImage(),
-                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTilePixelSizeX() + xPixelOffset + calcTileOrgX(entity.getOrigin(), entity.getTileImage())),
-                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset - 16), null);
+
+            BufferedImage temp = entity.getTileImage();
+
+            g2d.drawImage(temp,
+                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTilePixelSizeX() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
+                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
         }
         return image;
     }
@@ -193,6 +197,57 @@ public class Camera {
                 return 0;
             case CENTER:
                 return (int) (-(height / 2)) + Textures.getTilePixelSizeY() / 2;
+            default:
+        }
+        return -1;
+    }
+
+    private static int calcEntityOrgX(Origin origin, BufferedImage image) {
+        return calcEntityOrgX(origin, image.getWidth(), image.getHeight());
+    }
+
+    private static int calcEntityOrgY(Origin origin, BufferedImage image) {
+        return calcEntityOrgY(origin, image.getWidth(), image.getHeight());
+    }
+
+    private static int calcEntityOrgX(Origin origin, int width, int hight) {
+        switch (origin) {
+            case UPPER_LEFT:
+                return 0;
+            case UPPER_RIGHT:
+                return (-width);
+            case BOTTOM_LEFT:
+                return 0;
+            case BOTTOM_RIGHT:
+                return (-width);
+            case BOTTOM_CENTER:
+                return (int) (-(width / 2));
+            case TOP_CENTER:
+                return (int) (-(width / 2));
+            case CENTER:
+                return (int) (-(width / 2));
+
+            default:
+        }
+        return -1;
+    }
+
+    private static int calcEntityOrgY(Origin origin, int width, int height) {
+        switch (origin) {
+            case UPPER_LEFT:
+                return 0;
+            case UPPER_RIGHT:
+                return 0;
+            case BOTTOM_LEFT:
+                return (-height);
+            case BOTTOM_RIGHT:
+                return (-height);
+            case BOTTOM_CENTER:
+                return (-height);
+            case TOP_CENTER:
+                return 0;
+            case CENTER:
+                return (int) (-(height / 2));
             default:
         }
         return -1;
