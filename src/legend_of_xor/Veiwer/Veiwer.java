@@ -6,19 +6,13 @@
 package legend_of_xor.Veiwer;
 
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JFrame;
 import javax.swing.Timer;
 import legend_of_xor.KeyboardLisenter;
-import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Textures;
-
 /**
  *
  * @author parke
@@ -27,14 +21,9 @@ public class Veiwer extends javax.swing.JFrame {
 
     private static BufferedImage image;
 
-    public Veiwer(int xSize, int ySize) {
+    public Veiwer() {
         initComponents();
         KeyboardLisenter.init(jPanel1, this);
-        Textures.setResolutuin(xSize, ySize);
-        this.setSize(new Dimension(xSize, ySize));
-        jPanel1.setSize(new Dimension(xSize, ySize));
-        Textures.setResolutuin(xSize, ySize);
-
         System.out.println(jPanel1.getWidth());
         this.show();
 
@@ -63,6 +52,10 @@ public class Veiwer extends javax.swing.JFrame {
         imageDrawer.start();
     }
 
+    public static void setResolutiom(int width, int height) {
+        jPanel1.setSize(new Dimension(width, height));
+    }
+
     public static void setImage(BufferedImage image) {
 //        javax.swing.SwingUtilities.invokeLater(new Runnable() {
 //            @Override
@@ -86,6 +79,7 @@ public class Veiwer extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

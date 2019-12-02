@@ -104,8 +104,8 @@ public class grass implements Tile {
             offset += 8;
         }
         
-        offset = offset * (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE);
-        return image.getSubimage(0, offset, (int) (Textures.getTilePixelSizeX() * TILE_X_SCALE), (int) (Textures.getTilePixelSizeY() * TILE_Y_SCALE));
+        offset = offset * (int) (Textures.getTileHeight() * TILE_Y_SCALE);
+        return image.getSubimage(0, offset, (int) (Textures.getTileWidth() * TILE_X_SCALE), (int) (Textures.getTileHeight() * TILE_Y_SCALE));
     }
 
     @Override

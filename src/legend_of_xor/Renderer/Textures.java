@@ -29,8 +29,8 @@ public class Textures {
     private static int xRes = 1280; // default resolution
     private static int yRes = 720;
 
-    private static int tilePixelSizeX = 32;
-    private static int tilePixelSizeY = 32;
+    private static int tileWidth = 32;
+    private static int tileHeight = 32;
 
     public static int getXRes() {
         return xRes;
@@ -40,24 +40,25 @@ public class Textures {
         return yRes;
     }
 
-    public static int getTilePixelSizeX() {
-        return tilePixelSizeX;
+    public static int getTileWidth() {
+        return tileWidth;
     }
 
-    public static int getTilePixelSizeY() {
-        return tilePixelSizeY;
+    public static int getTileHeight() {
+        return tileHeight;
     }
 
-    public static void setResolutuin(int xRes, int yRes) {
+    public static void setResolutuin() {
         blockTextures.clear();
-        Textures.xRes = xRes;
-        Textures.yRes = yRes;
+        Textures.xRes = tileWidth * Camera.getCameraTilesX();
+        Textures.yRes = tileWidth * Camera.getCameraTilesY();
+        Veiwer.setResolutiom(xRes, yRes);
     }
 
-    public static void setTileResolution() {
+    public static void setTileResolution(int width, int height) {
         blockTextures.clear();
-        tilePixelSizeX = xRes / Camera.getCameraTilesX();
-        tilePixelSizeY = yRes / Camera.getCameraTilesY();
+        tileWidth = width;
+        tileHeight = height;
     }
 
     public static BufferedImage getBlockTexture(Tile tile) {
@@ -82,8 +83,8 @@ public class Textures {
             System.out.println(tile.getNameID());
             image = ImageIO.read(new File("src//textures//Tiles//" + tile.getNameID() + ".png"));
 
-            image = image.getScaledInstance((int) (tilePixelSizeX * tile.getXScale()),
-                    (int) (tilePixelSizeY * tile.getYScale()),
+            image = image.getScaledInstance((int) (tileWidth * tile.getXScale()),
+                    (int) (tileHeight * tile.getYScale()),
                     Image.SCALE_AREA_AVERAGING);
 
         } catch (Exception e) {
@@ -95,7 +96,7 @@ public class Textures {
         return toBufferedImage(image);
     }
 
-        public static BufferedImage getEntityTexture(Entity entity) {
+    public static BufferedImage getEntityTexture(Entity entity) {
         try {
 
             ListIterator list_Iter = entityTextreus.listIterator(0);
@@ -117,8 +118,8 @@ public class Textures {
             System.out.println(entity.getNameID());
             image = ImageIO.read(new File("src//textures//Entities//" + entity.getNameID() + ".png"));
 
-            image = image.getScaledInstance((int) (tilePixelSizeX * entity.getXScale()),
-                    (int) (tilePixelSizeY * entity.getYScale()),
+            image = image.getScaledInstance((int) (tileWidth * entity.getXScale()),
+                    (int) (tileHeight * entity.getYScale()),
                     Image.SCALE_AREA_AVERAGING);
 
         } catch (Exception e) {
@@ -129,7 +130,7 @@ public class Textures {
         entityTextreus.addFirst(new Object[]{entity.getNameID(), toBufferedImage(image)});
         return toBufferedImage(image);
     }
-    
+
     static Image nullImage() {
         return null;
     }

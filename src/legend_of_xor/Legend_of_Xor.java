@@ -12,9 +12,11 @@ import java.io.File;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Timer;
+import legend_of_xor.Game.Sound;
 import legend_of_xor.Game.Tiles.TEMPLATE;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Textures;
 import legend_of_xor.Veiwer.Veiwer;
 
 /**
@@ -28,8 +30,11 @@ public class Legend_of_Xor {
      */
     public static void main(String[] args) {
         
-        Veiwer frame = new Veiwer(1280 / 1, 704 / 1);
+        Veiwer frame = new Veiwer();
+        Textures.setTileResolution(32, 32);
         Level.loadNewLevel("Main");
+        
+        Sound.loadSound();
 
         Thread renderer = new Thread() {
             public void run() {
@@ -55,10 +60,12 @@ public class Legend_of_Xor {
             public void run() {
 
                 while (true) {
+                    long start = System.currentTimeMillis();
                     Level.update();
                     Camera.update();
+                    long end = System.currentTimeMillis();
                     try {
-                        Thread.sleep(16);
+                        Thread.sleep((int)((1000 / 60) - (end - start)));
                     } catch (Exception e) {
 
                     }

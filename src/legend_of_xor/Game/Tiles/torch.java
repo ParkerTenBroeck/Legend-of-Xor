@@ -44,7 +44,7 @@ public class torch implements Tile {
     public BufferedImage getTileImage(int xPos, int yPos) {
         long time = System.currentTimeMillis();
 
-        int frame = (int) ((time / 50) % 91);
+        int frame = (int) ((time / 40) % 91);
 
         int startingY = (int) ((image.getHeight() / (double) TILESY) * frame);
 

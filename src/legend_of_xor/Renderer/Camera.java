@@ -52,7 +52,7 @@ public class Camera {
         Camera.cameraTilesX = cameraTilesX;
         Camera.cameraTilesY = cameraTilesY;
 
-        Textures.setTileResolution();
+        Textures.setResolutuin();
     }
 
     public static double getXPos() {
@@ -106,8 +106,8 @@ public class Camera {
         int xTileOffset = 0 - (int) Math.floor(xPos);
         int yTileOffset = 0 - (int) Math.floor(yPos);
 
-        int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTilePixelSizeX());
-        int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTilePixelSizeY());
+        int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTileWidth());
+        int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTileHeight());
 
         for (int y = cameraTilesX + 1; y >= -1; y--) {
 
@@ -123,8 +123,8 @@ public class Camera {
                     int orgY = calcTileOrgY(temp.getOrigin(), i);
 
                     g2d.drawImage(i,
-                            x * Textures.getTilePixelSizeX() + xPixelOffset + orgX,
-                            y * Textures.getTilePixelSizeY() + yPixelOffset + orgY,
+                            x * Textures.getTileWidth() + xPixelOffset + orgX,
+                            y * Textures.getTileHeight() + yPixelOffset + orgY,
                             null);
                 }
             }
@@ -137,16 +137,16 @@ public class Camera {
         int xTileOffset = 0 - (int) Math.floor(xPos);
         int yTileOffset = 0 - (int) Math.floor(yPos);
 
-        int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTilePixelSizeX());
-        int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTilePixelSizeY());
+        int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTileWidth());
+        int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTileHeight());
 
         for (Entity entity : Level.getEntities()) {
 
             BufferedImage temp = entity.getTileImage();
 
             g2d.drawImage(temp,
-                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTilePixelSizeX() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
-                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTilePixelSizeY() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
+                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
+                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
         }
         return image;
     }
@@ -164,17 +164,17 @@ public class Camera {
             case UPPER_LEFT:
                 return 0;
             case UPPER_RIGHT:
-                return (-width) + Textures.getTilePixelSizeX();
+                return (-width) + Textures.getTileWidth();
             case BOTTOM_LEFT:
                 return 0;
             case BOTTOM_RIGHT:
-                return (-width) + Textures.getTilePixelSizeX();
+                return (-width) + Textures.getTileWidth();
             case BOTTOM_CENTER:
-                return (int) (-(width / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
             case TOP_CENTER:
-                return (int) (-(width / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
             case CENTER:
-                return (int) (-(width / 2)) + Textures.getTilePixelSizeX() / 2;
+                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
 
             default:
         }
@@ -188,15 +188,15 @@ public class Camera {
             case UPPER_RIGHT:
                 return 0;
             case BOTTOM_LEFT:
-                return (-height) + Textures.getTilePixelSizeY();
+                return (-height) + Textures.getTileHeight();
             case BOTTOM_RIGHT:
-                return (-height) + Textures.getTilePixelSizeY();
+                return (-height) + Textures.getTileHeight();
             case BOTTOM_CENTER:
-                return (-height) + Textures.getTilePixelSizeY();
+                return (-height) + Textures.getTileHeight();
             case TOP_CENTER:
                 return 0;
             case CENTER:
-                return (int) (-(height / 2)) + Textures.getTilePixelSizeY() / 2;
+                return (int) (-(height / 2)) + Textures.getTileHeight() / 2;
             default:
         }
         return -1;

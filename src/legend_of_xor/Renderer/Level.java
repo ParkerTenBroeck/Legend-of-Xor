@@ -50,7 +50,7 @@ public class Level {
         levelTilesX = 40 * 10;
         levelTilesY = 22 * 10;
 
-        Camera.init(0, 0, 40, 22);
+        Camera.init(0, 0, 40, 20);
 
         background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = background.createGraphics();
@@ -60,12 +60,12 @@ public class Level {
 
         graphics.dispose();
 
-        entities.clear();
+        smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
+        
+                entities.clear();
         Entity player = new player();
         entities.add(player);
         Camera.followEntity(player);
-
-        smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
     }
 

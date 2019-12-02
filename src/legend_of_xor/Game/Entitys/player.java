@@ -30,7 +30,7 @@ public class player implements Entity {
     private final Origin ORIGIN = Origin.BOTTOM_CENTER;
 
     private double xPos = 0;
-    private double yPos = -4;
+    private double yPos = 40;
 
     private double xVel;
     private double yVel;
@@ -48,16 +48,22 @@ public class player implements Entity {
 
     @Override
     public BufferedImage getTileImage() {
-        return image.getSubimage(0, Textures.getTilePixelSizeY() * ((int) (System.currentTimeMillis() / 150) % 4), Textures.getTilePixelSizeX(), Textures.getTilePixelSizeY());
+        return image.getSubimage(0, Textures.getTileHeight() * ((int) (System.currentTimeMillis() / 150) % 4), Textures.getTileWidth(), Textures.getTileHeight());
     }
 
     @Override
     public void update() {
-
+        
         if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
             if (yVel > 0) {
+
+                if (Math.abs(yVel) > 1) {
+                    Sound.playSound();
+                }
+
                 yVel = 0;
                 yPos = Math.ceil(yPos);
+
             }
         } else {
             yVel += 0.031;

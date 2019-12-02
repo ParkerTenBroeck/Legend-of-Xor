@@ -41,9 +41,9 @@ public class brick implements Tile {
 
     @Override
     public BufferedImage getTileImage(int xPos, int yPos) {
-        return image.getSubimage(Textures.getTilePixelSizeX() * (xPos % TILESY),
-                Textures.getTilePixelSizeY() * (yPos % TILESX),
-                 Textures.getTilePixelSizeX(), Textures.getTilePixelSizeY());
+        return image.getSubimage(Textures.getTileWidth() * (xPos % TILESY),
+                Textures.getTileHeight() * (yPos % TILESX),
+                 Textures.getTileWidth(), Textures.getTileHeight());
     }
 
     @Override
