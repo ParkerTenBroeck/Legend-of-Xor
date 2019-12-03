@@ -31,7 +31,7 @@ public class Legend_of_Xor {
     public static void main(String[] args) {
         
         Veiwer frame = new Veiwer();
-        Textures.setTileResolution(32, 32);
+        Textures.setTileResolution(32,32);
         Level.loadNewLevel("Main");
         
         Sound.loadSound();

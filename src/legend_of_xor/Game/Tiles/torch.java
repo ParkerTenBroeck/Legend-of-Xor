@@ -26,7 +26,7 @@ public class torch implements Tile {
     private final double TILE_Y_SCALE = 2.5;
 
     private final Origin ORIGIN = Origin.BOTTOM_CENTER;
-    
+
     private final boolean SOLID = false;
 
     BufferedImage image;
@@ -58,8 +58,7 @@ public class torch implements Tile {
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(int xPos, int yPos) {
     }
 
     @Override

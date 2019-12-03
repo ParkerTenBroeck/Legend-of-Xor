@@ -29,6 +29,8 @@ public class water_drop implements Entity {
 
     private double xPos;
     private double yPos;
+    
+    private double yVel = 0;
 
     private boolean hit = false;
     private long timeHit = 0;
@@ -69,8 +71,9 @@ public class water_drop implements Entity {
 
     @Override
     public void update() {
+        yVel += 0.006;
         if (timeHit == 0) {
-            yPos += 0.4;
+            yPos += yVel;
         }
 
         if (Level.getSmallTile((int) (xPos), (int) (yPos + 1)).isSolid() && timeHit == 0) {

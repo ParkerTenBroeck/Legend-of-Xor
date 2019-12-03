@@ -32,7 +32,7 @@ public class air implements Tile {
     }
 
     @Override
-    public void update() {
+    public void update(int xPos, int yPos) {
     }
 
     @Override
