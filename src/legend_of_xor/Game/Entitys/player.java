@@ -85,6 +85,7 @@ public class player implements Entity {
             xVel += 0.1;
         }
         if (Controls.isUpPressed() && yVel == 0) {
+            Level.addEntity(new water_drop(xPos, 0));
             yVel = -0.7;
         }
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
@@ -117,5 +118,10 @@ public class player implements Entity {
     @Override
     public double getYPos() {
         return yPos;
+    }
+
+    @Override
+    public boolean terminate(){
+        return false;
     }
 }

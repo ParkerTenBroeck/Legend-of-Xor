@@ -74,4 +74,9 @@ public class TEMPLATE implements Entity {
     public double getYPos() {
         return yPos;
     }
+
+    @Override
+    public boolean terminate() {
+        return false;
+    }
 }

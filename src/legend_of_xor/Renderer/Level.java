@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.player;
+import legend_of_xor.Game.Entitys.water_drop;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
 import legend_of_xor.Game.Tiles.grass;
@@ -40,9 +41,15 @@ public class Level {
         return levelTilesY;
     }
 
-    public static void update() {
-        for (Entity entity : entities) {
-            entity.update();
+    public static synchronized void update() {
+
+        if (entities.size() > 0 && entities != null) {
+            for (int i = entities.size() - 1; i >= 0; i--) {
+                entities.get(i).update();
+                if (entities.get(i).terminate()) {
+                    entities.remove(i);
+                }
+            }
         }
     }
 
@@ -60,9 +67,9 @@ public class Level {
         graphics.fillRect(0, 0, background.getWidth(), background.getHeight());
 
         graphics.dispose();
-        
+
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
-        
+
         entities.clear();
         Entity player = new player();
         entities.add(player);
@@ -107,6 +114,10 @@ public class Level {
     }
 
     static ArrayList<Entity> getEntities() {
-        return entities;
+        return (ArrayList<Entity>) entities.clone();
+    }
+
+    public static void addEntity(Entity entity) {
+        entities.add(entity);
     }
 }

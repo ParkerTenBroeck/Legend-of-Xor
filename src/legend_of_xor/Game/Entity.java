@@ -43,4 +43,6 @@ public interface Entity {
     public double getXPos();
     
     public double getYPos();
+    
+    public boolean terminate();
 }

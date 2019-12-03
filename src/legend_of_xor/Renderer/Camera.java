@@ -139,14 +139,17 @@ public class Camera {
 
         int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTileWidth());
         int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTileHeight());
+        try {
+            for (Entity entity : Level.getEntities()) {
+                BufferedImage temp = entity.getTileImage();
 
-        for (Entity entity : Level.getEntities()) {
+                g2d.drawImage(temp,
+                        (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
+                        (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
 
-            BufferedImage temp = entity.getTileImage();
+            }
+        } catch (Exception e) {
 
-            g2d.drawImage(temp,
-                    (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
-                    (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
         }
         return image;
     }
@@ -203,10 +206,16 @@ public class Camera {
     }
 
     private static int calcEntityOrgX(Origin origin, BufferedImage image) {
+        if (image == null) {
+            return 0;
+        }
         return calcEntityOrgX(origin, image.getWidth(), image.getHeight());
     }
 
     private static int calcEntityOrgY(Origin origin, BufferedImage image) {
+        if (image == null) {
+            return 0;
+        }
         return calcEntityOrgY(origin, image.getWidth(), image.getHeight());
     }
 
