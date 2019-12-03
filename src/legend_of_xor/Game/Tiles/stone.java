@@ -26,7 +26,7 @@ public class stone implements Tile {
     private final double TILE_Y_SCALE = 1;
 
     private final Origin ORIGIN = Origin.UPPER_LEFT;
-    
+
     private final boolean SOLID = true;
 
     BufferedImage image;
@@ -51,8 +51,7 @@ public class stone implements Tile {
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(int xPos, int yPos) {
     }
 
     @Override

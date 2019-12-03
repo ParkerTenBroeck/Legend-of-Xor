@@ -137,8 +137,8 @@ public class Textures {
 
         Graphics g = error.getGraphics();
 
-        int rectX = width / (tileWidth / 4);
-        int rectY = height / (tileHeight / 4);
+        int rectX = width / (tileWidth / 2);
+        int rectY = height / (tileHeight / 2);
 
         System.out.println(rectX);
 
@@ -150,7 +150,7 @@ public class Textures {
                 } else {
                     g.setColor(new Color(0xFF00FF));
                 }
-                g.fillRect(x * tileWidth / 4, y * tileHeight / 4, tileWidth / 4, tileHeight / 4);
+                g.fillRect(x * tileWidth / 2, y * tileHeight / 2, tileWidth / 2, tileHeight / 2);
             }
         }
 

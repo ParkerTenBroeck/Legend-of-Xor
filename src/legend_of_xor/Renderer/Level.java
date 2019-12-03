@@ -43,6 +43,16 @@ public class Level {
 
     public static synchronized void update() {
 
+        for (int y = levelTilesY - 1; y >= 0; y--) {
+            for (int x = levelTilesX - 1; x >= 0; x--) {
+                try {
+                    smallTiles[y][x].update(x, y);
+                } catch (Exception e) {
+
+                }
+            }
+        }
+
         if (entities.size() > 0 && entities != null) {
             for (int i = entities.size() - 1; i >= 0; i--) {
                 entities.get(i).update();

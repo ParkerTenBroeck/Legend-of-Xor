@@ -54,10 +54,38 @@ public class LevelGenerator {
                 }
                 if ((y - 3) > ((ySize - (int) noise))) {
                     temp[y][x] = new stone();
-                    if (Math.random() < 0.04) {
-                        temp[y][x] = new ore();
-                    }
                 }
+            }
+        }
+        gen.setSeed((double) System.currentTimeMillis() / 1000000);
+        NoiseGenerator oreGen = new NoiseGenerator((double) System.currentTimeMillis() / 13002040);
+
+        scale = 0.4;
+        double oreScale = 4;
+
+        for (int x = 0; x < xSize; x++) {
+
+            for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
+                double val = gen.noise(x * scale, y * scale);
+                double oreVal = oreGen.noise(x * oreScale, y * oreScale);
+
+                try {
+                    if (val > 0.4 && val < 0.5 || (val < -0.2 && val > -0.3)) {
+
+                        if (temp[y][x].getNameID().equals("stone")) {
+                            temp[y][x] = null;
+                        }
+
+                    }
+                    if (oreVal < -0.6) {
+                        if (temp[y][x].getNameID().equals("stone")) {
+                            temp[y][x] = new ore();
+                        }
+                    }
+
+                } catch (Exception e) {
+                }
+
             }
         }
 

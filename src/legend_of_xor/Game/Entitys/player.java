@@ -25,7 +25,7 @@ public class player implements Entity {
     private final int TILESY = 4;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
+    private final double TILE_Y_SCALE = 1.75;
 
     private final Origin ORIGIN = Origin.BOTTOM_CENTER;
 
@@ -48,7 +48,8 @@ public class player implements Entity {
 
     @Override
     public BufferedImage getTileImage() {
-        return image.getSubimage(0, Textures.getTileHeight() * ((int) (System.currentTimeMillis() / 150) % 4), Textures.getTileWidth(), Textures.getTileHeight());
+        return image.getSubimage(0, (int)(Textures.getTileHeight() * TILE_Y_SCALE * ((int) (System.currentTimeMillis() / 150) % 4)),
+                (int)(Textures.getTileWidth() * TILE_X_SCALE) , (int)(Textures.getTileHeight() * TILE_Y_SCALE));
     }
 
     @Override
@@ -85,7 +86,6 @@ public class player implements Entity {
             xVel += 0.1;
         }
         if (Controls.isUpPressed() && yVel == 0) {
-            Level.addEntity(new water_drop(xPos, 0));
             yVel = -0.7;
         }
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {

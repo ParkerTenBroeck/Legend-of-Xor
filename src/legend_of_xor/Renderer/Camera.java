@@ -16,6 +16,7 @@ import legend_of_xor.Veiwer.Veiwer;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Tiles.brick;
 import legend_of_xor.Game.Tiles.grass;
+import legend_of_xor.Game.Tiles.stalactite;
 
 /**
  *
@@ -93,7 +94,7 @@ public class Camera {
         }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTiles(new brick(), getMouseTileX(), getMouseTileY());
+            Level.setSmallTiles(new stalactite(), getMouseTileX(), getMouseTileY());
         }
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());

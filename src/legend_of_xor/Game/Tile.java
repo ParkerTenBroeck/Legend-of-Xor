@@ -41,5 +41,5 @@ public interface Tile {
      */
     public double getYScale();
 
-    public void update();
+    public void update(int xPos, int yPos);
 }

@@ -51,8 +51,7 @@ public class cobblestone implements Tile {
     }
 
     @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(int xPos, int yPos) {
     }
 
     @Override

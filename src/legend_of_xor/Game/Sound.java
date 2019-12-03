@@ -22,18 +22,15 @@ public class Sound {
     static AudioClip clip;
 
     public static void loadSound() {
-//        URL url = null;
-//        try {
-//            url = new URL("/Sounds/WW.wav");
-//        } catch (MalformedURLException ex) {
-//            Logger.getLogger(Sound.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        System.out.println(url);
-//        clip = Applet.newAudioClip(url);
+        URL url = null;
+
+        url = Sound.class.getResource("/Sounds/pp.wav");
+
+        System.out.println(url);
+        clip = Applet.newAudioClip(url);
     }
 
     public static void playSound() {
-        //clip.play();
+        clip.play();
     }
 }
