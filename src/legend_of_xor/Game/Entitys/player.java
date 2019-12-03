@@ -48,13 +48,13 @@ public class player implements Entity {
 
     @Override
     public BufferedImage getTileImage() {
-        return image.getSubimage(0, (int)(Textures.getTileHeight() * TILE_Y_SCALE * ((int) (System.currentTimeMillis() / 150) % 4)),
-                (int)(Textures.getTileWidth() * TILE_X_SCALE) , (int)(Textures.getTileHeight() * TILE_Y_SCALE));
+        return image.getSubimage(0, (int) (Textures.getTileHeight() * TILE_Y_SCALE * ((int) (System.currentTimeMillis() / 150) % 4)),
+                (int) (Textures.getTileWidth() * TILE_X_SCALE), (int) (Textures.getTileHeight() * TILE_Y_SCALE));
     }
 
     @Override
     public void update() {
-        
+
         if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
             if (yVel > 0) {
 
@@ -69,8 +69,8 @@ public class player implements Entity {
             }
         } else {
             yVel += 0.031;
-        }
 
+        }
         xPos += xVel;
         yPos += yVel;
 
@@ -89,9 +89,13 @@ public class player implements Entity {
         if (Controls.isUpPressed() && yVel == 0) {
             yVel = -0.7;
         }
-        if(Controls.isDownPressed()){
+        if (Controls.isDownPressed()) {
+            System.out.println(Level.numEntities());
+        }
+        for (int i = 0; i < 100; i++) {
             Level.addEntity(new goblin_enemy(xPos, yPos));
         }
+
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
             if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
                 yPos = Math.floor(yPos - 1);
@@ -125,7 +129,7 @@ public class player implements Entity {
     }
 
     @Override
-    public boolean terminate(){
+    public boolean terminate() {
         return false;
     }
 }

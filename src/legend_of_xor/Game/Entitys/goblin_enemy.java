@@ -25,7 +25,7 @@ public class goblin_enemy implements Entity {
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
 
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
+    private final Origin ORIGIN = Origin.BOTTOM_CENTER;
 
     private double xPos;
     private double yPos;
