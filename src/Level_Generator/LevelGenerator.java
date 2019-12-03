@@ -88,6 +88,32 @@ public class LevelGenerator {
 
             }
         }
+        for (int x = 0; x < xSize; x++) {
+            for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
+                try{
+                if (temp[y][x].getNameID().equals("stone")
+                        && temp[y][x + 1].getNameID().equals("stone")
+                        && temp[y][x - 1].getNameID().equals("stone")) {
+                    
+                    boolean empty = true;
+                  for(int i = x -1; i <= x + 1; i++){
+                      for(int j = y + 3; j >= y + 1; j --){
+                          if(temp[j][i] != null){
+                              empty = false;
+                          }
+                      }
+                  }
+                  if(empty){
+                      if(Math.random() > 0.6){
+                      temp[y + 1][x] = new stalactite();
+                      }
+                  }
+                }
+                }catch(Exception e){
+                    
+                }
+            }
+        }
 
         return temp;
     }

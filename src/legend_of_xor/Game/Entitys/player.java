@@ -90,6 +90,7 @@ public class player implements Entity {
             yVel = -0.7;
         }
         if (Controls.isDownPressed()) {
+            Level.addEntity(new goblin_enemy(xPos, yPos));
         }
 
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {

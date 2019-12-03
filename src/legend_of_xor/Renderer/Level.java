@@ -32,6 +32,8 @@ public class Level {
 
     private static int levelTilesX;
     private static int levelTilesY;
+    
+    private static Entity player;
 
     public static int getLevelTilesX() {
         return levelTilesX;
@@ -81,7 +83,7 @@ public class Level {
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
         entities.clear();
-        Entity player = new player();
+        player = new player();
         entities.add(player);
         Camera.followEntity(player);
 
@@ -89,6 +91,9 @@ public class Level {
 
     public static void setSmallTiles(Tile[][] smallTiles) {
         Level.smallTiles = smallTiles;
+    }
+    public static Entity getPlayer(){
+        return player;
     }
 
     public static BufferedImage getBackgroundImage() {

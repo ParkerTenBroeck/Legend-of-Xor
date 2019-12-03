@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
 import legend_of_xor.Renderer.Camera.Origin;
+import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -30,15 +31,21 @@ public class goblin_enemy implements Entity {
     private double xPos;
     private double yPos;
 
+    private double xVel;
+    private double yVel;
+
     BufferedImage image;
 
     public goblin_enemy() {
         image = Textures.getEntityTexture(this);
-        Sound.loadSound("/Sounds/goblin-1.wav");
-        Sound.playSound();
+
     }
 
     goblin_enemy(double xPos, double yPos) {
+
+        Sound.loadSound("/Sounds/goblin.wav");
+        Sound.playSound();
+
         this.xPos = xPos;
         this.yPos = yPos;
         image = Textures.getEntityTexture(this);
@@ -56,6 +63,26 @@ public class goblin_enemy implements Entity {
 
     @Override
     public void update() {
+        if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
+            yPos = (int) yPos;
+            yVel = 0;
+        } else {
+            yVel += 0.01;
+        }
+        yPos += yVel;
+        xPos += xVel;
+
+        if ((Level.getPlayer().getXPos() - xPos) > 0) {
+            xVel = 0.1;
+        } else {
+            xVel = -0.1;
+        }
+
+        while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+            if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+                yPos = Math.floor(yPos - 1);
+            }
+        }
 
     }
 

@@ -26,15 +26,16 @@ public class Sound {
     // /Sounds/goblin-1.wav
 
     public static void loadSound(String sound) {
-        URL url = null;
-
-        url = Sound.class.getResource(sound);
-
-        System.out.println(url);
-        clip = Applet.newAudioClip(url);
+//        URL url = null;
+//
+//        url = Sound.class.getResource(sound);
+//
+//        System.out.println(url);
+//        clip = Applet.newAudioClip(url);
+//        clip.play();
     }
 
     public static void playSound() {
-        clip.play();
+       // clip.play();
     }
 }
