@@ -33,8 +33,10 @@ public class goblin_enemy implements Entity {
 
     private double xVel;
     private double yVel;
-    
-    private enum DirectionState {RIGHT, LEFT}
+
+    private enum DirectionState {
+        RIGHT, LEFT
+    }
     private DirectionState AIDirection = DirectionState.RIGHT;
     private int movementNumber = 0;
 
@@ -57,26 +59,62 @@ public class goblin_enemy implements Entity {
 
     public void AI() {
         if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
-            if ((Level.getPlayer().getXPos() - xPos) > 0) {
-                xVel = 0.05;
-            } else {
-                xVel = -0.05;
-            }
-        } else {// just moving left and right (from -100 to 100 in terms of cycles of movement of 0.03 from the position of the start of this movement.)
-            if(AIDirection == DirectionState.RIGHT){
-                xVel = 0.03;
-                movementNumber++;
-                if(movementNumber >= 100) AIDirection = DirectionState.LEFT;
-            } else if(AIDirection == DirectionState.LEFT){
-                xVel = -0.03;
-                movementNumber--;
-                if(movementNumber <= -100) AIDirection = DirectionState.RIGHT;
-            }
-            
+            trackPlayerAI();
+        } else {
+            //movingLeftAndRightAI();
+            patrolElevationAI();
         }
 
     }
 
+    //----- START OF AI FUNCTIONS ------
+    
+    public void trackPlayerAI() {
+        if ((Level.getPlayer().getXPos() - xPos) > 0) {
+            xVel = 0.05;
+        } else {
+            xVel = -0.05;
+        }
+    }
+
+    public void move(DirectionState state) {
+        if (state == DirectionState.LEFT) {
+            xVel = -0.03;
+        }
+        if (state == DirectionState.RIGHT) {
+            xVel = 0.03;
+        }
+    }
+
+    public void patrolElevationAI() {// lol sorry this is wrong
+        if (!(Level.getSmallTile((int) xPos + 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos + 1, (int) yPos).isSolid()) {// if dif elev on right
+            AIDirection = DirectionState.LEFT;
+        }
+        
+        else if (!(Level.getSmallTile((int) xPos - 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos - 1, (int) yPos).isSolid()) {// if dif elev on left
+            AIDirection = DirectionState.RIGHT;
+        }
+        
+        move(AIDirection);
+    }
+
+    public void movingLeftAndRightAI() { // just moving left and right (from -100 to 100 in terms of cycles of movement of 0.03 from the position of the start of this movement.)
+        if (AIDirection == DirectionState.RIGHT) {
+            move(AIDirection);
+            movementNumber++;
+            if (movementNumber >= 100) {
+                AIDirection = DirectionState.LEFT;
+            }
+        } else if (AIDirection == DirectionState.LEFT) {
+            move(AIDirection);
+            movementNumber--;
+            if (movementNumber <= -100) {
+                AIDirection = DirectionState.RIGHT;
+            }
+        }
+    }
+
+    //-------- END OF AI FUNCTIONS --------
     @Override
     public String getNameID() {
         return NAMEID;
@@ -95,10 +133,11 @@ public class goblin_enemy implements Entity {
         } else {
             yVel += 0.01;
         }
+        
+        AI();
+        
         yPos += yVel;
         xPos += xVel;
-
-        AI();
 
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
             if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
