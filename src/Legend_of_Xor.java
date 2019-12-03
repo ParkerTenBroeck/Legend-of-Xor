@@ -34,7 +34,7 @@ public class Legend_of_Xor {
         Textures.setTileResolution(32,32);
         Level.loadNewLevel("Main");
         
-        Sound.loadSound();
+        //Sound.loadSound();
 
         Thread renderer = new Thread() {
             public void run() {
