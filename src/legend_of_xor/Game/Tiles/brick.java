@@ -18,8 +18,8 @@ public class brick implements Tile {
 
     public static final String NAMEID = brick.class.getName().split("\\.")[3];//name of tile must be unique
 
-    private final int TILESX = 4; //how many tiles there are in the sprite sheet
-    private final int TILESY = 4;
+    private final int TILESX = 1; //how many tiles there are in the sprite sheet
+    private final int TILESY = 1;
 
     private final double TILE_X_SCALE = 1;  //x and y scale of each tile
     private final double TILE_Y_SCALE = 1;
