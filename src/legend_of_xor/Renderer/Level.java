@@ -130,4 +130,8 @@ public class Level {
     public static void addEntity(Entity entity) {
         entities.add(entity);
     }
+
+    public static int numEntities() {
+        return entities.size();
+    }
 }
