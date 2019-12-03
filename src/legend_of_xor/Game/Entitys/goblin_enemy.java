@@ -33,6 +33,10 @@ public class goblin_enemy implements Entity {
 
     private double xVel;
     private double yVel;
+    
+    private enum DirectionState {RIGHT, LEFT}
+    private DirectionState AIDirection = DirectionState.RIGHT;
+    private int movementNumber = 0;
 
     BufferedImage image;
 
@@ -49,6 +53,28 @@ public class goblin_enemy implements Entity {
         this.xPos = xPos;
         this.yPos = yPos;
         image = Textures.getEntityTexture(this);
+    }
+
+    public void AI() {
+        if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
+            if ((Level.getPlayer().getXPos() - xPos) > 0) {
+                xVel = 0.05;
+            } else {
+                xVel = -0.05;
+            }
+        } else {// just moving left and right (from -100 to 100 in terms of cycles of movement of 0.03 from the position of the start of this movement.)
+            if(AIDirection == DirectionState.RIGHT){
+                xVel = 0.03;
+                movementNumber++;
+                if(movementNumber >= 100) AIDirection = DirectionState.LEFT;
+            } else if(AIDirection == DirectionState.LEFT){
+                xVel = -0.03;
+                movementNumber--;
+                if(movementNumber <= -100) AIDirection = DirectionState.RIGHT;
+            }
+            
+        }
+
     }
 
     @Override
@@ -72,11 +98,7 @@ public class goblin_enemy implements Entity {
         yPos += yVel;
         xPos += xVel;
 
-        if ((Level.getPlayer().getXPos() - xPos) > 0) {
-            xVel = 0.1;
-        } else {
-            xVel = -0.1;
-        }
+        AI();
 
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
             if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
