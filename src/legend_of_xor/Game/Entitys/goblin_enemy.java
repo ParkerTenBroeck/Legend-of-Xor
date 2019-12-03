@@ -5,6 +5,7 @@
  */
 package legend_of_xor.Game.Entitys;
 
+import com.sun.javafx.scene.traversal.Direction;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
@@ -87,11 +88,11 @@ public class goblin_enemy implements Entity {
     }
 
     public void patrolElevationAI() {// lol sorry this is wrong
-        if (!(Level.getSmallTile((int) xPos + 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos + 1, (int) yPos).isSolid()) {// if dif elev on right
+        if (AIDirection == DirectionState.RIGHT && (!(Level.getSmallTile((int) xPos + 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos + 1, (int) yPos).isSolid())) {// if dif elev on right
             AIDirection = DirectionState.LEFT;
         }
         
-        else if (!(Level.getSmallTile((int) xPos - 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos - 1, (int) yPos).isSolid()) {// if dif elev on left
+        else if (AIDirection == DirectionState.LEFT && (!(Level.getSmallTile((int) xPos - 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos - 1, (int) yPos).isSolid())) {// if dif elev on left
             AIDirection = DirectionState.RIGHT;
         }
         
