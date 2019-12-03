@@ -7,6 +7,7 @@ package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Sound;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;
 
@@ -33,6 +34,8 @@ public class goblin_enemy implements Entity {
 
     public goblin_enemy() {
         image = Textures.getEntityTexture(this);
+        Sound.loadSound("/Sounds/goblin-1.wav");
+        Sound.playSound();
     }
 
     @Override

@@ -20,11 +20,15 @@ import java.util.logging.Logger;
 public class Sound {
 
     static AudioClip clip;
+    
+    //-------list of sounds--------
+    // /Sounds/pp.wav
+    // /Sounds/goblin-1.wav
 
-    public static void loadSound() {
+    public static void loadSound(String sound) {
         URL url = null;
 
-        url = Sound.class.getResource("/Sounds/pp.wav");
+        url = Sound.class.getResource(sound);
 
         System.out.println(url);
         clip = Applet.newAudioClip(url);

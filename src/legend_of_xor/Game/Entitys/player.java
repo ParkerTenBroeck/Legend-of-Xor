@@ -59,6 +59,7 @@ public class player implements Entity {
             if (yVel > 0) {
 
                 if (Math.abs(yVel) > 1) {
+                    Sound.loadSound("/Sounds/pp.wav");
                     Sound.playSound();
                 }
 
