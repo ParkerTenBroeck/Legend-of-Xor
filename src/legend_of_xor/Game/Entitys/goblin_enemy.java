@@ -38,6 +38,12 @@ public class goblin_enemy implements Entity {
         Sound.playSound();
     }
 
+    goblin_enemy(double xPos, double yPos) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        image = Textures.getEntityTexture(this);
+    }
+
     @Override
     public String getNameID() {
         return NAMEID;
