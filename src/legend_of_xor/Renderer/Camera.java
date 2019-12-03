@@ -94,7 +94,7 @@ public class Camera {
         }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTiles(new stalactite(), getMouseTileX(), getMouseTileY());
+            Level.setSmallTiles(new brick(), getMouseTileX(), getMouseTileY());
         }
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
