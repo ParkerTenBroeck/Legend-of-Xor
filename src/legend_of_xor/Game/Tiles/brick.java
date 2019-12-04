@@ -5,68 +5,16 @@
  */
 package legend_of_xor.Game.Tiles;
 
-import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;
 
 /**
  *
  * @author parke
  */
-public class brick implements Tile {
-
-    public static final String NAMEID = brick.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
-
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
-
-    private final boolean SOLID = true;
-
-    BufferedImage image;
+public class brick extends Tile {
 
     public brick() {
         image = Textures.getBlockTexture(this);
-    }
-
-    @Override
-    public String getNameID() {
-        return NAMEID;
-    }
-
-    @Override
-    public BufferedImage getTileImage(int xPos, int yPos) {
-        return image.getSubimage(Textures.getTileWidth() * (xPos % TILESY),
-                Textures.getTileHeight() * (yPos % TILESX),
-                 Textures.getTileWidth(), Textures.getTileHeight());
-    }
-
-    @Override
-    public void update(int xPos, int yPos) {
-    }
-
-    @Override
-    public Origin getOrigin() {
-        return ORIGIN;
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public boolean isSolid() {
-        return SOLID;
     }
 }

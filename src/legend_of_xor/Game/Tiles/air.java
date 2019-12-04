@@ -7,39 +7,25 @@ package legend_of_xor.Game.Tiles;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Textures;
 
 /**
  *
  * @author parke
  */
-public class air implements Tile {
-
-    public static final String NAMEID = TEMPLATE.class.getName().split("\\.")[3];//name of tile must be unique
-
-    public air() {
-    }
+public class air extends Tile {
 
     @Override
-    public String getNameID() {
-        return NAMEID;
+    protected void init(){
+        SOLID = false;
+    }
+
+    public air() {
     }
 
     @Override
     public BufferedImage getTileImage(int xPos, int yPos) {
         return null;
     }
-
-    @Override
-    public void update(int xPos, int yPos) {
-    }
-
-    @Override
-    public Origin getOrigin() {
-        return Origin.UPPER_LEFT;
-    }
-
     @Override
     public double getXScale() {
         return 0;

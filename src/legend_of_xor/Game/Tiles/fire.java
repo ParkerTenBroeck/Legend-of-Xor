@@ -5,39 +5,28 @@
  */
 package legend_of_xor.Game.Tiles;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;
 
 /**
  *
  * @author parke
  */
-public class fire implements Tile {
+public class fire extends Tile {
 
-    public static final String NAMEID = fire.class.getName().split("\\.")[3];//name of tile must be unique
+    @Override
+    protected void init() {
+        TILESX = 1;
+        TILESY = 8;
+        TILE_X_SCALE = 1;
+        TILE_Y_SCALE = 1;
+        SOLID = false;
 
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 8;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
-
-    private final Origin ORIGIN = Origin.UPPER_LEFT;
-    
-    private final boolean SOLID = false;
-
-    BufferedImage image;
+    }
 
     public fire() {
         image = Textures.getBlockTexture(this);
-    }
-
-    @Override
-    public String getNameID() {
-        return NAMEID;
     }
 
     @Override
@@ -47,30 +36,6 @@ public class fire implements Tile {
         int frame = (int) ((time / 50) % 8);
 
         return image.getSubimage(0, image.getWidth() * frame, image.getWidth(), image.getWidth());
-    }
-
-    @Override
-public Origin getOrigin() {
-        return ORIGIN;
-    }
-
-    @Override
-    public void update(int xPos, int yPos) {
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public boolean isSolid() {
-        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

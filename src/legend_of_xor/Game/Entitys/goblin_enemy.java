@@ -31,7 +31,7 @@ public class goblin_enemy extends Entity {
     private int movementNumber = 0;
 
     public goblin_enemy() {
-        image = Textures.getEntityTexture(this);
+       // image = Textures.getEntityTexture(this);
 
     }
 

@@ -15,29 +15,20 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class grass implements Tile {
-
-    public static final String NAMEID = grass.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 256;
-
-    private final double TILE_X_SCALE = 1.25;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1.25;
-
-    private final Origin ORIGIN = Origin.CENTER;
-
-    private final boolean SOLID = true;
-
-    BufferedImage image;
-
-    public grass() {
-        image = Textures.getBlockTexture(this);
-    }
+public class grass extends Tile {
 
     @Override
-    public String getNameID() {
-        return NAMEID;
+    protected void init(){
+        TILESX = 1;
+        TILESY = 256;
+        TILE_X_SCALE = 1.25;
+        TILE_Y_SCALE = 1.25;
+        ORIGIN = Origin.CENTER;
+        SOLID = true;
+    }
+    
+    public grass() {
+        image = Textures.getBlockTexture(this);
     }
 
     @Override
@@ -107,29 +98,4 @@ public class grass implements Tile {
         offset = offset * (int) (Textures.getTileHeight() * TILE_Y_SCALE);
         return image.getSubimage(0, offset, (int) (Textures.getTileWidth() * TILE_X_SCALE), (int) (Textures.getTileHeight() * TILE_Y_SCALE));
     }
-
-    @Override
-    public Origin getOrigin() {
-        return ORIGIN;
-    }
-
-    @Override
-    public void update(int xPos, int yPos) {
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public boolean isSolid() {
-        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

@@ -14,29 +14,21 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class explosion implements Tile {
-
-    public static final String NAMEID = explosion.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 24;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 2.385;
+public class explosion extends Tile {
     
-    private final Origin ORIGIN = Origin.BOTTOM_LEFT;
-    
-    private final boolean SOLID = false;
-
-    BufferedImage image;
-
-    public explosion() {
-        image = Textures.getBlockTexture(this);
+    @Override
+    protected void init(){
+        TILESX = 1;
+        TILESY = 24;
+        
+        TILE_X_SCALE = 1;
+        TILE_Y_SCALE = 2.385;
+        ORIGIN = Origin.BOTTOM_LEFT;
+        SOLID = false;
     }
 
-    @Override
-    public String getNameID() {
-        return NAMEID;
+    public explosion() {
+        //image = Textures.getBlockTexture(this);
     }
 
     @Override
@@ -46,29 +38,5 @@ public class explosion implements Tile {
         int ySize = (int)(Textures.getTileHeight() * TILE_Y_SCALE);
 
         return image.getSubimage(0, (int)(((System.currentTimeMillis()) / 50) % 24) * ySize, xSize, ySize);
-    }
-
-    @Override
-    public void update(int xPos, int yPos) {
-    }
-    
-        @Override
-    public Origin getOrigin(){
-        return ORIGIN;
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public boolean isSolid() {
-        return SOLID;//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -7,39 +7,61 @@ package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Renderer.Camera.Origin;
+import legend_of_xor.Renderer.Textures;
 
 /**
  *
  * @author parke
  */
-public interface Tile {
+public abstract class Tile {
 
-    public String getNameID();
-   
-    public boolean isSolid();
+    public final String NAMEID;
 
-    public BufferedImage getTileImage(int xPos, int yPos);
+    protected int TILESX = 1; //how many tiles there are in the sprite sheet
+    protected int TILESY = 1;
+
+    protected double TILE_X_SCALE = 1;  //x and y scale of each tile
+    protected double TILE_Y_SCALE = 1;
+
+    protected Origin ORIGIN = Origin.TOP_CENTER;
     
+    protected boolean SOLID = true;
 
-    public Origin getOrigin();
+    protected BufferedImage image;
 
-    /**
-     * Gets the X scale of the image
-     *
-     * Must be Tile X scale * Tiles X
-     *
-     * @return 
-     */
-    public double getXScale();
+    protected void init() {
+    }
 
-    /**
-     * Gets the Y scale of the image
-     *
-     * Must be Tile Y scale * Tiles Y
-     *
-     * @return 
-     */
-    public double getYScale();
+    public Tile() {
+        init();
+        NAMEID = this.getClass().getName().split("\\.")[3];//name of tile must be unique
+    }
 
-    public void update(int xPos, int yPos);
+    public String getNameID() {
+        return NAMEID;
+    }
+
+    public BufferedImage getTileImage(int xPos, int yPos) {
+        return image;
+    }
+
+    public void update(int xPos, int yPos) {
+
+    }
+
+    public Origin getOrigin() {
+        return ORIGIN;
+    }
+
+    public double getXScale() {
+        return TILESX * TILE_X_SCALE;
+    }
+
+    public double getYScale() {
+        return TILESY * TILE_Y_SCALE;
+    }
+
+    public boolean isSolid(){
+        return SOLID;
+    }
 }

@@ -15,35 +15,18 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class big_tree implements Tile {
+public class big_tree extends Tile {
 
-    public static final String NAMEID = big_tree.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
-
-    private final double TILE_X_SCALE = 3;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 7;
-
-    private final Origin ORIGIN = Origin.BOTTOM_CENTER;
-    
-    private final boolean SOLID = false;
-
-    BufferedImage image;
+    @Override
+    protected void init(){
+        ORIGIN = Origin.BOTTOM_CENTER;
+        TILE_X_SCALE = 3;
+        TILE_Y_SCALE = 7;
+        SOLID = false;
+    }
 
     public big_tree() {
         image = Textures.getBlockTexture(this);
-    }
-
-    @Override
-    public String getNameID() {
-        return NAMEID;
-    }
-
-    @Override
-    public BufferedImage getTileImage(int xPos, int yPos) {
-
-        return image;
     }
 
     @Override

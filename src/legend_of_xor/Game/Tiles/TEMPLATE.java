@@ -14,7 +14,7 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class TEMPLATE implements Tile {
+public class TEMPLATE extends Tile {
 
     public static final String NAMEID = TEMPLATE.class.getName().split("\\.")[3];//name of tile must be unique
 
