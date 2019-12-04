@@ -19,20 +19,7 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class goblin_enemy implements Entity {
-
-    public static final String NAMEID = goblin_enemy.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 1;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
-
-    private final Origin ORIGIN = Origin.BOTTOM_CENTER;
-
-    private double xPos;
-    private double yPos;
+public class goblin_enemy extends Entity {
 
     private double xVel;
     private double yVel;
@@ -43,15 +30,12 @@ public class goblin_enemy implements Entity {
     private DirectionState AIDirection = DirectionState.RIGHT;
     private int movementNumber = 0;
 
-    BufferedImage image;
-
     public goblin_enemy() {
         image = Textures.getEntityTexture(this);
 
     }
 
     goblin_enemy(double xPos, double yPos) {
-
         Sound.loadSound("/Sounds/goblin.wav");
         Sound.playSound();
 
@@ -82,11 +66,11 @@ public class goblin_enemy implements Entity {
 
     public void move(DirectionState state) {
         
-        if(Level.getSmallTile((int)xPos, (int)yPos).isSolid()){
-            Level.setSmallTile(new brick(), (int)xPos, (int)yPos);
-        }else{
-           Level.setSmallTile(new torch(), (int)xPos, (int)yPos); 
-        }
+//        if(Level.getSmallTile((int)xPos, (int)yPos).isSolid()){
+//            Level.setSmallTile(new brick(), (int)xPos, (int)yPos);
+//        }else{
+//           Level.setSmallTile(new torch(), (int)xPos, (int)yPos); 
+//        }
         
         if (state == DirectionState.LEFT) {
             xVel = -0.03;
@@ -124,17 +108,6 @@ public class goblin_enemy implements Entity {
         }
     }
 
-    //-------- END OF AI FUNCTIONS --------
-    @Override
-    public String getNameID() {
-        return NAMEID;
-    }
-
-    @Override
-    public BufferedImage getTileImage() {
-        return image;
-    }
-
     @Override
     public void update() {
         
@@ -156,35 +129,5 @@ public class goblin_enemy implements Entity {
             }
         }
 
-    }
-
-    @Override
-    public Origin getOrigin() {
-        return ORIGIN;
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public double getXPos() {
-        return xPos;
-    }
-
-    @Override
-    public double getYPos() {
-        return yPos;
-    }
-
-    @Override
-    public boolean terminate() {
-        return false;
     }
 }

@@ -6,43 +6,72 @@
 package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
+import legend_of_xor.Game.Entitys.goblin_enemy;
 import legend_of_xor.Renderer.Camera.Origin;
+import legend_of_xor.Renderer.Textures;
 
 /**
  *
  * @author parke
  */
-public interface Entity {
+public abstract class Entity {
 
-    public String getNameID();
+    public final String NAMEID;
 
-    public BufferedImage getTileImage();
+    protected int TILESX = 1; //how many tiles there are in the sprite sheet
+    protected int TILESY = 1;
 
-    public Origin getOrigin();
+    protected double TILE_X_SCALE = 1;  //x and y scale of each tile
+    protected double TILE_Y_SCALE = 1;
 
-    /**
-     * Gets the X scale of the image
-     *
-     * Must be Tile X scale * Tiles X
-     *
-     * @return
-     */
-    public double getXScale();
+    protected Origin ORIGIN = Origin.BOTTOM_CENTER;
 
-    /**
-     * Gets the Y scale of the image
-     *
-     * Must be Tile Y scale * Tiles Y
-     *
-     * @return
-     */
-    public double getYScale();
+    protected double xPos = 0;
+    protected double yPos = 0;
 
-    public void update();
+    protected BufferedImage image;
     
-    public double getXPos();
-    
-    public double getYPos();
-    
-    public boolean terminate();
+    protected void init(){
+    }
+
+    public Entity() {
+        init();
+        NAMEID = this.getClass().getName().split("\\.")[3];//name of tile must be unique
+    }
+
+    public String getNameID() {
+        return NAMEID;
+    }
+
+    public BufferedImage getTileImage() {
+        return image;
+    }
+
+    public void update() {
+
+    }
+
+    public Origin getOrigin() {
+        return ORIGIN;
+    }
+
+    public double getXScale() {
+        return TILESX * TILE_X_SCALE;
+    }
+
+    public double getYScale() {
+        return TILESY * TILE_Y_SCALE;
+    }
+
+    public double getXPos() {
+        return xPos;
+    }
+
+    public double getYPos() {
+        return yPos;
+    }
+
+    public boolean terminate() {
+        return false;
+    }
 }

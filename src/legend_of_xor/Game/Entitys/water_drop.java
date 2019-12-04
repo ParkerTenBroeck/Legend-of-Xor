@@ -15,21 +15,8 @@ import legend_of_xor.Renderer.Textures;
  *
  * @author parke
  */
-public class water_drop implements Entity {
+public class water_drop extends Entity {
 
-    public static final String NAMEID = water_drop.class.getName().split("\\.")[3];//name of tile must be unique
-
-    private final int TILESX = 1; //how many tiles there are in the sprite sheet
-    private final int TILESY = 6;
-
-    private final double TILE_X_SCALE = 1;  //x and y scale of each tile
-    private final double TILE_Y_SCALE = 1;
-
-    private final Camera.Origin ORIGIN = Camera.Origin.TOP_CENTER;
-
-    private double xPos;
-    private double yPos;
-    
     private double yVel = 0;
 
     private boolean hit = false;
@@ -37,7 +24,16 @@ public class water_drop implements Entity {
 
     private boolean done;
 
-    BufferedImage image;
+    @Override
+    protected void init() {
+        TILESX = 1; //how many tiles there are in the sprite sheet
+        TILESY = 6;
+
+        TILE_X_SCALE = 1;  //x and y scale of each tile
+        TILE_Y_SCALE = 1;
+
+        ORIGIN = Camera.Origin.TOP_CENTER;
+    }
 
     public water_drop() {
         image = Textures.getEntityTexture(this);
@@ -47,11 +43,6 @@ public class water_drop implements Entity {
         image = Textures.getEntityTexture(this);
         this.xPos = xPos;
         this.yPos = yPos;
-    }
-
-    @Override
-    public String getNameID() {
-        return NAMEID;
     }
 
     @Override
@@ -71,7 +62,7 @@ public class water_drop implements Entity {
 
     @Override
     public void update() {
-        yVel += 0.006;
+        yVel += 0.001;
         if (timeHit == 0) {
             yPos += yVel;
         }
@@ -84,35 +75,5 @@ public class water_drop implements Entity {
         if ((System.currentTimeMillis() - timeHit) > 5 * 100 && timeHit != 0) {
             done = true;
         }
-    }
-
-    @Override
-    public Camera.Origin getOrigin() {
-        return ORIGIN;
-    }
-
-    @Override
-    public double getXScale() {
-        return TILESX * TILE_X_SCALE;
-    }
-
-    @Override
-    public double getYScale() {
-        return TILESY * TILE_Y_SCALE;
-    }
-
-    @Override
-    public double getXPos() {
-        return xPos;
-    }
-
-    @Override
-    public double getYPos() {
-        return yPos;
-    }
-
-    @Override
-    public boolean terminate() {
-        return done;
     }
 }
