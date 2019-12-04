@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import legend_of_xor.Controls;
 import legend_of_xor.Game.*;
+import legend_of_xor.Game.Tiles.air;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;

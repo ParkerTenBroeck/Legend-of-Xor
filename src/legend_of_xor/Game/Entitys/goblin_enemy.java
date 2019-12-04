@@ -9,6 +9,8 @@ import com.sun.javafx.scene.traversal.Direction;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
+import legend_of_xor.Game.Tiles.brick;
+import legend_of_xor.Game.Tiles.torch;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
@@ -79,6 +81,13 @@ public class goblin_enemy implements Entity {
     }
 
     public void move(DirectionState state) {
+        
+        if(Level.getSmallTile((int)xPos, (int)yPos).isSolid()){
+            Level.setSmallTile(new brick(), (int)xPos, (int)yPos);
+        }else{
+           Level.setSmallTile(new torch(), (int)xPos, (int)yPos); 
+        }
+        
         if (state == DirectionState.LEFT) {
             xVel = -0.03;
         }
@@ -88,11 +97,11 @@ public class goblin_enemy implements Entity {
     }
 
     public void patrolElevationAI() {// lol sorry this is wrong
-        if (AIDirection == DirectionState.RIGHT && (!(Level.getSmallTile((int) xPos + 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos + 1, (int) yPos).isSolid())) {// if dif elev on right
+        if (AIDirection == DirectionState.RIGHT && !((!Level.getSmallTile((int) (xPos + 0.5), (int) yPos -1 ).isSolid()) && Level.getSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
             AIDirection = DirectionState.LEFT;
         }
         
-        else if (AIDirection == DirectionState.LEFT && (!(Level.getSmallTile((int) xPos - 1, (int) yPos + 1).isSolid()) || Level.getSmallTile((int) xPos - 1, (int) yPos).isSolid())) {// if dif elev on left
+        else if (AIDirection == DirectionState.LEFT && !((!Level.getSmallTile((int) (xPos - 0.5), (int) yPos -1 ).isSolid()) && Level.getSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
             AIDirection = DirectionState.RIGHT;
         }
         
@@ -128,6 +137,7 @@ public class goblin_enemy implements Entity {
 
     @Override
     public void update() {
+        
         if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
             yPos = (int) yPos;
             yVel = 0;

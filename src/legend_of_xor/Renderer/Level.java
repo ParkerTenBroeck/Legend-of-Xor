@@ -32,7 +32,7 @@ public class Level {
 
     private static int levelTilesX;
     private static int levelTilesY;
-    
+
     private static Entity player;
 
     public static int getLevelTilesX() {
@@ -92,8 +92,13 @@ public class Level {
     public static void setSmallTiles(Tile[][] smallTiles) {
         Level.smallTiles = smallTiles;
     }
-    public static Entity getPlayer(){
+
+    public static Entity getPlayer() {
         return player;
+    }
+
+    public synchronized static void setSmallTile(Tile tile, int xPos, int yPos) {
+        Level.smallTiles[yPos][xPos] = tile;
     }
 
     public static BufferedImage getBackgroundImage() {

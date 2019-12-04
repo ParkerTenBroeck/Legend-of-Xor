@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -29,22 +28,18 @@ public class Legend_of_Xor {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        Veiwer frame = new Veiwer();
-        Textures.setTileResolution(32,32);
-        Level.loadNewLevel("Main");
-        
-        //Sound.loadSound();
 
+        Veiwer frame = new Veiwer();
+        Textures.setTileResolution(32, 32);
+        Level.loadNewLevel("Main");
+
+        //Sound.loadSound();
         Thread renderer = new Thread() {
             public void run() {
                 while (true) {
-                    long last = System.nanoTime();
+
                     Camera.DrawScreen();
-                    long newt = System.nanoTime();
-                    if (newt - last > 0.017 * 1_000_000_000) {
-                        System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
-                    }
+
                     try {
                         Thread.sleep(16);
                     } catch (Exception e) {
@@ -60,12 +55,15 @@ public class Legend_of_Xor {
             public void run() {
 
                 while (true) {
-                    long start = System.currentTimeMillis();
+                    long last = System.nanoTime();
                     Level.update();
                     Camera.update();
-                    long end = System.currentTimeMillis();
+                    long newt = System.nanoTime();
+                    if (newt - last > 0.017 * 1_000_000_000) {
+                        System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                    }
                     try {
-                        Thread.sleep((int)((1000 / 60) - (end - start)));
+                        Thread.sleep((int) ((1000 / 60) - (newt - last)/1000000));
                     } catch (Exception e) {
 
                     }
