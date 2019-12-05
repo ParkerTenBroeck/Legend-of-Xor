@@ -14,9 +14,8 @@ import static legend_of_xor.Controls.isRightMousePressed;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Game.Tiles.brick;
-import legend_of_xor.Game.Tiles.grass;
-import legend_of_xor.Game.Tiles.stalactite;
+
+import legend_of_xor.Game.Tiles.chest;
 
 /**
  *
@@ -76,7 +75,7 @@ public class Camera {
         }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTiles(new brick(), getMouseTileX(), getMouseTileY());
+            Level.setSmallTiles(new chest(), getMouseTileX(), getMouseTileY());
         }
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
@@ -89,20 +88,63 @@ public class Camera {
         int imageSizeX = Textures.getXRes();
         int imageSizeY = Textures.getYRes();
 
+        BufferedImage[] layers = new BufferedImage[5];
+
+        Thread smallTiles = new Thread(new Runnable() {
+
+            BufferedImage[] layers;
+
+            @Override
+            public void run() {
+                layers[2] = drawSmallTiles();
+            }
+
+            public Runnable pass(BufferedImage[] layers) {
+                this.layers = layers;
+                return this;
+            }
+        }.pass(layers));
+        smallTiles.start();
+
+        Thread entities = new Thread(new Runnable() {
+
+            BufferedImage[] layers;
+
+            @Override
+            public void run() {
+                layers[3] = drawEntities();
+            }
+
+            public Runnable pass(BufferedImage[] layers) {
+                this.layers = layers;
+                return this;
+            }
+        }.pass(layers));
+        entities.start();
+
         BufferedImage image = new BufferedImage(imageSizeX, imageSizeY, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
-        drawSmallTiles(g2d, image);
-        drawEntities(g2d, image);
 
-        //drawSmallTiles(g2d, image);
-        //drawSmallTiles(g2d, image);
+        try {
+            entities.join();
+            smallTiles.join();
+        } catch (InterruptedException ex) {
+
+        }
+        for (int i = 0; i < layers.length; i++) {
+            g2d.drawImage(layers[i], 0, 0, null);
+        }
+
         Veiwer.setImage(image);
 
     }
 
-    static public BufferedImage drawSmallTiles(Graphics2D g2d, BufferedImage image) {
+    static public BufferedImage drawSmallTiles() {
+
+        BufferedImage image = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
         int yTileOffset = 0 - (int) Math.floor(yPos);
@@ -133,7 +175,10 @@ public class Camera {
         return image;
     }
 
-    static public BufferedImage drawEntities(Graphics2D g2d, BufferedImage image) {
+    static public BufferedImage drawEntities() {
+
+        BufferedImage image = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
         int yTileOffset = 0 - (int) Math.floor(yPos);

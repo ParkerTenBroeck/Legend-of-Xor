@@ -30,18 +30,21 @@ public class Legend_of_Xor {
     public static void main(String[] args) {
 
         Veiwer frame = new Veiwer();
-        Textures.setTileResolution(32, 32);
+        Textures.setTileResolution(24, 24);
         Level.loadNewLevel("Main");
 
         //Sound.loadSound();
         Thread renderer = new Thread() {
             public void run() {
                 while (true) {
-
+                    long last = System.nanoTime();
                     Camera.DrawScreen();
-
+                    long newt = System.nanoTime();
+                    if (newt - last > 0.017 * 1_000_000_000) {
+                        //System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                    }
                     try {
-                        Thread.sleep(16);
+                        Thread.sleep(3);
                     } catch (Exception e) {
 
                     }
@@ -62,7 +65,7 @@ public class Legend_of_Xor {
                         System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                     }
                     try {
-                        Thread.sleep((int) ((1000 / 60) - (newt - last)/1000000));
+                        Thread.sleep((int) ((1000 / 60) - (newt - last) / 1000000));
                     } catch (Exception e) {
 
                     }

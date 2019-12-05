@@ -7,7 +7,6 @@ package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Textures;
 
 /**
  *
@@ -26,6 +25,7 @@ public abstract class Tile {
     protected Origin ORIGIN = Origin.TOP_CENTER;
     
     protected boolean SOLID = true;
+    protected boolean INVENTORY = false;
 
     protected BufferedImage image;
 
@@ -63,5 +63,8 @@ public abstract class Tile {
 
     public boolean isSolid(){
         return SOLID;
+    }
+    public boolean hasInventory(){
+        return INVENTORY;
     }
 }
