@@ -17,6 +17,9 @@ public abstract class AI {
    public AI(Entity entity){
        this.entity = entity;
    }
-   
-   public abstract void hel();
+   /**
+    * 
+    */
+   public abstract void update();
 }
+

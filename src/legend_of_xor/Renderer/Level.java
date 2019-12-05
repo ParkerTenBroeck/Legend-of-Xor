@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Entitys.water_drop;
@@ -45,15 +46,21 @@ public class Level {
 
     public static synchronized void update() {
 
-        for (int y = levelTilesY - 1; y >= 0; y--) {
-            for (int x = levelTilesX - 1; x >= 0; x--) {
-                try {
-                    smallTiles[y][x].update(x, y);
-                } catch (Exception e) {
+        Thread updateTiles = new Thread() {
+            public void run() {
 
+                for (int y = levelTilesY - 1; y >= 0; y--) {
+                    for (int x = levelTilesX - 1; x >= 0; x--) {
+                        try {
+                            smallTiles[y][x].update(x, y);
+                        } catch (Exception e) {
+
+                        }
+                    }
                 }
             }
-        }
+        };
+        updateTiles.start();
 
         if (entities.size() > 0 && entities != null) {
             for (int i = entities.size() - 1; i >= 0; i--) {
@@ -63,6 +70,13 @@ public class Level {
                 }
             }
         }
+        Camera.update();
+        try {
+            updateTiles.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+       
     }
 
     public static void loadNewLevel(String name) {

@@ -21,7 +21,7 @@ public class DefaultAI {
         return new AI(entity) {
 
             @Override
-            public void hel() {
+            public void update() {
             }
         };
     }

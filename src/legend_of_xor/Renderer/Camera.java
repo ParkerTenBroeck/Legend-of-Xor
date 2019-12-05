@@ -64,24 +64,6 @@ public class Camera {
         return yPos;
     }
 
-    public static synchronized void DrawScreen() {
-
-        int imageSizeX = Textures.getXRes();
-        int imageSizeY = Textures.getYRes();
-
-        BufferedImage image = new BufferedImage(imageSizeX, imageSizeY, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
-
-        g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
-        drawSmallTiles(g2d, image);
-        drawEntities(g2d, image);
-
-        //drawSmallTiles(g2d, image);
-        //drawSmallTiles(g2d, image);
-        Veiwer.setImage(image);
-
-    }
-
     public static void followEntity(Entity entity) {
         followEntity = true;
         Camera.entity = entity;
@@ -99,6 +81,24 @@ public class Camera {
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
         }
+
+    }
+
+    public static synchronized void DrawScreen() {
+
+        int imageSizeX = Textures.getXRes();
+        int imageSizeY = Textures.getYRes();
+
+        BufferedImage image = new BufferedImage(imageSizeX, imageSizeY, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
+
+        g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
+        drawSmallTiles(g2d, image);
+        drawEntities(g2d, image);
+
+        //drawSmallTiles(g2d, image);
+        //drawSmallTiles(g2d, image);
+        Veiwer.setImage(image);
 
     }
 

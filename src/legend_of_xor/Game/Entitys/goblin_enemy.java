@@ -92,22 +92,6 @@ public class goblin_enemy extends Entity {
         move(AIDirection);
     }
 
-    public void movingLeftAndRightAI() { // just moving left and right (from -100 to 100 in terms of cycles of movement of 0.03 from the position of the start of this movement.)
-        if (AIDirection == DirectionState.RIGHT) {
-            move(AIDirection);
-            movementNumber++;
-            if (movementNumber >= 100) {
-                AIDirection = DirectionState.LEFT;
-            }
-        } else if (AIDirection == DirectionState.LEFT) {
-            move(AIDirection);
-            movementNumber--;
-            if (movementNumber <= -100) {
-                AIDirection = DirectionState.RIGHT;
-            }
-        }
-    }
-
     @Override
     public void update() {
         
