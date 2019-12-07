@@ -136,7 +136,7 @@ public class Textures {
     }
     
     
-    public static BufferedImage getBackgroundTexture(String name) {
+    public static BufferedImage getBackgroundTexture(String name, int xRes, int yRes) {
         try {
 
             ListIterator list_Iter = blockTextures.listIterator(0);

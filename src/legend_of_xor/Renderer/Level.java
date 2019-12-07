@@ -89,7 +89,7 @@ public class Level {
 
         Camera.init(0, 0, 40, 20);
 
-        background = Textures.getBackgroundTexture("main");
+        background = Textures.getBackgroundTexture("main", Textures.getXRes(), Textures.getYRes());
 
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 

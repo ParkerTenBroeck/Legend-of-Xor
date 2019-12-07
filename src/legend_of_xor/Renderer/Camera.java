@@ -139,7 +139,9 @@ public class Camera {
         entities.start();
 
         Graphics2D g2d = (Graphics2D) imageBuffer.getGraphics().create();
-        g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
+        g2d.drawImage(Level.getBackgroundImage(),0,0,null);
+              //  (int) (Camera.getXPos() * Textures.getTileWidth()),
+               // (int) (Camera.getYPos() * Textures.getTileHeight()), null);
 
         try {
             entities.join();
