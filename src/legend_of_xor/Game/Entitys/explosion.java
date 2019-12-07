@@ -6,6 +6,7 @@
 package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
+import java.util.Random;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Level;
@@ -18,6 +19,7 @@ import legend_of_xor.Renderer.Textures;
 public class explosion extends Entity {
 
     private final long START;
+    private final double RAD;
 
     @Override
     protected void init() {
@@ -29,8 +31,9 @@ public class explosion extends Entity {
         ORIGIN = Camera.Origin.BOTTOM_CENTER;
     }
 
-    public explosion(double xPos, double yPos) {
+    public explosion(double xPos, double yPos, double radius) {
         START = System.currentTimeMillis();
+        RAD = radius;
         this.xPos = xPos;
         this.yPos = yPos;
         image = Textures.getEntityTexture(this);
@@ -43,15 +46,16 @@ public class explosion extends Entity {
 
     @Override
     public void update() {
+        Random ran = new Random();
         if ((System.currentTimeMillis() - START) < 20) {
-            for(int i = 0; i <= 5; i ++){
-            Level.setSmallTile(null, (int)(((Math.random() - 0.5) * 5) + xPos),(int)(((Math.random() - 0.5) * 5) + yPos));
-            }
+            for(int i = 0; i < (int)(RAD * RAD * 60); i ++){
+            Level.setSmallTile(null, (int) (((ran.nextGaussian()) * RAD) + xPos), (int) (((ran.nextGaussian()) * RAD) + yPos));
         }
     }
+}
 
-    @Override
-    public BufferedImage getTileImage() {
+@Override
+        public BufferedImage getTileImage() {
 
         int xSize = (int) (Textures.getTileWidth() * TILE_X_SCALE);
         int ySize = (int) (Textures.getTileHeight() * TILE_Y_SCALE);

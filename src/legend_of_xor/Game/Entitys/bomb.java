@@ -59,7 +59,7 @@ public class bomb extends Entity {
         if (Level.getSmallTile((int)(xPos), (int) (yPos)).isSolid()) {
             yPos = (int) (yPos);
             hit = true;
-            Level.addEntity(new explosion(xPos, yPos));
+            Level.addEntity(new explosion(xPos, yPos, 1.75));
         }
     }
 }
