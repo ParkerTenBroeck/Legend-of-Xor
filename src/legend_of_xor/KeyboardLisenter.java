@@ -12,8 +12,9 @@ public class KeyboardLisenter extends Controls {
 
     protected static boolean jumpPressed, rightPressed,
             leftPressed, downPressed, upPressed, attackPressed,
-            blockPressed, magicPressed,
-            leftMouse, rightMouse, middleMouse;
+            blockPressed, magicPressed, inventoryActive, inventoryPressed,
+            leftMouse, rightMouse, middleMouse,
+            pausePressed;
 
     protected static int mouseXTile, mouseYTile, mouseXReal, mouseYReal;
 
@@ -101,7 +102,16 @@ public class KeyboardLisenter extends Controls {
         frame.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent ke) {
-
+                if (ke.getKeyChar() == Controls.inventoryKey) {
+                    inventoryActive = !inventoryActive;
+                }
+                if(ke.getKeyChar() == Controls.pauseKey){
+                    if(Legend_of_Xor.isPaused()){
+                        Legend_of_Xor.unpause();
+                    }else {
+                        Legend_of_Xor.pause();
+                    }
+                }
             }
 
             @Override
@@ -129,6 +139,12 @@ public class KeyboardLisenter extends Controls {
                 }
                 if (ke.getKeyChar() == Controls.magicKey) {
                     magicPressed = true;
+                }
+                if (ke.getKeyChar() == Controls.pauseKey) {
+                    pausePressed = true;
+                }
+                if (ke.getKeyChar() == Controls.inventoryKey) {
+                    inventoryPressed = true;
                 }
             }
 
@@ -158,21 +174,27 @@ public class KeyboardLisenter extends Controls {
                 if (ke.getKeyChar() == Controls.magicKey) {
                     magicPressed = false;
                 }
+                if (ke.getKeyChar() == Controls.pauseKey) {
+                    pausePressed = false;
+                }
+                if (ke.getKeyChar() == Controls.inventoryKey) {
+                    inventoryPressed = false;
+                }
             }
         });
     }
 
     protected static void calculateMouseTilePos() {
-        
-        try{
 
-        double mouseX = comp.getMousePosition().x * (double)Camera.getCameraTilesX() / (double)Veiwer.getXSize();
-        double mouseY = comp.getMousePosition().y * (double)Camera.getCameraTilesY() / (double)Veiwer.getYSize();
+        try {
 
-        mouseXTile = (int) (mouseX + -Camera.getXPos());
-        mouseYTile = (int) (mouseY + -Camera.getYPos());
+            double mouseX = comp.getMousePosition().x * (double) Camera.getCameraTilesX() / (double) Veiwer.getXSize();
+            double mouseY = comp.getMousePosition().y * (double) Camera.getCameraTilesY() / (double) Veiwer.getYSize();
 
-        }catch(Exception e){
+            mouseXTile = (int) (mouseX + -Camera.getXPos());
+            mouseYTile = (int) (mouseY + -Camera.getYPos());
+
+        } catch (Exception e) {
             mouseXTile = -1;
             mouseYTile = -1;
         }

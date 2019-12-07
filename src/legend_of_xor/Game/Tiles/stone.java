@@ -13,7 +13,6 @@ import legend_of_xor.Renderer.Textures;
  * @author parke
  */
 public class stone extends Tile {
-
     public stone() {
         image = Textures.getBlockTexture(this);
     }

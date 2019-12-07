@@ -8,6 +8,8 @@ package legend_of_xor.Renderer;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,6 +30,7 @@ public class Textures {
 
     static final private LinkedList<Object[]> blockTextures = new LinkedList();
     static final private LinkedList<Object[]> entityTextreus = new LinkedList();
+    static final private LinkedList<Object[]> backgroundTextures = new LinkedList();
 
     private static int xRes = 1280; // default resolution
     private static int yRes = 720;
@@ -131,6 +134,42 @@ public class Textures {
         entityTextreus.addFirst(new Object[]{entity.getNameID(), toBufferedImage(image)});
         return toBufferedImage(image);
     }
+    
+    
+    public static BufferedImage getBackgroundTexture(String name) {
+        try {
+
+            ListIterator list_Iter = blockTextures.listIterator(0);
+
+            while (list_Iter.hasNext()) {
+                Object[] temp = (Object[]) list_Iter.next();
+
+                if (name.equals(temp[0])) {
+                    return (BufferedImage) temp[1];
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        Image image = null;
+        try {
+            System.out.println(name);
+            image = ImageIO.read(Textures.class.getResourceAsStream("/Textures/Backgrounds/" + name + ".png"));
+
+            image = image.getScaledInstance((int) (xRes),
+                    (int) (yRes),
+                    Image.SCALE_AREA_AVERAGING);
+
+        } catch (Exception e) {
+            image = Textures.nullImage((int) (tileWidth * Level.getLevelTilesX()), (int) ((tileHeight * Level.getLevelTilesY())));
+        }
+
+        blockTextures.addFirst(new Object[]{name, toBufferedImage(image)});
+        return toBufferedImage(image);
+    }
+
 
     static Image nullImage(int width, int height) {
         BufferedImage error = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -171,7 +210,36 @@ public class Textures {
         bGr.dispose();
 
         // Return the buffered image
-        return bimage;
+        return toCompatibleImage(bimage);
+    }
+
+    public static BufferedImage toCompatibleImage(BufferedImage image) {
+        // obtain the current system graphical settings
+        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
+                getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                getDefaultConfiguration();
+
+        /*
+     * if image is already compatible and optimized for current system 
+     * settings, simply return it
+         */
+        if (image.getColorModel().equals(gfxConfig.getColorModel())) {
+            return image;
+        }
+
+        // image is not optimized, so create a new image that is
+        BufferedImage newImage = gfxConfig.createCompatibleImage(
+                image.getWidth(), image.getHeight(), image.getTransparency());
+
+        // get the graphics context of the new image to draw the old image on
+        Graphics2D g2d = newImage.createGraphics();
+
+        // actually draw the image and dispose of context no longer needed
+        g2d.drawImage(image, 0, 0, null);
+        g2d.dispose();
+
+        // return the new optimized image
+        return newImage;
     }
 
 }

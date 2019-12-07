@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import javax.swing.Timer;
 import legend_of_xor.KeyboardLisenter;
+import legend_of_xor.Renderer.Camera;
+import legend_of_xor.Renderer.Textures;
+
 /**
  *
  * @author parke
@@ -32,38 +35,30 @@ public class Veiwer extends javax.swing.JFrame {
         Timer imageDrawer = new Timer(1000 / 60, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                //    javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                // public void run() {
                 if (image != null && jPanel1 != null) {
                     Graphics2D g2d = (Graphics2D) jPanel1.getGraphics().create();
                     Image i = image.getScaledInstance(jPanel1.getSize().width, jPanel1.getSize().height, Image.SCALE_FAST);
                     g2d.drawImage(i, 0, 0, null);
-                    //Graphics g2d = i.getGraphics();
-                    //jPanel1.paint(g2d);
-                    // g2d.dispose();
-                    //jPanel1.repaint();
-                    //jPanel1.repaint();
                 }
-                //  }
-                // });
             }
         });
         imageDrawer.start();
     }
 
+    public static void drawImage() {
+
+    }
+
     public static void setResolutiom(int width, int height) {
         jPanel1.setSize(new Dimension(width, height));
     }
+    public static void refreshImageSize(){
+        image = Camera.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+    }
 
     public static void setImage(BufferedImage image) {
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
-        Veiwer.image = image;
+
+        Veiwer.image.getGraphics().drawImage(image, 0, 0, null);
 
     }
 

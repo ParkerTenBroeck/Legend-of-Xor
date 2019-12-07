@@ -21,6 +21,8 @@ public class chest extends Tile {
     @Override
     protected void init() {
         INVENTORY = true;
+        SOLID = false;
+        TILE_X_SCALE = 1.25;
     }
 
     public chest() {
@@ -31,9 +33,10 @@ public class chest extends Tile {
     public void update(int xPos, int yPos) {
         if (Math.abs(xPos - Level.getPlayer().getXPos()) < 2 && Math.abs(yPos - Level.getPlayer().getYPos()) < 2) {
             if (sign == null) {
-                sign = new open_sign(xPos + 0.5, yPos);
+                sign = new open_sign(xPos + 0.5, yPos );
                 Level.addEntity(sign);
             }
+            sign.terminate(false);
         } else {
             if (sign != null) {
                 sign.terminate(true);

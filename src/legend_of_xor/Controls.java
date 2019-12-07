@@ -9,7 +9,9 @@ public class Controls {
     }
 
     //Keyboard Keys variables
-    protected static char jumpKey = ' ', rightKey = 'd', leftKey = 'a', upKey = 'w', downKey = 's', attackKey = 'j', blockKey = 'k', magicKey = 0;
+    protected static char jumpKey = ' ', rightKey = 'd', leftKey = 'a',
+            upKey = 'w', downKey = 's', attackKey = 'j', blockKey = 'k',
+            magicKey = 0, pauseKey = 27, inventoryKey = 'e';
 
     //Controller button variables
     private static controlType controlTypeInUse = controlType.KEYBOARD;
@@ -64,6 +66,30 @@ public class Controls {
         switch (controlTypeInUse) {
             case KEYBOARD:
                 return KeyboardLisenter.upPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    public static boolean isInventoryActive() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.inventoryActive;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    public static boolean isInventoryPressed() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.inventoryPressed;
             case CONTROLLER:
                 break;
             default:

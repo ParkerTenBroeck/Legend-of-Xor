@@ -67,8 +67,11 @@ public class player extends Entity {
         if (yPos > Level.getLevelTilesY()) {
             yPos = 0;
         }
+        if (Controls.isDownPressed()) {
+            Level.addEntity(new bomb(xPos, yPos - 1, xVel * 1.25, -0.25));
+        }
 
-        xPos *= 0.70;
+        xVel *= 0.70;
 
         if (Controls.isLeftPressed()) {
             xVel -= 0.1;
@@ -78,9 +81,6 @@ public class player extends Entity {
         }
         if (Controls.isUpPressed() && yVel == 0) {
             yVel = -0.7;
-        }
-        if (Controls.isDownPressed()) {
-            Level.addEntity(new goblin_enemy(xPos, yPos));
         }
 
         while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {

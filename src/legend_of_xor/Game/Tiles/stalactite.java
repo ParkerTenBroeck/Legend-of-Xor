@@ -33,7 +33,7 @@ public class stalactite extends Tile {
     @Override
     public void update(int xPos, int yPos) {
         if (Math.random() > 0.99) {
-            Level.addEntity(new water_drop(xPos + 0.5, yPos + 1.75));
+            //Level.addEntity(new water_drop(xPos + 0.5, yPos + 1.75));
         }
     }
 }

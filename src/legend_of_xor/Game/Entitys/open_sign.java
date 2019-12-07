@@ -6,8 +6,7 @@
 package legend_of_xor.Game.Entitys;
 
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Game.Tiles.chest;
-import legend_of_xor.Renderer.Camera;
+import legend_of_xor.Legend_of_Xor;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;
 
@@ -20,13 +19,19 @@ public class open_sign extends Entity {
 
     private boolean terminate= false;
     
+    private long lastCheck;
+    
     @Override
     protected void init(){
         ORIGIN = Origin.BOTTOM_CENTER;
+        TILE_X_SCALE = 0.75;
+        TILE_Y_SCALE = 0.75;
     }
     
     public void terminate(Boolean terminate){
         this.terminate = terminate;
+        lastCheck = System.currentTimeMillis();
+        
     }
     
     public open_sign(double xPos, double yPos) {
@@ -37,6 +42,6 @@ public class open_sign extends Entity {
 
     @Override
     public boolean terminate() {
-        return terminate;
+        return terminate || (System.currentTimeMillis() - 100) > lastCheck;
     }
 }

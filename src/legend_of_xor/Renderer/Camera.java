@@ -6,7 +6,13 @@
 package legend_of_xor.Renderer;
 
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.MemoryImageSource;
 import static legend_of_xor.Controls.getMouseTileX;
 import static legend_of_xor.Controls.getMouseTileY;
 import static legend_of_xor.Controls.isLeftMousePressed;
@@ -32,6 +38,19 @@ public class Camera {
 
     private static int cameraTilesX;
     private static int cameraTilesY;
+
+    private static BufferedImage imageBuffer;
+    private static ColorModel cm;
+
+    private static Image[] layers;
+
+    public static int getCenterCameraXPos() {
+        return (int) (xPos + ((double) cameraTilesX / 2.0));
+    }
+
+    public static int getCenterCameraYPos() {
+        return (int) (yPos + ((double) cameraTilesY / 2.0));
+    }
 
     public static int getCameraTilesX() {
         return cameraTilesX;
@@ -85,9 +104,6 @@ public class Camera {
 
     public static synchronized void DrawScreen() {
 
-        int imageSizeX = Textures.getXRes();
-        int imageSizeY = Textures.getYRes();
-
         BufferedImage[] layers = new BufferedImage[5];
 
         Thread smallTiles = new Thread(new Runnable() {
@@ -122,9 +138,7 @@ public class Camera {
         }.pass(layers));
         entities.start();
 
-        BufferedImage image = new BufferedImage(imageSizeX, imageSizeY, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
-
+        Graphics2D g2d = (Graphics2D) imageBuffer.getGraphics().create();
         g2d.drawImage(Level.getBackgroundImage(), 0, 0, null);
 
         try {
@@ -136,14 +150,13 @@ public class Camera {
         for (int i = 0; i < layers.length; i++) {
             g2d.drawImage(layers[i], 0, 0, null);
         }
-
-        Veiwer.setImage(image);
+        Veiwer.setImage(imageBuffer);
 
     }
 
     static public BufferedImage drawSmallTiles() {
 
-        BufferedImage image = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = Camera.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
@@ -177,7 +190,7 @@ public class Camera {
 
     static public BufferedImage drawEntities() {
 
-        BufferedImage image = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = Camera.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
@@ -185,18 +198,21 @@ public class Camera {
 
         int xPixelOffset = (int) ((xPos - Math.floor(xPos)) * Textures.getTileWidth());
         int yPixelOffset = (int) ((yPos - Math.floor(yPos)) * Textures.getTileHeight());
-        try {
-            for (Entity entity : Level.getEntities()) {
-                BufferedImage temp = entity.getTileImage();
+        //System.out.println(Level.getEntities().size());
 
+        for (Entity entity : Level.getEntities()) {
+            try {
+                BufferedImage temp = entity.getTileImage();
+                //System.out.println(entity);
                 g2d.drawImage(temp,
                         (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
                         (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
 
-            }
-        } catch (Exception e) {
+            } catch (Exception e) {
 
+            }
         }
+
         return image;
     }
 
@@ -306,6 +322,37 @@ public class Camera {
             default:
         }
         return -1;
+    }
+
+    protected static ColorModel getCompatibleColorModel() {
+        GraphicsConfiguration gfx_config = GraphicsEnvironment.
+                getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                getDefaultConfiguration();
+        return gfx_config.getColorModel();
+    }
+
+    public static void init() {
+
+        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
+                getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                getDefaultConfiguration();
+
+        System.out.println(Textures.getXRes());
+
+        cm = getCompatibleColorModel();
+        imageBuffer = gfxConfig.createCompatibleImage(
+                Textures.getXRes(), Textures.getYRes(), BufferedImage.TRANSLUCENT);
+    }
+
+    public static BufferedImage createCompatibleImage(int width, int height) {
+        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
+                getLocalGraphicsEnvironment().getDefaultScreenDevice().
+                getDefaultConfiguration();
+
+        BufferedImage temp = gfxConfig.createCompatibleImage(
+                width, height, BufferedImage.TRANSLUCENT);
+
+        return temp;
     }
 
 }

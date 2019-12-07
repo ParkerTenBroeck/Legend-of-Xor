@@ -18,6 +18,7 @@ import legend_of_xor.Game.Entitys.water_drop;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
 import legend_of_xor.Game.Tiles.grass;
+import legend_of_xor.Veiwer.Veiwer;
 
 /**
  *
@@ -66,7 +67,9 @@ public class Level {
             for (int i = entities.size() - 1; i >= 0; i--) {
                 entities.get(i).update();
                 if (entities.get(i).terminate()) {
+                    //System.out.print("removed " + entities.size() + " " + entities.get(i) + " ");
                     entities.remove(i);
+                    //System.out.println(entities.size());
                 }
             }
         }
@@ -76,7 +79,7 @@ public class Level {
         } catch (InterruptedException ex) {
             Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-       
+
     }
 
     public static void loadNewLevel(String name) {
@@ -86,15 +89,11 @@ public class Level {
 
         Camera.init(0, 0, 40, 20);
 
-        background = new BufferedImage(Textures.getXRes(), Textures.getYRes(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = background.createGraphics();
-
-        graphics.setColor(new Color(0x89CFF0));
-        graphics.fillRect(0, 0, background.getWidth(), background.getHeight());
-
-        graphics.dispose();
+        background = Textures.getBackgroundTexture("main");
 
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
+
+        Veiwer.refreshImageSize();
 
         entities.clear();
         player = new player();
@@ -112,7 +111,11 @@ public class Level {
     }
 
     public synchronized static void setSmallTile(Tile tile, int xPos, int yPos) {
-        Level.smallTiles[yPos][xPos] = tile;
+        try {
+            Level.smallTiles[yPos][xPos] = tile;
+        } catch (Exception e) {
+
+        }
     }
 
     public static BufferedImage getBackgroundImage() {
@@ -153,5 +156,6 @@ public class Level {
 
     public static void addEntity(Entity entity) {
         entities.add(entity);
+        //System.out.println("new Entity " + entity);
     }
 }
