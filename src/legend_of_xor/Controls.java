@@ -109,6 +109,30 @@ public class Controls {
         }
         return false;
     }
+    
+    public static boolean isAttackPressed() {
+        switch (controlTypeInUse){
+            case KEYBOARD:
+                return KeyboardLisenter.attackPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+    
+    public static boolean isMagicPressed() {
+        switch (controlTypeInUse) {
+            case KEYBOARD:
+                return KeyboardLisenter.magicPressed;
+            case CONTROLLER:
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
 
     //---------METHODS FOR USER CHANGING AND GETTING THE CONTROLS------------
     public static void setJumpKey(char key) {
