@@ -5,8 +5,10 @@
  */
 package Level_Generator;
 
+import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.*;
+import legend_of_xor.Renderer.Level;
 
 /**
  *
@@ -14,8 +16,9 @@ import legend_of_xor.Game.Tiles.*;
  */
 public class LevelGenerator {
 
-    public static Tile[][] makeLevel(int xSize, int ySize) {
-        Tile[][] temp = new Tile[ySize][xSize];
+    public static void makeLevel(int xSize, int ySize) {
+
+        Level.newLevel(xSize, ySize, new player());
 
         double scale = 0.1;
         double change = 1.5;
@@ -31,29 +34,30 @@ public class LevelGenerator {
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
 
                 if (y == (ySize - (int) noise)) {
-                    temp[y][x] = new grass();
+                    Level.setSmallTile(new grass(), x, y);
                     if (Math.random() < 0.2) {
                         try {
-                            if (temp[y - 1][x - 1] == null && temp[y - 1][x - 2] == null) {
-                                if (temp[y][x - 1] != null && temp[y][x - 2] != null) {
-                                    temp[y - 1][x - 1] = new big_tree();
+                            if (Level.getSmallTile(x - 1, y - 1) == null && Level.getSmallTile(x - 2, y - 1) == null) {
+                                if (Level.getSmallTile(x - 1, y) != null && Level.getSmallTile(x - 2, y) != null) {
+                                    Level.setSmallTile(new big_tree(), x - 1, y - 1);
                                 }
                             } else {
-                                temp[y - 1][x] = new small_tree();
+                                Level.setSmallTile(new small_tree(), x, y - 1);
                             }
                         } catch (Exception e) {
 
                         }
                     } else if (Math.random() < 0.06) {
-                        temp[y - 1][x] = new torch();
+                        Level.setSmallTile(new torch(), x, y - 1);
                     } else {
                         //temp[y-1][x] = new explosion();
                     }
                 } else {
-                    temp[y][x] = new grass();
+                   Level.setSmallTile(new grass(), x, y);
                 }
                 if ((y - 3) > ((ySize - (int) noise))) {
-                    temp[y][x] = new stone();
+                    Level.setSmallTile(new stone(), x, y);
+                    Level.setAestheticTile(new background_stone(), x, y);
                 }
             }
         }
@@ -72,14 +76,14 @@ public class LevelGenerator {
                 try {
                     if (val > 0.4 && val < 0.5 || (val < -0.2 && val > -0.3)) {
 
-                        if (temp[y][x].getNameID().equals("stone")) {
-                            temp[y][x] = null;
+                        if (Level.getSmallTile(x, y).getNameID().equals("stone")) {
+                            Level.setSmallTile(null, x, y);
                         }
 
                     }
                     if (oreVal < -0.6) {
-                        if (temp[y][x].getNameID().equals("stone")) {
-                            temp[y][x] = new ore();
+                        if (Level.getSmallTile(x, y).getNameID().equals("stone")) {
+                            Level.setSmallTile(new ore(), x, y);
                         }
                     }
 
@@ -90,58 +94,30 @@ public class LevelGenerator {
         }
         for (int x = 0; x < xSize; x++) {
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
-                try{
-                if (temp[y][x].getNameID().equals("stone")
-                        && temp[y][x + 1].getNameID().equals("stone")
-                        && temp[y][x - 1].getNameID().equals("stone")) {
-                    
-                    boolean empty = true;
-                  for(int i = x -1; i <= x + 1; i++){
-                      for(int j = y + 3; j >= y + 1; j --){
-                          if(temp[j][i] != null){
-                              empty = false;
-                          }
-                      }
-                  }
-                  if(empty){
-                      if(Math.random() > 0.6){
-                      temp[y + 1][x] = new stalactite();
-                      }
-                  }
-                }
-                }catch(Exception e){
-                    
+                try {
+                    if (Level.getSafeSmallTile(x, y).getNameID().equals("stone")
+                            && Level.getSafeSmallTile(x + 1, y).getNameID().equals("stone")
+                            && Level.getSafeSmallTile(x - 1, y).getNameID().equals("stone")) {
+
+                        boolean empty = true;
+                        for (int i = x - 1; i <= x + 1; i++) {
+                            for (int j = y + 3; j >= y + 1; j--) {
+                                if (Level.getSmallTile(i, j) != null) {
+                                    
+                                    empty = false;
+                                }
+                            }
+                        }
+                        if (empty) {
+                            if (Math.random() > 0.6) {
+                                Level.setSmallTile(new stalactite(), x, y + 1);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                      
                 }
             }
         }
-
-        return temp;
-    }
-
-    public static void tree(Tile[][] tiles, int xPos, int yPos) {//x and y are the bottom trunk
-
-        try {
-            tiles[yPos][xPos] = new wood();
-            tiles[yPos - 1][xPos] = new wood();
-            tiles[yPos - 2][xPos] = new wood();
-            tiles[yPos - 3][xPos] = new wood();
-
-            tiles[yPos - 3][xPos] = new leaf();
-            tiles[yPos - 3][xPos + 1] = new leaf();
-            tiles[yPos - 3][xPos - 1] = new leaf();
-            tiles[yPos - 3][xPos + 2] = new leaf();
-            tiles[yPos - 3][xPos - 2] = new leaf();
-            tiles[yPos - 2][xPos + 1] = new leaf();
-            tiles[yPos - 2][xPos - 1] = new leaf();
-            tiles[yPos - 2][xPos + 2] = new leaf();
-            tiles[yPos - 2][xPos - 2] = new leaf();
-
-            tiles[yPos - 4][xPos + 1] = new leaf();
-            tiles[yPos - 4][xPos] = new leaf();
-            tiles[yPos - 4][xPos - 1] = new leaf();
-        } catch (Exception e) {
-
-        }
-
     }
 }

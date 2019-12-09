@@ -5,6 +5,7 @@
  */
 package legend_of_xor.Renderer;
 
+import legend_of_xor.Renderer.Layers.AestheticLayer;
 import legend_of_xor.Renderer.Layers.LightingLayer;
 import legend_of_xor.Renderer.Layers.EntityLayer;
 import legend_of_xor.Renderer.Layers.BackgroundLayer;
@@ -24,7 +25,7 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Renderer {
 
-    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new SmallTileLayer(), new EntityLayer(), new LightingLayer()};
+    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(),new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new LightingLayer()};
     // private static final Layer background = new BackgroundLayer();
 
     private static BufferedImage imageBuffer;

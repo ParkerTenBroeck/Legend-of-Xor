@@ -46,7 +46,7 @@ public class player extends Entity {
     public void update() {
 
         for (int i = (int) Math.floor(yPos); i <= Math.floor(yPos + yVel); i++) {
-            if (Level.getSmallTile((int) xPos, i).isSolid()) {
+            if (Level.getSafeSmallTile((int) xPos, i).isSolid()) {
                 if (yVel > 0) {
                     yVel = 0;
                     yPos = i;
@@ -80,7 +80,7 @@ public class player extends Entity {
             xVel += 0.1;
         }
         if (Controls.isUpPressed() && yVel == 0) {
-            yVel = -0.7;
+            yVel = -0.4;
         }
     }
 }

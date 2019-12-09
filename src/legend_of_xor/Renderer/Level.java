@@ -18,6 +18,7 @@ import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Entitys.water_drop;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
+import legend_of_xor.Game.Tiles.background_stone;
 import legend_of_xor.Game.Tiles.grass;
 import legend_of_xor.Veiwer.Veiwer;
 
@@ -30,7 +31,7 @@ public class Level {
     private static BackgroundTile[][] backgroundTiles = new BackgroundTile[1][1];
 
     private static Tile[][] smallTiles;
-    private static Tile[][] largeTiles;
+    private static Tile[][] aestheticTiles;
     private static final ArrayList<Entity> entities = new ArrayList();
     private static boolean isTopDown = false;
 
@@ -97,19 +98,19 @@ public class Level {
         backgroundTiles[0][0] = new BackgroundTile("main", Textures.getXRes(), (int) (Textures.getYRes())).setTopYTileLock(0).setBottomYTileLock(50);
         //backgroundTiles[1][0] = new BackgroundTile("cave", Textures.getXRes(), Textures.getYRes()).setTopYTileLock(50).setBottomYTileLock(20 * 10);
 
-        smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
+        LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
-        Veiwer.refreshImageSize();
-
-        entities.clear();
-        player = new player();
-        entities.add(player);
         Camera.followEntity(player);
 
+        Veiwer.refreshImageSize();
     }
 
-    public static void setSmallTiles(Tile[][] smallTiles) {
-        Level.smallTiles = smallTiles;
+    public static void newLevel(int tilesX, int tilesY, Entity player) {
+        aestheticTiles = new Tile[tilesY][tilesX];
+        smallTiles = new Tile[tilesY][tilesX];
+        entities.clear();
+        entities.add(player);
+        Level.player = player;
     }
 
     public static Entity getPlayer() {
@@ -126,6 +127,14 @@ public class Level {
 
     public static Tile getSmallTile(int xPos, int yPos) {
         try {
+            return smallTiles[yPos][xPos];
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static Tile getSafeSmallTile(int xPos, int yPos) {
+        try {
             if (smallTiles[yPos][xPos] != null) {
                 return smallTiles[yPos][xPos];
             } else {
@@ -133,22 +142,6 @@ public class Level {
             }
         } catch (Exception e) {
             return new air();
-        }
-    }
-
-    public static Image getSmallTileImage(int xPos, int yPos) {
-        Tile temp = getSmallTile(xPos, yPos);
-        if (temp != null) {
-            return temp.getTileImage(xPos, yPos);
-        }
-        return null;
-    }
-
-    static void setSmallTiles(Tile tile, int xPos, int yPos) {
-        try {
-            smallTiles[yPos][xPos] = tile;
-        } catch (Exception e) {
-
         }
     }
 
@@ -192,8 +185,8 @@ public class Level {
 
     public static int getBackgroundTilesWidth() {
         int temp = 0;
-        
-        for(int i = 0; i < backgroundTiles[0].length; i ++){
+
+        for (int i = 0; i < backgroundTiles[0].length; i++) {
             temp += getBackgroundTile(i, 0).getWidth();
         }
         return temp;
@@ -201,10 +194,30 @@ public class Level {
 
     public static int getBackgroundTilesHeight() {
         int temp = 0;
-        
-        for(int i = 0; i < backgroundTiles.length; i ++){
+
+        for (int i = 0; i < backgroundTiles.length; i++) {
             temp += getBackgroundTile(0, i).getHeight();
         }
         return temp;
+    }
+
+    public static void setAestheticTile(Tile tile, int x, int y) {
+        try {
+            aestheticTiles[y][x] = tile;
+        } catch (Exception e) {
+
+        }
+    }
+
+    public static Tile getSafeAestheticTile(int x, int y) {
+        try {
+            if (aestheticTiles[y][x] != null) {
+                return aestheticTiles[y][x];
+            } else {
+                return new air();
+            }
+        } catch (Exception e) {
+            return new air();
+        }
     }
 }

@@ -76,11 +76,11 @@ public class goblin_enemy extends Entity {
     }
 
     public void patrolElevationAI() {// lol sorry this is wrong
-        if (AIDirection == DirectionState.RIGHT && !((!Level.getSmallTile((int) (xPos + 0.5), (int) yPos -1 ).isSolid()) && Level.getSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
+        if (AIDirection == DirectionState.RIGHT && !((!Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos -1 ).isSolid()) && Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
             AIDirection = DirectionState.LEFT;
         }
         
-        else if (AIDirection == DirectionState.LEFT && !((!Level.getSmallTile((int) (xPos - 0.5), (int) yPos -1 ).isSolid()) && Level.getSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
+        else if (AIDirection == DirectionState.LEFT && !((!Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos -1 ).isSolid()) && Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
             AIDirection = DirectionState.RIGHT;
         }
         
@@ -90,7 +90,7 @@ public class goblin_enemy extends Entity {
     @Override
     public void update() {
         
-        if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
+        if (Level.getSafeSmallTile((int) xPos, (int) yPos).isSolid()) {
             yPos = (int) yPos;
             yVel = 0;
         } else {
@@ -102,8 +102,8 @@ public class goblin_enemy extends Entity {
         yPos += yVel;
         xPos += xVel;
 
-        while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-            if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+        while (Level.getSafeSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
+            if (Level.getSafeSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
                 yPos = Math.floor(yPos - 1);
             }
         }

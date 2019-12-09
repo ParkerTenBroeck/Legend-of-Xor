@@ -20,7 +20,7 @@ public class BasicSmallTilePhysics extends Physics {
 
     @Override
     public boolean onGround() {
-        return Level.getSmallTile((int) entity.getXPos(), (int) entity.getYPos() + 1).isSolid();
+        return Level.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos() + 1).isSolid();
     }
 
     @Override
