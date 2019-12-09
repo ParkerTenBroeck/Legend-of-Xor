@@ -9,19 +9,19 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
-import java.awt.image.MemoryImageSource;
 import static legend_of_xor.Controls.getMouseTileX;
 import static legend_of_xor.Controls.getMouseTileY;
 import static legend_of_xor.Controls.isLeftMousePressed;
 import static legend_of_xor.Controls.isRightMousePressed;
+import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Veiwer.Veiwer;
 import legend_of_xor.Game.Entity;
 
 import legend_of_xor.Game.Tiles.chest;
+import legend_of_xor.Game.Tiles.grass;
 
 /**
  *
@@ -38,11 +38,6 @@ public class Camera {
 
     private static int cameraTilesX;
     private static int cameraTilesY;
-
-    private static BufferedImage imageBuffer;
-    private static ColorModel cm;
-
-    private static Image[] layers;
 
     public static int getCenterCameraXPos() {
         return (int) (xPos + ((double) cameraTilesX / 2.0));
@@ -92,9 +87,19 @@ public class Camera {
             xPos = (-entity.getXPos()) + (Camera.cameraTilesX / 2);
             yPos = (-entity.getYPos()) + (Camera.cameraTilesY / 2);
         }
+        if (-xPos < 0) {
+            xPos = 0;
+        } else if (-xPos + cameraTilesX > Level.getLevelTilesX()) {
+            xPos = -(Level.getLevelTilesX() - cameraTilesX);
+        }
+        if (-yPos < 0) {
+            yPos = 0;
+        } else if (-yPos + cameraTilesY > Level.getLevelTilesY()) {
+            yPos = -(Level.getLevelTilesY() - cameraTilesY);
+        }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTiles(new chest(), getMouseTileX(), getMouseTileY());
+            Level.setSmallTiles(new grass(), getMouseTileX(), getMouseTileY());
         }
         if (isRightMousePressed()) {
             Level.setSmallTiles(null, getMouseTileX(), getMouseTileY());
@@ -102,63 +107,10 @@ public class Camera {
 
     }
 
-    public static synchronized void DrawScreen() {
+    
+    static private BufferedImage drawSmallTiles() {
 
-        BufferedImage[] layers = new BufferedImage[5];
-
-        Thread smallTiles = new Thread(new Runnable() {
-
-            BufferedImage[] layers;
-
-            @Override
-            public void run() {
-                layers[2] = drawSmallTiles();
-            }
-
-            public Runnable pass(BufferedImage[] layers) {
-                this.layers = layers;
-                return this;
-            }
-        }.pass(layers));
-        smallTiles.start();
-
-        Thread entities = new Thread(new Runnable() {
-
-            BufferedImage[] layers;
-
-            @Override
-            public void run() {
-                layers[3] = drawEntities();
-            }
-
-            public Runnable pass(BufferedImage[] layers) {
-                this.layers = layers;
-                return this;
-            }
-        }.pass(layers));
-        entities.start();
-
-        Graphics2D g2d = (Graphics2D) imageBuffer.getGraphics().create();
-        g2d.drawImage(Level.getBackgroundImage(),0,0,null);
-              //  (int) (Camera.getXPos() * Textures.getTileWidth()),
-               // (int) (Camera.getYPos() * Textures.getTileHeight()), null);
-
-        try {
-            entities.join();
-            smallTiles.join();
-        } catch (InterruptedException ex) {
-
-        }
-        for (int i = 0; i < layers.length; i++) {
-            g2d.drawImage(layers[i], 0, 0, null);
-        }
-        Veiwer.setImage(imageBuffer);
-
-    }
-
-    static public BufferedImage drawSmallTiles() {
-
-        BufferedImage image = Camera.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+        BufferedImage image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
@@ -177,8 +129,8 @@ public class Camera {
 
                     BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
 
-                    int orgX = calcTileOrgX(temp.getOrigin(), i);
-                    int orgY = calcTileOrgY(temp.getOrigin(), i);
+                    int orgX = Renderer.calcTileOrgX(temp.getOrigin(), i);
+                    int orgY = Renderer.calcTileOrgY(temp.getOrigin(), i);
 
                     g2d.drawImage(i,
                             x * Textures.getTileWidth() + xPixelOffset + orgX,
@@ -192,7 +144,7 @@ public class Camera {
 
     static public BufferedImage drawEntities() {
 
-        BufferedImage image = Camera.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+        BufferedImage image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(xPos);
@@ -207,8 +159,8 @@ public class Camera {
                 BufferedImage temp = entity.getTileImage();
                 //System.out.println(entity);
                 g2d.drawImage(temp,
-                        (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + calcEntityOrgX(entity.getOrigin(), temp)),
-                        (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + calcEntityOrgY(entity.getOrigin(), temp)), null);
+                        (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + Renderer.calcEntityOrgX(entity.getOrigin(), temp)),
+                        (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + Renderer.calcEntityOrgY(entity.getOrigin(), temp)), null);
 
             } catch (Exception e) {
 
@@ -217,144 +169,4 @@ public class Camera {
 
         return image;
     }
-
-    private static int calcTileOrgX(Origin origin, BufferedImage image) {
-        return calcTileOrgX(origin, image.getWidth(), image.getHeight());
-    }
-
-    private static int calcTileOrgY(Origin origin, BufferedImage image) {
-        return calcTileOrgY(origin, image.getWidth(), image.getHeight());
-    }
-
-    private static int calcTileOrgX(Origin origin, int width, int height) {
-        switch (origin) {
-            case UPPER_LEFT:
-                return 0;
-            case UPPER_RIGHT:
-                return (-width) + Textures.getTileWidth();
-            case BOTTOM_LEFT:
-                return 0;
-            case BOTTOM_RIGHT:
-                return (-width) + Textures.getTileWidth();
-            case BOTTOM_CENTER:
-                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
-            case TOP_CENTER:
-                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
-            case CENTER:
-                return (int) (-(width / 2)) + Textures.getTileWidth() / 2;
-
-            default:
-        }
-        return -1;
-    }
-
-    private static int calcTileOrgY(Origin origin, int width, int height) {
-        switch (origin) {
-            case UPPER_LEFT:
-                return 0;
-            case UPPER_RIGHT:
-                return 0;
-            case BOTTOM_LEFT:
-                return (-height) + Textures.getTileHeight();
-            case BOTTOM_RIGHT:
-                return (-height) + Textures.getTileHeight();
-            case BOTTOM_CENTER:
-                return (-height) + Textures.getTileHeight();
-            case TOP_CENTER:
-                return 0;
-            case CENTER:
-                return (int) (-(height / 2)) + Textures.getTileHeight() / 2;
-            default:
-        }
-        return -1;
-    }
-
-    private static int calcEntityOrgX(Origin origin, BufferedImage image) {
-        if (image == null) {
-            return 0;
-        }
-        return calcEntityOrgX(origin, image.getWidth(), image.getHeight());
-    }
-
-    private static int calcEntityOrgY(Origin origin, BufferedImage image) {
-        if (image == null) {
-            return 0;
-        }
-        return calcEntityOrgY(origin, image.getWidth(), image.getHeight());
-    }
-
-    private static int calcEntityOrgX(Origin origin, int width, int hight) {
-        switch (origin) {
-            case UPPER_LEFT:
-                return 0;
-            case UPPER_RIGHT:
-                return (-width);
-            case BOTTOM_LEFT:
-                return 0;
-            case BOTTOM_RIGHT:
-                return (-width);
-            case BOTTOM_CENTER:
-                return (int) (-(width / 2));
-            case TOP_CENTER:
-                return (int) (-(width / 2));
-            case CENTER:
-                return (int) (-(width / 2));
-
-            default:
-        }
-        return -1;
-    }
-
-    private static int calcEntityOrgY(Origin origin, int width, int height) {
-        switch (origin) {
-            case UPPER_LEFT:
-                return 0;
-            case UPPER_RIGHT:
-                return 0;
-            case BOTTOM_LEFT:
-                return (-height);
-            case BOTTOM_RIGHT:
-                return (-height);
-            case BOTTOM_CENTER:
-                return (-height);
-            case TOP_CENTER:
-                return 0;
-            case CENTER:
-                return (int) (-(height / 2));
-            default:
-        }
-        return -1;
-    }
-
-    protected static ColorModel getCompatibleColorModel() {
-        GraphicsConfiguration gfx_config = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                getDefaultConfiguration();
-        return gfx_config.getColorModel();
-    }
-
-    public static void init() {
-
-        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                getDefaultConfiguration();
-
-        System.out.println(Textures.getXRes());
-
-        cm = getCompatibleColorModel();
-        imageBuffer = gfxConfig.createCompatibleImage(
-                Textures.getXRes(), Textures.getYRes(), BufferedImage.TRANSLUCENT);
-    }
-
-    public static BufferedImage createCompatibleImage(int width, int height) {
-        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                getDefaultConfiguration();
-
-        BufferedImage temp = gfxConfig.createCompatibleImage(
-                width, height, BufferedImage.TRANSLUCENT);
-
-        return temp;
-    }
-
 }

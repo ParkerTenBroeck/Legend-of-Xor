@@ -5,9 +5,8 @@ package legend_of_xor;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import static legend_of_xor.KeyboardLisenter.pausePressed;
-import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 import legend_of_xor.Veiwer.Veiwer;
 
@@ -23,9 +22,12 @@ public class Legend_of_Xor {
 
         Veiwer frame = new Veiwer();
         Textures.setTileResolution(24, 24);
+        
+        Renderer.init();
+        
         Level.loadNewLevel("Main");
 
-        Camera.init();
+        Renderer.init();
 
         //Sound.loadSound();
         Thread renderer = new Thread() {
@@ -33,7 +35,7 @@ public class Legend_of_Xor {
                 while (true) {
 
                     long last = System.nanoTime();
-                    Camera.DrawScreen();
+                    Renderer.DrawScreen();
                     long newt = System.nanoTime();
                     if (newt - last > 0.017 * 1_000_000_000) {
                         System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
@@ -87,11 +89,11 @@ public class Legend_of_Xor {
 //            } else {
 //                Legend_of_Xor.unpause();
 //            }
-//            try {
-//                Thread.sleep(80);
-//            } catch (Exception e) {
-//
-//            }
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+
+            }
         }
 
     }

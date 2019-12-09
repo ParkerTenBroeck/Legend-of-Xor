@@ -30,8 +30,8 @@ public abstract class Entity {
     protected double yPos = 0;
 
     protected BufferedImage image;
-    
-    protected void init(){
+
+    protected void init() {
     }
 
     public Entity() {
@@ -67,11 +67,27 @@ public abstract class Entity {
         return xPos;
     }
 
+    public void setXPos(double xPos) {
+        this.xPos = xPos;
+    }
+
     public double getYPos() {
         return yPos;
     }
 
+    public void setYPos(double yPos) {
+        this.yPos = yPos;
+    }
+
     public boolean terminate() {
         return false;
+    }
+
+    public void changeXPos(double xOffset) {
+        xPos += xOffset;
+    }
+
+    public void changeYPos(double yOffset) {
+        yPos += yOffset;
     }
 }

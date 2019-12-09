@@ -45,30 +45,30 @@ public class player extends Entity {
     @Override
     public void update() {
 
-        if (Level.getSmallTile((int) xPos, (int) yPos).isSolid()) {
-            if (yVel > 0) {
+        for (int i = (int) Math.floor(yPos); i <= Math.floor(yPos + yVel); i++) {
+            if (Level.getSmallTile((int) xPos, i).isSolid()) {
+                if (yVel > 0) {
+                    yVel = 0;
+                    yPos = i;
+                    break;
 
-                if (Math.abs(yVel) > 1) {
-                    Sound.loadSound("/Sounds/pp.wav");
-                    Sound.playSound();
                 }
-
-                yVel = 0;
-                yPos = Math.ceil(yPos);
-
+            } else if (i == (int) Math.floor(yPos + yVel)) {
+                yVel += 0.031;
             }
-        } else {
-            yVel += 0.031;
-
         }
+        if (yPos > Level.getLevelTilesY()) {
+            if (yVel > 0) {
+                yVel = 0;
+                yPos = Level.getLevelTilesY();
+            }
+        }
+
         xPos += xVel;
         yPos += yVel;
 
-        if (yPos > Level.getLevelTilesY()) {
-            yPos = 0;
-        }
         if (Controls.isDownPressed()) {
-            Level.addEntity(new bomb(xPos, yPos - 1, xVel * 1.25, -0.25));
+            Level.addEntity(new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));
         }
 
         xVel *= 0.70;
@@ -81,12 +81,6 @@ public class player extends Entity {
         }
         if (Controls.isUpPressed() && yVel == 0) {
             yVel = -0.7;
-        }
-
-        while (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-            if (Level.getSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-                yPos = Math.floor(yPos - 1);
-            }
         }
     }
 }

@@ -12,6 +12,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Entitys.water_drop;
@@ -26,7 +27,8 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Level {
 
-    private static BufferedImage background;
+    private static BackgroundTile[][] backgroundTiles = new BackgroundTile[1][1];
+
     private static Tile[][] smallTiles;
     private static Tile[][] largeTiles;
     private static final ArrayList<Entity> entities = new ArrayList();
@@ -36,6 +38,7 @@ public class Level {
     private static int levelTilesY;
 
     private static Entity player;
+    public static int getBackgroundTilesYRes;
 
     public static int getLevelTilesX() {
         return levelTilesX;
@@ -89,7 +92,10 @@ public class Level {
 
         Camera.init(0, 0, 40, 20);
 
-        background = Textures.getBackgroundTexture("main", Textures.getXRes(), Textures.getYRes());
+        backgroundTiles = new BackgroundTile[1][2];
+
+        backgroundTiles[0][0] = new BackgroundTile("main", Textures.getXRes(), (int) (Textures.getYRes())).setTopYTileLock(0).setBottomYTileLock(50);
+        //backgroundTiles[1][0] = new BackgroundTile("cave", Textures.getXRes(), Textures.getYRes()).setTopYTileLock(50).setBottomYTileLock(20 * 10);
 
         smallTiles = LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
@@ -116,10 +122,6 @@ public class Level {
         } catch (Exception e) {
 
         }
-    }
-
-    public static BufferedImage getBackgroundImage() {
-        return background;
     }
 
     public static Tile getSmallTile(int xPos, int yPos) {
@@ -150,12 +152,59 @@ public class Level {
         }
     }
 
-    static ArrayList<Entity> getEntities() {
+    public static ArrayList<Entity> getEntities() {
         return (ArrayList<Entity>) entities.clone();
     }
 
     public static void addEntity(Entity entity) {
         entities.add(entity);
         //System.out.println("new Entity " + entity);
+    }
+
+    public static int getBackgroundTilesX() {
+        return backgroundTiles[0].length;
+    }
+
+    public static int getBackgroundTilesY() {
+        return backgroundTiles.length;
+    }
+
+    public static BackgroundTile getBackgroundTile(int x, int y) {
+        if (y < 0) {
+            return getBackgroundTile(x, 0);
+        } else if (y >= getBackgroundTilesY()) {
+            return getBackgroundTile(x, getBackgroundTilesY() - 1);
+        } else if (x < 0) {
+            return getBackgroundTile(0, y);
+        } else if (x >= getBackgroundTilesX()) {
+            return getBackgroundTile(getBackgroundTilesX() - 1, y);
+        }
+        if (backgroundTiles[y][x] != null) {
+            return backgroundTiles[y][x];
+        } else {
+            if (x != 0) {
+                return getBackgroundTile(x - 1, y);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public static int getBackgroundTilesWidth() {
+        int temp = 0;
+        
+        for(int i = 0; i < backgroundTiles[0].length; i ++){
+            temp += getBackgroundTile(i, 0).getWidth();
+        }
+        return temp;
+    }
+
+    public static int getBackgroundTilesHeight() {
+        int temp = 0;
+        
+        for(int i = 0; i < backgroundTiles.length; i ++){
+            temp += getBackgroundTile(0, i).getHeight();
+        }
+        return temp;
     }
 }

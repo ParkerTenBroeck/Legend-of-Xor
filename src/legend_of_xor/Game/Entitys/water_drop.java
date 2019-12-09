@@ -7,6 +7,8 @@ package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Physics.BasicFallingPhysics;
+import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
@@ -23,6 +25,8 @@ public class water_drop extends Entity {
     private long timeHit = 0;
 
     private boolean done;
+
+    private final Physics phy = new BasicFallingPhysics(this, 0, 0, 0.001);
 
     @Override
     protected void init() {
@@ -50,7 +54,7 @@ public class water_drop extends Entity {
         if (done) {
             return null;
         }
-        if (!hit) {
+        if (!phy.onGround()) {
             return image.getSubimage(0, 0, image.getWidth(), image.getHeight() / TILESY);
         } else {
             int offset = ((int) ((System.currentTimeMillis() - timeHit) / 100)) % 5;
@@ -62,14 +66,10 @@ public class water_drop extends Entity {
 
     @Override
     public void update() {
-        yVel += 0.001;
-        if (timeHit == 0) {
-            yPos += yVel;
-        }
 
-        if (Level.getSmallTile((int) (xPos), (int) (yPos + 1)).isSolid() && timeHit == 0) {
-            yPos = (int) (yPos);
-            hit = true;
+        phy.update();
+
+        if (phy.onGround() && timeHit == 0) {
             timeHit = System.currentTimeMillis();
         }
         if ((System.currentTimeMillis() - timeHit) > 5 * 100 && timeHit != 0) {

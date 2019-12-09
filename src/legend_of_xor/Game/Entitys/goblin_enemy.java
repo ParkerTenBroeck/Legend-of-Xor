@@ -5,13 +5,8 @@
  */
 package legend_of_xor.Game.Entitys;
 
-import com.sun.javafx.scene.traversal.Direction;
-import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
-import legend_of_xor.Game.Tiles.brick;
-import legend_of_xor.Game.Tiles.torch;
-import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
 
