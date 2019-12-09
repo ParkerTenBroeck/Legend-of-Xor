@@ -10,6 +10,7 @@ import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Layers.Layer;
 import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -20,8 +21,6 @@ public class BackgroundLayer extends Layer {
 
     @Override
     public void drawLayer() {
-
-        Graphics graphics = image.getGraphics();
 
         int tilesWidth = Level.getBackgroundTilesWidth() * (Level.getBackgroundTilesX() - 1);
         int tilesHeight = Level.getBackgroundTilesHeight() * (Level.getBackgroundTilesY() - 1);
@@ -34,10 +33,15 @@ public class BackgroundLayer extends Layer {
 
                 BackgroundTile tile = Level.getBackgroundTile(x, y);
 
-                graphics.drawImage(tile.getImage(),
+                image.getGraphics().drawImage(tile.getImage(),
                         tile.getXPos(x, y) + offsetX,
                         tile.getYPos(x, y) + offsetY,
-                        null);
+                         null);
+
+//                Renderer.copySrcIntoDstAt(tile.getImage(), image,
+//                        tile.getXPos(x, y) + offsetX,
+//                        tile.getYPos(x, y) + offsetY);
+
             }
         }
     }

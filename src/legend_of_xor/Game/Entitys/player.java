@@ -43,7 +43,7 @@ public class player extends Entity {
     }
 
     @Override
-    public void update() {
+    public synchronized void update() {
 
         for (int i = (int) Math.floor(yPos); i <= Math.floor(yPos + yVel); i++) {
             if (Level.getSafeSmallTile((int) xPos, i).isSolid()) {

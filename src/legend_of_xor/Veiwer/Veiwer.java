@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import javax.swing.Timer;
 import legend_of_xor.KeyboardLisenter;
 import legend_of_xor.Renderer.Camera;
@@ -53,14 +54,13 @@ public class Veiwer extends javax.swing.JFrame {
     public static void setResolutiom(int width, int height) {
         jPanel1.setSize(new Dimension(width, height));
     }
-    public static void refreshImageSize(){
+
+    public static void refreshImageSize() {
         image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
     }
 
     public static void setImage(BufferedImage image) {
-
-        Veiwer.image.getGraphics().drawImage(image, 0, 0, null);
-
+        Renderer.copySrcIntoDstAt(image, Veiwer.image, 0, 0);
     }
 
     /**

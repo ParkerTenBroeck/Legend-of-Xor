@@ -15,6 +15,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBufferInt;
 import legend_of_xor.Renderer.Layers.Layer;
 import legend_of_xor.Renderer.Layers.SmallTileLayer;
 import legend_of_xor.Veiwer.Veiwer;
@@ -25,7 +26,7 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Renderer {
 
-    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(),new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new LightingLayer()};
+    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new LightingLayer()};
     // private static final Layer background = new BackgroundLayer();
 
     private static BufferedImage imageBuffer;
@@ -36,7 +37,6 @@ public class Renderer {
         Graphics graphics = imageBuffer.getGraphics();
 
         //long start = System.currentTimeMillis();
-
         for (Layer layer : LAYERS) {
             layer.startRender();
         }
@@ -192,5 +192,22 @@ public class Renderer {
                 width, height, BufferedImage.TRANSLUCENT);
 
         return temp;
+    }
+
+    public static void copySrcIntoDstAt(final BufferedImage src,
+            final BufferedImage dst, final int dx, final int dy) {
+        int[] srcbuf = ((DataBufferInt) src.getRaster().getDataBuffer()).getData();
+        int[] dstbuf = ((DataBufferInt) dst.getRaster().getDataBuffer()).getData();
+        int width = src.getWidth();
+        int height = src.getHeight();
+        int dstoffs = dx + dy * dst.getWidth();
+        int srcoffs = 0;
+        for (int y = 0; y < height; y++, dstoffs += dst.getWidth(), srcoffs += width) {
+            try{
+            System.arraycopy(srcbuf, srcoffs, dstbuf, dstoffs, width);
+            }catch(Exception e){
+                
+            }
+        }
     }
 }

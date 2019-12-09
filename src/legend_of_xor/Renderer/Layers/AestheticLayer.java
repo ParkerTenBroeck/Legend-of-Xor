@@ -23,7 +23,7 @@ public class AestheticLayer extends Layer {
 
     @Override
     public void drawLayer() {
-        
+
         Graphics2D g2d = (Graphics2D) image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(Camera.getXPos());
