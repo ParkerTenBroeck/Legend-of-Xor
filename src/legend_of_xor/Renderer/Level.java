@@ -6,20 +6,12 @@
 package legend_of_xor.Renderer;
 
 import Level_Generator.LevelGenerator;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Game.Entitys.player;
-import legend_of_xor.Game.Entitys.water_drop;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
-import legend_of_xor.Game.Tiles.background_stone;
-import legend_of_xor.Game.Tiles.grass;
 import legend_of_xor.Veiwer.Veiwer;
 
 /**
@@ -54,8 +46,14 @@ public class Level {
         Thread updateTiles = new Thread() {
             public void run() {
 
-                for (int y = levelTilesY - 1; y >= 0; y--) {
-                    for (int x = levelTilesX - 1; x >= 0; x--) {
+                int xDist = 30;
+                int yDist = 50;
+
+                int xPos = (int) (-Camera.getXPos() + (Camera.getCameraTilesX() / 2.0));
+                int yPos = (int) (-Camera.getYPos() + (Camera.getCameraTilesY() / 2.0));
+
+                for (int y = yPos + yDist; y >= yPos - yDist; y--) {
+                    for (int x = xPos + xDist; x >= xPos - xDist; x--) {
                         try {
                             smallTiles[y][x].update(x, y);
                         } catch (Exception e) {

@@ -5,6 +5,8 @@
  */
 package Level_Generator;
 
+import legend_of_xor.Game.Entitys.bird;
+import legend_of_xor.Game.Entitys.bunny;
 import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.*;
@@ -48,12 +50,12 @@ public class LevelGenerator {
 
                         }
                     } else if (Math.random() < 0.06) {
-                        Level.setSmallTile(new torch(), x, y - 1);
+                        Level.setSmallTile(new chest(), x, y - 1);
                     } else {
                         //temp[y-1][x] = new explosion();
                     }
                 } else {
-                   Level.setSmallTile(new grass(), x, y);
+                    Level.setSmallTile(new grass(), x, y);
                 }
                 if ((y - 3) > ((ySize - (int) noise))) {
                     Level.setSmallTile(new stone(), x, y);
@@ -103,7 +105,7 @@ public class LevelGenerator {
                         for (int i = x - 1; i <= x + 1; i++) {
                             for (int j = y + 3; j >= y + 1; j--) {
                                 if (Level.getSmallTile(i, j) != null) {
-                                    
+
                                     empty = false;
                                 }
                             }
@@ -115,9 +117,18 @@ public class LevelGenerator {
                         }
                     }
                 } catch (Exception e) {
-                      
+
                 }
             }
+        }
+
+        for (int i = 0; i < xSize / 10; i++) {
+            Level.addEntity(new bird(Math.random() * xSize, 0));
+            Level.addEntity(new bird(Math.random() * xSize, 0));
+            Level.addEntity(new bunny(Math.random() * xSize, 0));
+        }
+        for(int i = 0; i < 1000; i ++){
+            Level.update();
         }
     }
 }

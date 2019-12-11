@@ -5,8 +5,11 @@
  */
 package legend_of_xor.Game.Entitys;
 
+import legend_of_xor.AI.AI;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
+import legend_of_xor.Physics.BasicSmallTilePhysics;
+import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Level;
 import legend_of_xor.Renderer.Textures;
 
@@ -16,17 +19,54 @@ import legend_of_xor.Renderer.Textures;
  */
 public class goblin_enemy extends Entity {
 
-    private double xVel;
-    private double yVel;
+    private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
 
-    private enum DirectionState {
-        RIGHT, LEFT
-    }
-    private DirectionState AIDirection = DirectionState.RIGHT;
-    private int movementNumber = 0;
+    private final AI ai = new AI<goblin_enemy>(this) {
+        @Override
+        public void update() {
+            if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
+                trackPlayerAI();
+            } else {
+                patrolElevationAI();
+            }
+        }
+
+        private void trackPlayerAI() {
+            if ((Level.getPlayer().getXPos() - xPos) > 0) {
+                phy.setXVelocity(0.05);
+            } else {
+                phy.setXVelocity(-0.05);
+            }
+        }
+
+        private void move() {
+            if (rightLeft) {
+                phy.setXVelocity(-0.03);
+            } else {
+                phy.setXVelocity(0.03);
+            }
+        }
+
+        private void patrolElevationAI() {// lol sorry this is wrong
+            if (!rightLeft && !((!Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos - 1).isSolid()) && Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
+                rightLeft = true;
+            } else if (rightLeft && !((!Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos - 1).isSolid()) && Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
+                rightLeft = false;
+            }
+
+            move();
+        }
+
+        @Override
+        public AI.Direction getDirection() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    };
+
+    private boolean rightLeft = false;
 
     public goblin_enemy() {
-       // image = Textures.getEntityTexture(this);
+        // image = Textures.getEntityTexture(this);
 
     }
 
@@ -39,74 +79,11 @@ public class goblin_enemy extends Entity {
         image = Textures.getEntityTexture(this);
     }
 
-    public void AI() {
-        if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
-            trackPlayerAI();
-        } else {
-            //movingLeftAndRightAI();
-            patrolElevationAI();
-        }
-
-    }
-
-    //----- START OF AI FUNCTIONS ------
-    
-    public void trackPlayerAI() {
-        if ((Level.getPlayer().getXPos() - xPos) > 0) {
-            xVel = 0.05;
-        } else {
-            xVel = -0.05;
-        }
-    }
-
-    public void move(DirectionState state) {
-        
-//        if(Level.getSmallTile((int)xPos, (int)yPos).isSolid()){
-//            Level.setSmallTile(new brick(), (int)xPos, (int)yPos);
-//        }else{
-//           Level.setSmallTile(new torch(), (int)xPos, (int)yPos); 
-//        }
-        
-        if (state == DirectionState.LEFT) {
-            xVel = -0.03;
-        }
-        if (state == DirectionState.RIGHT) {
-            xVel = 0.03;
-        }
-    }
-
-    public void patrolElevationAI() {// lol sorry this is wrong
-        if (AIDirection == DirectionState.RIGHT && !((!Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos -1 ).isSolid()) && Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
-            AIDirection = DirectionState.LEFT;
-        }
-        
-        else if (AIDirection == DirectionState.LEFT && !((!Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos -1 ).isSolid()) && Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
-            AIDirection = DirectionState.RIGHT;
-        }
-        
-        move(AIDirection);
-    }
-
     @Override
     public void update() {
-        
-        if (Level.getSafeSmallTile((int) xPos, (int) yPos).isSolid()) {
-            yPos = (int) yPos;
-            yVel = 0;
-        } else {
-            yVel += 0.01;
-        }
-        
-        AI();
-        
-        yPos += yVel;
-        xPos += xVel;
 
-        while (Level.getSafeSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-            if (Level.getSafeSmallTile((int) xPos, (int) (yPos - 1)).isSolid()) {
-                yPos = Math.floor(yPos - 1);
-            }
-        }
+        phy.update();
+        ai.update();
 
     }
 }

@@ -38,11 +38,11 @@ public class Legend_of_Xor {
                     Renderer.DrawScreen();
                     long newt = System.nanoTime();
                     if (newt - last > 0.017 * 1_000_000_000) {
-                        System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                        //System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                     }
 
                     try {
-                        Thread.sleep(20);
+                        Thread.sleep(16 - ((newt - last) / 1000000));
                     } catch (Exception e) {
 
                     }
@@ -63,7 +63,7 @@ public class Legend_of_Xor {
                         Level.update();
                         long newt = System.nanoTime();
                         if (newt - last > 0.017 * 1_000_000_000) {
-                            //System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                            System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                         }
                         try {
                             Thread.sleep((int) ((1000 / 60) - (newt - last) / 1000000));

@@ -6,9 +6,7 @@
 package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
-import legend_of_xor.Game.Entitys.goblin_enemy;
 import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Textures;
 
 /**
  *
@@ -43,7 +41,7 @@ public abstract class Entity {
         return NAMEID;
     }
 
-    public BufferedImage getTileImage() {
+    public BufferedImage getEntityImage() {
         return image;
     }
 

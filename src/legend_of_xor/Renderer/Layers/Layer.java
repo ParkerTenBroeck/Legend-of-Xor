@@ -64,7 +64,7 @@ public abstract class Layer {
 
     public abstract void drawLayer();
 
-    public Image getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 

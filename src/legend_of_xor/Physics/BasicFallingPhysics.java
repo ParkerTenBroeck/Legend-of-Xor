@@ -25,7 +25,7 @@ public class BasicFallingPhysics extends Physics {
 
     @Override
     public boolean onGround() {
-        return Level.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos() + 1).isSolid();
+        return Level.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos()).isSolid();
     }
 
     @Override
@@ -34,7 +34,24 @@ public class BasicFallingPhysics extends Physics {
             entity.changeYPos(yVel);
             entity.changeXPos(xVel);
             yVel += grav;
+        }else {
+            yVel = 0;
         }
+    }
+
+    @Override
+    public boolean onCel() {
+        return false;
+    }
+
+    @Override
+    public boolean onLeftWall() {
+        return false;
+    }
+
+    @Override
+    public boolean onRightWall() {
+        return false;
     }
 
 }

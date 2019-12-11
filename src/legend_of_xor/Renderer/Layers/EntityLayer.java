@@ -33,7 +33,7 @@ public class EntityLayer extends Layer {
 
         for (Entity entity : Level.getEntities()) {
             try {
-                BufferedImage temp = entity.getTileImage();
+                BufferedImage temp = entity.getEntityImage();
                 //System.out.println(entity);
                 g2d.drawImage(temp,
                         (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + Renderer.calcEntityOrgX(entity.getOrigin(), temp)),

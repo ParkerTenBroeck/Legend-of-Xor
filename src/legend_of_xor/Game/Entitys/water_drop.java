@@ -19,9 +19,6 @@ import legend_of_xor.Renderer.Textures;
  */
 public class water_drop extends Entity {
 
-    private double yVel = 0;
-
-    private boolean hit = false;
     private long timeHit = 0;
 
     private boolean done;
@@ -36,7 +33,7 @@ public class water_drop extends Entity {
         TILE_X_SCALE = 1;  //x and y scale of each tile
         TILE_Y_SCALE = 1;
 
-        ORIGIN = Camera.Origin.TOP_CENTER;
+        ORIGIN = Camera.Origin.BOTTOM_LEFT;
     }
 
     public water_drop() {
@@ -50,7 +47,8 @@ public class water_drop extends Entity {
     }
 
     @Override
-    public BufferedImage getTileImage() {
+    public BufferedImage getEntityImage() {
+                
         if (done) {
             return null;
         }

@@ -6,6 +6,7 @@
 package legend_of_xor.Physics;
 
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Renderer.Level;
 
 /**
  *
@@ -23,6 +24,12 @@ public abstract class Physics {
     }
 
     public abstract boolean onGround();
+
+    public abstract boolean onCel();
+
+    public abstract boolean onLeftWall();
+
+    public abstract boolean onRightWall();
 
     public void setXVelocity(double xVel) {
         this.xVel = xVel;

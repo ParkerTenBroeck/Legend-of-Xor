@@ -26,7 +26,7 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Renderer {
 
-    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new LightingLayer()};
+    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer()};
     // private static final Layer background = new BackgroundLayer();
 
     private static BufferedImage imageBuffer;
@@ -36,7 +36,6 @@ public class Renderer {
 
         Graphics graphics = imageBuffer.getGraphics();
 
-        //long start = System.currentTimeMillis();
         for (Layer layer : LAYERS) {
             layer.startRender();
         }
@@ -44,13 +43,13 @@ public class Renderer {
         try {
             for (Layer layer : LAYERS) {
                 layer.joinLayer();
+                //Renderer.copySrcIntoDstAt(layer.getImage(), imageBuffer, 0, 0);
                 graphics.drawImage(layer.getImage(), 0, 0, null);
             }
         } catch (InterruptedException ex) {
 
         }
         Veiwer.setImage(imageBuffer);
-
     }
 
     public static int calcTileOrgX(Camera.Origin origin, BufferedImage image) {
@@ -176,8 +175,7 @@ public class Renderer {
 
         cm = getCompatibleColorModel();
         imageBuffer = gfxConfig.createCompatibleImage(
-                Textures.getXRes(), Textures.getYRes(), BufferedImage.TRANSLUCENT);
-
+                Textures.getXRes(), Textures.getYRes(), cm.getTransferType());
         for (Layer layer : LAYERS) {
             layer.init();
         }
@@ -189,8 +187,7 @@ public class Renderer {
                 getDefaultConfiguration();
 
         BufferedImage temp = gfxConfig.createCompatibleImage(
-                width, height, BufferedImage.TRANSLUCENT);
-
+                width, height, cm.getTransferType());
         return temp;
     }
 
@@ -203,10 +200,10 @@ public class Renderer {
         int dstoffs = dx + dy * dst.getWidth();
         int srcoffs = 0;
         for (int y = 0; y < height; y++, dstoffs += dst.getWidth(), srcoffs += width) {
-            try{
-            System.arraycopy(srcbuf, srcoffs, dstbuf, dstoffs, width);
-            }catch(Exception e){
-                
+            try {
+                System.arraycopy(srcbuf, srcoffs, dstbuf, dstoffs, width);
+            } catch (Exception e) {
+
             }
         }
     }

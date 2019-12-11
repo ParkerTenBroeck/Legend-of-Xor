@@ -18,7 +18,7 @@ import legend_of_xor.Renderer.Textures;
  */
 public class explosion extends Entity {
 
-    private final long START;
+    private long START;
     private final double RAD;
 
     @Override
@@ -38,6 +38,16 @@ public class explosion extends Entity {
         this.yPos = yPos;
         image = Textures.getEntityTexture(this);
     }
+    @Override
+    public void setXPos(double xPos){
+        this.xPos = xPos;
+        START = System.currentTimeMillis();
+    }
+    @Override
+    public void setYPos(double yPos){
+        this.yPos = yPos;
+        START = System.currentTimeMillis();
+    }
 
     @Override
     public boolean terminate() {
@@ -55,7 +65,7 @@ public class explosion extends Entity {
 }
 
 @Override
-        public BufferedImage getTileImage() {
+        public BufferedImage getEntityImage() {
 
         int xSize = (int) (Textures.getTileWidth() * TILE_X_SCALE);
         int ySize = (int) (Textures.getTileHeight() * TILE_Y_SCALE);

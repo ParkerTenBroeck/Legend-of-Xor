@@ -5,21 +5,25 @@
  */
 package legend_of_xor.AI;
 
-import legend_of_xor.Game.Entity;
 
 /**
  *
  * @author parke
  */
-public abstract class AI {
-    Entity entity;
-    
-   public AI(Entity entity){
-       this.entity = entity;
-   }
-   /**
-    * 
-    */
-   public abstract void update();
-}
+public abstract class AI<T> {
 
+    protected final T entity;
+    
+    public enum Direction{UP, DOWN, LEFT, RIGHT, STILL, FALLING, RISING}
+
+    public AI(T entity) {
+        this.entity = entity;
+    }
+
+    /**
+     *
+     */
+    public abstract void update();
+    
+    public abstract Direction getDirection();
+}

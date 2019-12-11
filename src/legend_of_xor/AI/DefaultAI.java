@@ -23,6 +23,11 @@ public class DefaultAI {
             @Override
             public void update() {
             }
+
+            @Override
+            public AI.Direction getDirection() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
         };
     }
 }

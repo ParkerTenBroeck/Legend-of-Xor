@@ -18,10 +18,4 @@ public class background_stone extends Tile {
     public background_stone() {
         image = Textures.getBlockTexture(this);
     }
-
-    @Override
-    public BufferedImage getTileImage(int xPos, int yPos) {
-        return image;
-    }
-
 }
