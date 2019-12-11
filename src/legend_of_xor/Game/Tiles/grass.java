@@ -36,64 +36,32 @@ public class grass extends Tile {
 
         int offset = 0;
 
-        try {
             if (!Level.getSafeSmallTile(xPos, yPos - 1).isSolid()) {
                 offset += 1;
             }
-        } catch (Exception e) {
-            offset += 1;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos + 1, yPos).isSolid()) {
                 offset += 2;
             }
-        } catch (Exception e) {
-            offset += 2;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos, yPos + 1).isSolid()) {
                 offset += 4;
             }
-        } catch (Exception e) {
-            offset += 4;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos - 1, yPos).isSolid()) {
                 offset += 8;
             }
-        } catch (Exception e) {
-            offset += 8;
-        }
         offset *= 16;
 
-        try {
             if (!Level.getSafeSmallTile(xPos - 1, yPos - 1).isSolid()) {
                 offset += 1;
             }
-        } catch (Exception e) {
-            offset += 1;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos + 1, yPos - 1).isSolid()) {
                 offset += 2;
             }
-        } catch (Exception e) {
-            offset += 2;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos + 1, yPos + 1).isSolid()) {
                 offset += 4;
             }
-        } catch (Exception e) {
-            offset += 4;
-        }
-        try {
             if (!Level.getSafeSmallTile(xPos - 1, yPos + 1).isSolid()) {
                 offset += 8;
             }
-        } catch (Exception e) {
-            offset += 8;
-        }
         
         offset = offset * (int) (Textures.getTileHeight() * TILE_Y_SCALE);
         return image.getSubimage(0, offset, (int) (Textures.getTileWidth() * TILE_X_SCALE), (int) (Textures.getTileHeight() * TILE_Y_SCALE));

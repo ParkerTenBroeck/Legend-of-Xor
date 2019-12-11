@@ -22,6 +22,7 @@ public class Legend_of_Xor {
 
         Veiwer frame = new Veiwer();
         Textures.setTileResolution(24, 24);
+        //Textures.enableShit(0.5);
         
         Renderer.init();
         

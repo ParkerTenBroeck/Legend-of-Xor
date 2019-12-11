@@ -28,6 +28,9 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Textures {
 
+    private static boolean shit = false;
+    private static double shitPer;
+
     static final private LinkedList<Object[]> blockTextures = new LinkedList();
     static final private LinkedList<Object[]> entityTextreus = new LinkedList();
     static final private LinkedList<Object[]> backgroundTextures = new LinkedList();
@@ -134,8 +137,7 @@ public class Textures {
         entityTextreus.addFirst(new Object[]{entity.getNameID(), toBufferedImage(image)});
         return toBufferedImage(image);
     }
-    
-    
+
     public static BufferedImage getBackgroundTexture(String name, int xRes, int yRes) {
         try {
 
@@ -170,8 +172,7 @@ public class Textures {
         return toBufferedImage(image);
     }
 
-
-    static Image nullImage(int width, int height) {
+    static BufferedImage nullImage(int width, int height) {
         BufferedImage error = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Graphics g = error.getGraphics();
@@ -214,6 +215,13 @@ public class Textures {
     }
 
     public static BufferedImage toCompatibleImage(BufferedImage image) {
+        
+        if(shit){
+            if(Math.random() > shitPer){
+                image = nullImage(image.getWidth(), image.getHeight());
+            }
+        }
+        
         // obtain the current system graphical settings
         GraphicsConfiguration gfxConfig = GraphicsEnvironment.
                 getLocalGraphicsEnvironment().getDefaultScreenDevice().
@@ -240,6 +248,11 @@ public class Textures {
 
         // return the new optimized image
         return newImage;
+    }
+
+    public static void enableShit(double shitPer) {
+        shit = true;
+        Textures.shitPer = shitPer;
     }
 
 }
