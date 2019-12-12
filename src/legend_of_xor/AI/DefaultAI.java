@@ -25,7 +25,7 @@ public class DefaultAI {
             }
 
             @Override
-            public AI.Direction getDirection() {
+            public Object getState(Object state) {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };

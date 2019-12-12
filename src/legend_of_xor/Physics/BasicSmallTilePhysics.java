@@ -14,8 +14,6 @@ import legend_of_xor.Renderer.Level;
  */
 public class BasicSmallTilePhysics extends Physics {
 
-    double grav;
-
     public BasicSmallTilePhysics(Entity entity, double initXVel, double initYVel, double gravity) {
         super(entity);
         this.yVel = initYVel;

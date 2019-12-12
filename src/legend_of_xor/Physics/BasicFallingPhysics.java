@@ -14,8 +14,6 @@ import legend_of_xor.Renderer.Level;
  */
 public class BasicFallingPhysics extends Physics {
 
-    private final double grav;
-
     public BasicFallingPhysics(Entity entity, double initYVel, double initXVel, double gravity) {
         super(entity);
         this.yVel = initYVel;

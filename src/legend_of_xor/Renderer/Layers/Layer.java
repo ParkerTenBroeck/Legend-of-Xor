@@ -7,6 +7,7 @@ package legend_of_xor.Renderer.Layers;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 

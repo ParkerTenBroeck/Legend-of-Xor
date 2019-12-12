@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.awt.image.VolatileImage;
 import javax.swing.Timer;
 import legend_of_xor.KeyboardLisenter;
 import legend_of_xor.Renderer.Camera;

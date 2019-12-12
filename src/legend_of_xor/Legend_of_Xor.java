@@ -39,7 +39,7 @@ public class Legend_of_Xor {
                     Renderer.DrawScreen();
                     long newt = System.nanoTime();
                     if (newt - last > 0.017 * 1_000_000_000) {
-                        //System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                   //     System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                     }
 
                     try {

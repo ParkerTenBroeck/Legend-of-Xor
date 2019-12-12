@@ -21,7 +21,7 @@ public class goblin_enemy extends Entity {
 
     private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
 
-    private final AI ai = new AI<goblin_enemy>(this) {
+    private final AI ai = new AI<goblin_enemy, Boolean, Integer>(this) {
         @Override
         public void update() {
             if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
@@ -58,7 +58,7 @@ public class goblin_enemy extends Entity {
         }
 
         @Override
-        public AI.Direction getDirection() {
+        public Boolean getState(Integer state) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     };

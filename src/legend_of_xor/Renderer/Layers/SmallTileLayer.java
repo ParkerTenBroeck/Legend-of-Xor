@@ -40,7 +40,7 @@ public class SmallTileLayer extends Layer {
                 if (i != null) {
                     int orgX = Renderer.calcTileOrgX(temp.getOrigin(), i);
                     int orgY = Renderer.calcTileOrgY(temp.getOrigin(), i);
-
+                    
                     g2d.drawImage(i,
                             x * Textures.getTileWidth() + xPixelOffset + orgX,
                             y * Textures.getTileHeight() + yPixelOffset + orgY,

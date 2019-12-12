@@ -9,12 +9,19 @@ package legend_of_xor.AI;
 /**
  *
  * @author parke
+ * @param <T>
+ * entity type
+ * 
+ * @param <S>
+ * user state
+ * 
+ * @param <R>
+ * return type
+ * 
  */
-public abstract class AI<T> {
+public abstract class AI<T, R, S> {
 
     protected final T entity;
-    
-    public enum Direction{UP, DOWN, LEFT, RIGHT, STILL, FALLING, RISING}
 
     public AI(T entity) {
         this.entity = entity;
@@ -25,5 +32,5 @@ public abstract class AI<T> {
      */
     public abstract void update();
     
-    public abstract Direction getDirection();
+    public abstract R getState(S state);
 }

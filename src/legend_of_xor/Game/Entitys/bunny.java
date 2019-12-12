@@ -23,7 +23,7 @@ public class bunny extends Entity {
 
     protected final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.01);
 
-    private final AI ai = new AI<bunny>(this) {
+    private final AI ai = new AI<bunny,  Boolean, Integer>(this) {
 
         public boolean direaction;
 
@@ -51,7 +51,7 @@ public class bunny extends Entity {
         }
 
         @Override
-        public AI.Direction getDirection() {
+        public Boolean getState(Integer state) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     };

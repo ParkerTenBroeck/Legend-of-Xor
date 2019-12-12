@@ -107,11 +107,12 @@ public class player extends Entity implements Playable {
 
     @Override
     public void magic() {
-        if (Math.random() > 0.5) {
-            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));
-        } else {
-            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));  
-        }
+//        if (Math.random() > 0.5) {
+//            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));
+//        } else {
+//            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));  
+//        }
+Level.addEntity(new bird(xPos, yPos));
     }
 
     @Override

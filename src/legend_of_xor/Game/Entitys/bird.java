@@ -5,9 +5,9 @@
  */
 package legend_of_xor.Game.Entitys;
 
+import com.sun.javafx.scene.traversal.Direction;
 import java.awt.image.BufferedImage;
 import legend_of_xor.AI.AI;
-import legend_of_xor.AI.AI.Direction;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Physics.BasicSmallTilePhysics;
 import legend_of_xor.Physics.Physics;
@@ -19,10 +19,15 @@ import legend_of_xor.Renderer.Textures;
  */
 public class bird extends Entity {
 
+    protected enum STATE {
+        left, right, leftFlying, rightFlying
+    }
+
     private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.001);
-    private final AI ai = new AI<bird>(this) {
+    private final AI ai = new AI<bird, STATE, Integer>(this) {
 
         private boolean flying = false;
+        private boolean falling = false;
 
         private boolean moving = false;
 
@@ -33,15 +38,37 @@ public class bird extends Entity {
 
             if (flying) {
                 if (phy.getYVelocity() > -0.04) {
+
                     phy.changeYVel(-0.003);
                 }
+                phy.setGravity(0.001);
             }
+            if (phy.onGround()) {
+                phy.setXVelocity(0);
+                falling = false;
+                if (moving && !flying) {
+                    phy.setGravity(0.007);
+
+                    if ( phy.onLeftWall()) {
+                        phy.setYVelocity(-0.12);
+                    } else if ( phy.onRightWall()) {
+                        phy.setYVelocity(-0.12);
+                    } else {
+                        phy.setYVelocity(-0.05);
+                    }
+
+                }
+            }
+
             if (moving) {
                 if (direction == Direction.LEFT) {
                     phy.setXVelocity(-0.05);
                 } else if (direction == Direction.RIGHT) {
                     phy.setXVelocity(0.05);
                 }
+
+            } else {
+                phy.setXVelocity(phy.getXVelocity() * 0.93);
             }
 
             if (Math.random() > 0.991) {
@@ -50,6 +77,7 @@ public class bird extends Entity {
 
             if (Math.random() > 0.993) {
                 flying = !flying;
+                falling = true;
             }
             if (Math.random() > 0.993) {
                 if (direction == Direction.RIGHT) {
@@ -61,11 +89,21 @@ public class bird extends Entity {
         }
 
         @Override
-        public AI.Direction getDirection() {
-            return direction;
-
+        public STATE getState(Integer state) {
+            if (flying || falling) {
+                if (direction == Direction.LEFT) {
+                    return STATE.leftFlying;
+                } else {
+                    return STATE.rightFlying;
+                }
+            } else {
+                if (direction == Direction.LEFT) {
+                    return STATE.left;
+                } else {
+                    return STATE.right;
+                }
+            }
         }
-
     };
 
     private final int type;
@@ -100,17 +138,17 @@ public class bird extends Entity {
     @Override
     public BufferedImage getEntityImage() {
 
+        STATE state = (STATE) ai.getState(0);
+
         int xOffset = (int) (image.getWidth() / TILESX * TILE_X_SCALE * type);
 
         int yOffset = 0;
 
-        if (phy.onGround()) {
-            yOffset = 0;
-        } else {
+        if (state == STATE.leftFlying || state == STATE.rightFlying) {
             yOffset = (int) (1 + ((System.currentTimeMillis() / 100) % 2));
         }
 
-        if (ai.getDirection() == Direction.RIGHT) {
+        if (state == STATE.right || state == STATE.rightFlying) {
             yOffset += 3;
         }
         yOffset = (int) (image.getHeight() / TILESY * TILE_Y_SCALE * yOffset);

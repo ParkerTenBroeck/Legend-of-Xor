@@ -16,8 +16,9 @@ public abstract class Physics {
 
     protected Entity entity;
 
-    double xVel;
-    double yVel;
+    protected double xVel;
+    protected double yVel;
+    protected double grav;
 
     public Physics(Entity entity) {
         this.entity = entity;
@@ -53,6 +54,13 @@ public abstract class Physics {
 
     public double getYVelocity() {
         return yVel;
+    }
+    
+    public void setGravity(double grav){
+        this.grav = grav;
+    }
+    public double getGravity(){
+        return grav;
     }
 
     public abstract void update();

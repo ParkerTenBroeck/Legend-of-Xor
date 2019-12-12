@@ -13,9 +13,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferInt;
+import java.awt.image.VolatileImage;
 import legend_of_xor.Renderer.Layers.Layer;
 import legend_of_xor.Renderer.Layers.SmallTileLayer;
 import legend_of_xor.Veiwer.Veiwer;
@@ -49,6 +51,7 @@ public class Renderer {
         } catch (InterruptedException ex) {
 
         }
+        graphics.dispose();
         Veiwer.setImage(imageBuffer);
     }
 
@@ -168,26 +171,20 @@ public class Renderer {
     }
 
     public static void init() {
-
-        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                getDefaultConfiguration();
-
+        
         cm = getCompatibleColorModel();
-        imageBuffer = gfxConfig.createCompatibleImage(
-                Textures.getXRes(), Textures.getYRes(), cm.getTransferType());
+        imageBuffer = createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         for (Layer layer : LAYERS) {
             layer.init();
         }
     }
 
     public static BufferedImage createCompatibleImage(int width, int height) {
-        GraphicsConfiguration gfxConfig = GraphicsEnvironment.
-                getLocalGraphicsEnvironment().getDefaultScreenDevice().
-                getDefaultConfiguration();
 
-        BufferedImage temp = gfxConfig.createCompatibleImage(
-                width, height, cm.getTransferType());
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
+        BufferedImage temp = gc.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+        temp.setAccelerationPriority(1);
         return temp;
     }
 
