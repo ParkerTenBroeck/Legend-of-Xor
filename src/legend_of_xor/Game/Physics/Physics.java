@@ -6,7 +6,7 @@
 package legend_of_xor.Physics;
 
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 
 /**
  *
@@ -55,11 +55,12 @@ public abstract class Physics {
     public double getYVelocity() {
         return yVel;
     }
-    
-    public void setGravity(double grav){
+
+    public void setGravity(double grav) {
         this.grav = grav;
     }
-    public double getGravity(){
+
+    public double getGravity() {
         return grav;
     }
 

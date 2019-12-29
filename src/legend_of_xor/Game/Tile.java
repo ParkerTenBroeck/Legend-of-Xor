@@ -23,7 +23,7 @@ public abstract class Tile {
     protected double TILE_Y_SCALE = 1;
 
     protected Origin ORIGIN = Origin.TOP_CENTER;
-    
+
     protected boolean SOLID = true;
     protected boolean INVENTORY = false;
 
@@ -61,10 +61,19 @@ public abstract class Tile {
         return TILESY * TILE_Y_SCALE;
     }
 
-    public boolean isSolid(){
+    public boolean isSolid() {
         return SOLID;
     }
-    public boolean hasInventory(){
+
+    public boolean hasInventory() {
         return INVENTORY;
+    }
+
+    public double getXTileScale() {
+        return TILE_X_SCALE;
+    }
+
+    public double getYTileScale() {
+        return TILE_Y_SCALE;
     }
 }

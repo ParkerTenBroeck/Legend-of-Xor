@@ -6,7 +6,7 @@
 package legend_of_xor.Physics;
 
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 
 /**
  *
@@ -23,7 +23,7 @@ public class BasicFallingPhysics extends Physics {
 
     @Override
     public boolean onGround() {
-        return Level.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos()).isSolid();
+        return Game.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos()).isSolid();
     }
 
     @Override
@@ -32,7 +32,12 @@ public class BasicFallingPhysics extends Physics {
             entity.changeYPos(yVel);
             entity.changeXPos(xVel);
             yVel += grav;
-        }else {
+            if (onGround()) {
+                entity.setYPos((int)entity.getYPos());
+                yVel = 0;
+            }
+        } else {
+            entity.setYPos((int)entity.getYPos());
             yVel = 0;
         }
     }

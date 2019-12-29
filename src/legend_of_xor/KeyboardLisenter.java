@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.JComponent;
 import javax.swing.event.MouseInputListener;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Veiwer.Veiwer;
 
 public class KeyboardLisenter extends Controls {
@@ -41,12 +41,12 @@ public class KeyboardLisenter extends Controls {
                 double xD = Math.abs(Camera.getXPos() - (int) Camera.getXPos());
                 double yD = Math.abs(Camera.getYPos() - (int) Camera.getYPos());
 
-                xD = xD * (double) Veiwer.getXSize() / (double) Level.getLevelTilesX();
-                yD = yD * (double) Veiwer.getYSize() / (double) Level.getLevelTilesY();
+                xD = xD * (double) Veiwer.getXSize() / (double) Game.getLevelTilesX();
+                yD = yD * (double) Veiwer.getYSize() / (double) Game.getLevelTilesY();
 
                 //  System.out.println(xD);
-                mouseXTile = (int) (((me.getX() * Level.getLevelTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
-                mouseYTile = (int) (((me.getY() * Level.getLevelTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);
+                mouseXTile = (int) (((me.getX() * Game.getLevelTilesX()) / Veiwer.getXSize()) + (-Camera.getXPos()) + xD);
+                mouseYTile = (int) (((me.getY() * Game.getLevelTilesY()) / Veiwer.getYSize()) + (-Camera.getYPos()) + yD);
             }
         });
 

@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Entitys.rope;
+import legend_of_xor.Game.Level;
+import legend_of_xor.Game.Levels.main_level;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
 import legend_of_xor.Veiwer.Veiwer;
@@ -18,7 +21,7 @@ import legend_of_xor.Veiwer.Veiwer;
  *
  * @author parke
  */
-public class Level {
+public class Game {
 
     private static BackgroundTile[][] backgroundTiles = new BackgroundTile[1][1];
 
@@ -27,11 +30,14 @@ public class Level {
     private static final ArrayList<Entity> entities = new ArrayList();
     private static boolean isTopDown = false;
 
+    Level level = new main_level();
+
     private static int levelTilesX;
     private static int levelTilesY;
 
     private static Entity player;
-    public static int getBackgroundTilesYRes;
+    
+    private static long tick = 0;
 
     public static int getLevelTilesX() {
         return levelTilesX;
@@ -69,7 +75,6 @@ public class Level {
             for (int i = entities.size() - 1; i >= 0; i--) {
                 entities.get(i).update();
                 if (entities.get(i).terminate()) {
-                    //System.out.print("removed " + entities.size() + " " + entities.get(i) + " ");
                     entities.remove(i);
                     //System.out.println(entities.size());
                 }
@@ -79,9 +84,12 @@ public class Level {
         try {
             updateTiles.join();
         } catch (InterruptedException ex) {
-            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-
+        tick ++;
+    }
+    public static long getTick(){
+        return tick;
     }
 
     public static void loadNewLevel(String name) {
@@ -99,6 +107,8 @@ public class Level {
         LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
         Camera.followEntity(player);
+        
+        entities.add(new rope(20, player, false));
 
         Veiwer.refreshImageSize();
     }
@@ -108,18 +118,17 @@ public class Level {
         smallTiles = new Tile[tilesY][tilesX];
         entities.clear();
         entities.add(player);
-        Level.player = player;
+        Game.player = player;
     }
 
     public static Entity getPlayer() {
         return player;
     }
 
-    public synchronized static void setSmallTile(Tile tile, int xPos, int yPos) {
+    public static void setSmallTile(Tile tile, int xPos, int yPos) {
         try {
-            Level.smallTiles[yPos][xPos] = tile;
+            Game.smallTiles[yPos][xPos] = tile;
         } catch (Exception e) {
-
         }
     }
 
@@ -142,8 +151,11 @@ public class Level {
             return new air();
         }
     }
+    public static ArrayList<Entity> getEntities(){
+        return entities;
+    }
 
-    public static ArrayList<Entity> getEntities() {
+    public static ArrayList<Entity> getEntitiesClone() {
         return (ArrayList<Entity>) entities.clone();
     }
 

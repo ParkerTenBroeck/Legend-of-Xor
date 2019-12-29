@@ -32,6 +32,10 @@ public class Controls {
         return KeyboardLisenter.rightMouse;
     }
 
+    public static boolean isMiddlePressed() {
+        return KeyboardLisenter.middleMouse;
+    }
+
     public static int getMouseTileX() {
         KeyboardLisenter.calculateMouseTilePos();
         return KeyboardLisenter.mouseXTile;
@@ -137,8 +141,8 @@ public class Controls {
         }
         return false;
     }
-    
-        public static boolean getLeftPress() {
+
+    public static boolean getLeftPress() {
         switch (controlTypeInUse) {
             case KEYBOARD:
                 return KeyboardLisenter.leftPressed;
@@ -225,8 +229,6 @@ public class Controls {
         }
         return false;
     }
-    
-    
 
     //---------METHODS FOR USER CHANGING AND GETTING THE CONTROLS------------
     public static void setJumpKey(char key) {

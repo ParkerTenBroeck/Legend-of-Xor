@@ -6,12 +6,13 @@
 package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import legend_of_xor.AI.Playable;
 import legend_of_xor.Controls;
 import legend_of_xor.Game.*;
 import legend_of_xor.Physics.BasicSmallTilePhysics;
 import legend_of_xor.Physics.Physics;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -19,8 +20,6 @@ import legend_of_xor.Renderer.Textures;
  * @author parke
  */
 public class player extends Entity implements Playable {
-
-    private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
 
     @Override
     protected void init() {
@@ -32,6 +31,8 @@ public class player extends Entity implements Playable {
 
         xPos = 0;
         yPos = 40;
+
+        this.phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
     }
 
     public player() {
@@ -102,17 +103,17 @@ public class player extends Entity implements Playable {
 
     @Override
     public void attack() {
-        Level.addEntity(new bomb(xPos, yPos - 1.5, phy.getXVelocity() * 1.2, -0.2));
+        Game.addEntity(new bomb(xPos, yPos - 1.5, phy.getXVelocity() * 1.2, -0.2));
     }
 
     @Override
     public void magic() {
-//        if (Math.random() > 0.5) {
-//            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));
-//        } else {
-//            Level.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));  
-//        }
-Level.addEntity(new bird(xPos, yPos));
+        if (Math.random() > 0.5) {
+            Game.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));
+        } else {
+            Game.addEntity(new egg(xPos, yPos, new goblin_enemy(xPos, yPos)));//new bomb(xPos, yPos - 1.25, xVel * 1.25, -0.25));  
+        }
+//Level.addEntity(new bird(xPos, yPos));
     }
 
     @Override

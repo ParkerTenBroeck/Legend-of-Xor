@@ -5,11 +5,12 @@
  */
 package legend_of_xor.Renderer.Layers;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 
@@ -21,7 +22,8 @@ public class SmallTileLayer extends Layer {
 
     @Override
     public void drawLayer() {
-        Graphics2D g2d = (Graphics2D) image.getGraphics().create();
+        Graphics g2d =image.getGraphics().create();
+        
 
         int xTileOffset = 0 - (int) Math.floor(Camera.getXPos());
         int yTileOffset = 0 - (int) Math.floor(Camera.getYPos());
@@ -33,7 +35,7 @@ public class SmallTileLayer extends Layer {
 
             for (int x = -1; x < Camera.getCameraTilesX(); x++) {
 
-                Tile temp = Level.getSafeSmallTile(x + xTileOffset, y + yTileOffset);
+                Tile temp = Game.getSafeSmallTile(x + xTileOffset, y + yTileOffset);
 
                 BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
 

@@ -10,7 +10,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Physics.BasicFallingPhysics;
 import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -23,8 +23,6 @@ public class water_drop extends Entity {
 
     private boolean done;
 
-    private final Physics phy = new BasicFallingPhysics(this, 0, 0, 0.001);
-
     @Override
     protected void init() {
         TILESX = 1; //how many tiles there are in the sprite sheet
@@ -34,6 +32,9 @@ public class water_drop extends Entity {
         TILE_Y_SCALE = 1;
 
         ORIGIN = Camera.Origin.BOTTOM_LEFT;
+        
+        phy = new BasicFallingPhysics(this, 0, 0, 0.001);
+
     }
 
     public water_drop() {

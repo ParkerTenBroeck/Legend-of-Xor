@@ -6,10 +6,11 @@
 package legend_of_xor.Renderer.Layers;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Layers.Layer;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 
@@ -22,18 +23,20 @@ public class BackgroundLayer extends Layer {
     @Override
     public void drawLayer() {
 
-        int tilesWidth = Level.getBackgroundTilesWidth() * (Level.getBackgroundTilesX() - 1);
-        int tilesHeight = Level.getBackgroundTilesHeight() * (Level.getBackgroundTilesY() - 1);
+        Graphics graphics = image.getGraphics();
+        
+        int tilesWidth = Game.getBackgroundTilesWidth() * (Game.getBackgroundTilesX() - 1);
+        int tilesHeight = Game.getBackgroundTilesHeight() * (Game.getBackgroundTilesY() - 1);
 
-        int offsetX = (int) (Camera.getXPos() / ((double) (Level.getLevelTilesX() - Camera.getCameraTilesX())) * tilesWidth) / (Level.getBackgroundTilesX());
-        int offsetY = (int) (Camera.getYPos() / ((double) (Level.getLevelTilesY() - Camera.getCameraTilesY())) * tilesHeight) / (Level.getBackgroundTilesY());
+        int offsetX = (int) (Camera.getXPos() / ((double) (Game.getLevelTilesX() - Camera.getCameraTilesX())) * tilesWidth) / (Game.getBackgroundTilesX());
+        int offsetY = (int) (Camera.getYPos() / ((double) (Game.getLevelTilesY() - Camera.getCameraTilesY())) * tilesHeight) / (Game.getBackgroundTilesY());
 
-        for (int y = 0; y < Level.getBackgroundTilesY(); y++) {
-            for (int x = 0; x < Level.getBackgroundTilesX(); x++) {
+        for (int y = 0; y < Game.getBackgroundTilesY(); y++) {
+            for (int x = 0; x < Game.getBackgroundTilesX(); x++) {
 
-                BackgroundTile tile = Level.getBackgroundTile(x, y);
+                BackgroundTile tile = Game.getBackgroundTile(x, y);
 
-                image.getGraphics().drawImage(tile.getImage(),
+                graphics.drawImage(tile.getImage(),
                         tile.getXPos(x, y) + offsetX,
                         tile.getYPos(x, y) + offsetY,
                          null);

@@ -7,7 +7,7 @@ package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -69,9 +69,9 @@ public class BackgroundTile {
         if (tileX == 0) {
             return 0;
         } else if (tileX > 0) {
-            return Level.getBackgroundTile(tileX, tileY).getWidth() + getXPos(tileX - 1, tileY);
+            return Game.getBackgroundTile(tileX, tileY).getWidth() + getXPos(tileX - 1, tileY);
         } else {
-            return Level.getBackgroundTile(tileX, tileY).getWidth() + getXPos(tileX + 1, tileY);
+            return Game.getBackgroundTile(tileX, tileY).getWidth() + getXPos(tileX + 1, tileY);
         }
     }
 
@@ -94,9 +94,9 @@ public class BackgroundTile {
         if (tileY == 0) {
             return 0;
         } else if (tileY > 0) {
-            return Level.getBackgroundTile(tileX, tileY).getHeight() + getYPos(tileX, tileY - 1);
+            return Game.getBackgroundTile(tileX, tileY).getHeight() + getYPos(tileX, tileY - 1);
         } else {
-            return Level.getBackgroundTile(tileX, tileY).getHeight() + getYPos(tileX, tileY + 1);
+            return Game.getBackgroundTile(tileX, tileY).getHeight() + getYPos(tileX, tileY + 1);
         }
     }
 

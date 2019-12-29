@@ -165,7 +165,7 @@ public class Textures {
                     Image.SCALE_AREA_AVERAGING);
 
         } catch (Exception e) {
-            image = Textures.nullImage((int) (tileWidth * Level.getLevelTilesX()), (int) ((tileHeight * Level.getLevelTilesY())));
+            image = Textures.nullImage((int) (tileWidth * Game.getLevelTilesX()), (int) ((tileHeight * Game.getLevelTilesY())));
         }
 
         blockTextures.addFirst(new Object[]{name, toBufferedImage(image)});

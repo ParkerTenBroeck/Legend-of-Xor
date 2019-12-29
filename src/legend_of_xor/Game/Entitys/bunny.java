@@ -21,9 +21,7 @@ import legend_of_xor.Renderer.Textures;
  */
 public class bunny extends Entity {
 
-    protected final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.01);
-
-    private final AI ai = new AI<bunny,  Boolean, Integer>(this) {
+    private final AI ai = new AI<bunny, Boolean, Integer>(this) {
 
         public boolean direaction;
 
@@ -62,6 +60,8 @@ public class bunny extends Entity {
     protected void init() {
         TILESY = 5;
         TILESX = 2;
+
+        phy = new BasicSmallTilePhysics(this, 0, 0, 0.01);
 
     }
 

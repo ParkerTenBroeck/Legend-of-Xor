@@ -10,7 +10,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
 import legend_of_xor.Physics.BasicSmallTilePhysics;
 import legend_of_xor.Physics.Physics;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -19,12 +19,10 @@ import legend_of_xor.Renderer.Textures;
  */
 public class goblin_enemy extends Entity {
 
-    private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
-
     private final AI ai = new AI<goblin_enemy, Boolean, Integer>(this) {
         @Override
         public void update() {
-            if (Math.abs(Level.getPlayer().getXPos() - xPos) < 10) {//tracks the player
+            if (Math.abs(Game.getPlayer().getXPos() - xPos) < 10) {//tracks the player
                 trackPlayerAI();
             } else {
                 patrolElevationAI();
@@ -32,7 +30,7 @@ public class goblin_enemy extends Entity {
         }
 
         private void trackPlayerAI() {
-            if ((Level.getPlayer().getXPos() - xPos) > 0) {
+            if ((Game.getPlayer().getXPos() - xPos) > 0) {
                 phy.setXVelocity(0.05);
             } else {
                 phy.setXVelocity(-0.05);
@@ -48,9 +46,9 @@ public class goblin_enemy extends Entity {
         }
 
         private void patrolElevationAI() {// lol sorry this is wrong
-            if (!rightLeft && !((!Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos - 1).isSolid()) && Level.getSafeSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
+            if (!rightLeft && !((!Game.getSafeSmallTile((int) (xPos + 0.5), (int) yPos - 1).isSolid()) && Game.getSafeSmallTile((int) (xPos + 0.5), (int) yPos).isSolid())) {// if dif elev on right
                 rightLeft = true;
-            } else if (rightLeft && !((!Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos - 1).isSolid()) && Level.getSafeSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
+            } else if (rightLeft && !((!Game.getSafeSmallTile((int) (xPos - 0.5), (int) yPos - 1).isSolid()) && Game.getSafeSmallTile((int) (xPos - 0.5), (int) yPos).isSolid())) {// if dif elev on left
                 rightLeft = false;
             }
 
@@ -62,11 +60,16 @@ public class goblin_enemy extends Entity {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     };
-
+    
     private boolean rightLeft = false;
 
+    @Override
+    protected void init() {
+        phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
+    }
+
     public goblin_enemy() {
-        // image = Textures.getEntityTexture(this);
+        image = Textures.getEntityTexture(this);
 
     }
 

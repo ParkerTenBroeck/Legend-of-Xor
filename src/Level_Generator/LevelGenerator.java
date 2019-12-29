@@ -10,7 +10,7 @@ import legend_of_xor.Game.Entitys.bunny;
 import legend_of_xor.Game.Entitys.player;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.*;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 
 /**
  *
@@ -20,7 +20,7 @@ public class LevelGenerator {
 
     public static void makeLevel(int xSize, int ySize) {
 
-        Level.newLevel(xSize, ySize, new player());
+        Game.newLevel(xSize, ySize, new player());
 
         double scale = 0.1;
         double change = 1.5;
@@ -36,30 +36,30 @@ public class LevelGenerator {
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
 
                 if (y == (ySize - (int) noise)) {
-                    Level.setSmallTile(new grass(), x, y);
+                    Game.setSmallTile(new grass(), x, y);
                     if (Math.random() < 0.2) {
                         try {
-                            if (Level.getSmallTile(x - 1, y - 1) == null && Level.getSmallTile(x - 2, y - 1) == null) {
-                                if (Level.getSmallTile(x - 1, y) != null && Level.getSmallTile(x - 2, y) != null) {
-                                    Level.setSmallTile(new big_tree(), x - 1, y - 1);
+                            if (Game.getSmallTile(x - 1, y - 1) == null && Game.getSmallTile(x - 2, y - 1) == null) {
+                                if (Game.getSmallTile(x - 1, y) != null && Game.getSmallTile(x - 2, y) != null) {
+                                    Game.setSmallTile(new big_tree(), x - 1, y - 1);
                                 }
                             } else {
-                                Level.setSmallTile(new small_tree(), x, y - 1);
+                                Game.setSmallTile(new small_tree(), x, y - 1);
                             }
                         } catch (Exception e) {
 
                         }
                     } else if (Math.random() < 0.06) {
-                        Level.setSmallTile(new chest(), x, y - 1);
+                        Game.setSmallTile(new campfire(), x, y - 1);
                     } else {
                         //temp[y-1][x] = new explosion();
                     }
                 } else {
-                    Level.setSmallTile(new grass(), x, y);
+                    Game.setSmallTile(new grass(), x, y);
                 }
                 if ((y - 3) > ((ySize - (int) noise))) {
-                    Level.setSmallTile(new stone(), x, y);
-                    Level.setAestheticTile(new background_stone(), x, y);
+                    Game.setSmallTile(new stone(), x, y);
+                    Game.setAestheticTile(new background_stone(), x, y);
                 }
             }
         }
@@ -78,14 +78,14 @@ public class LevelGenerator {
                 try {
                     if (val > 0.4 && val < 0.5 || (val < -0.2 && val > -0.3)) {
 
-                        if (Level.getSmallTile(x, y).getNameID().equals("stone")) {
-                            Level.setSmallTile(null, x, y);
+                        if (Game.getSmallTile(x, y).getNameID().equals("stone")) {
+                            Game.setSmallTile(null, x, y);
                         }
 
                     }
                     if (oreVal < -0.6) {
-                        if (Level.getSmallTile(x, y).getNameID().equals("stone")) {
-                            Level.setSmallTile(new ore(), x, y);
+                        if (Game.getSmallTile(x, y).getNameID().equals("stone")) {
+                            Game.setSmallTile(new ore(), x, y);
                         }
                     }
 
@@ -97,14 +97,14 @@ public class LevelGenerator {
         for (int x = 0; x < xSize; x++) {
             for (int y = ySize - 1; y >= ySize - (int) noise; y--) {
                 try {
-                    if (Level.getSafeSmallTile(x, y).getNameID().equals("stone")
-                            && Level.getSafeSmallTile(x + 1, y).getNameID().equals("stone")
-                            && Level.getSafeSmallTile(x - 1, y).getNameID().equals("stone")) {
+                    if (Game.getSafeSmallTile(x, y).getNameID().equals("stone")
+                            && Game.getSafeSmallTile(x + 1, y).getNameID().equals("stone")
+                            && Game.getSafeSmallTile(x - 1, y).getNameID().equals("stone")) {
 
                         boolean empty = true;
                         for (int i = x - 1; i <= x + 1; i++) {
                             for (int j = y + 3; j >= y + 1; j--) {
-                                if (Level.getSmallTile(i, j) != null) {
+                                if (Game.getSmallTile(i, j) != null) {
 
                                     empty = false;
                                 }
@@ -112,7 +112,7 @@ public class LevelGenerator {
                         }
                         if (empty) {
                             if (Math.random() > 0.6) {
-                                Level.setSmallTile(new stalactite(), x, y + 1);
+                                Game.setSmallTile(new stalactite(), x, y + 1);
                             }
                         }
                     }
@@ -123,12 +123,12 @@ public class LevelGenerator {
         }
 
         for (int i = 0; i < xSize / 10; i++) {
-            Level.addEntity(new bird(Math.random() * xSize, 0));
-            Level.addEntity(new bird(Math.random() * xSize, 0));
-            Level.addEntity(new bunny(Math.random() * xSize, 0));
+            Game.addEntity(new bird(Math.random() * xSize, 0));
+            Game.addEntity(new bird(Math.random() * xSize, 0));
+            Game.addEntity(new bunny(Math.random() * xSize, 0));
         }
         for(int i = 0; i < 1000; i ++){
-            Level.update();
+            Game.update();
         }
     }
 }

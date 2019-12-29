@@ -7,7 +7,7 @@ package legend_of_xor.Game.Tiles;
 
 import legend_of_xor.Game.Entitys.open_sign;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -31,10 +31,10 @@ public class chest extends Tile {
 
     @Override
     public void update(int xPos, int yPos) {
-        if (Math.abs(xPos - Level.getPlayer().getXPos()) < 2 && Math.abs(yPos - Level.getPlayer().getYPos()) < 2) {
+        if (Math.abs(xPos - Game.getPlayer().getXPos()) < 2 && Math.abs(yPos - Game.getPlayer().getYPos()) < 2) {
             if (sign == null) {
                 sign = new open_sign(xPos + 0.5, yPos );
-                Level.addEntity(sign);
+                Game.addEntity(sign);
             }
             sign.terminate(false);
         } else {

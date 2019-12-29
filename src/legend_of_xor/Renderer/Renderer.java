@@ -45,7 +45,7 @@ public class Renderer {
         try {
             for (Layer layer : LAYERS) {
                 layer.joinLayer();
-                //Renderer.copySrcIntoDstAt(layer.getImage(), imageBuffer, 0, 0);
+
                 graphics.drawImage(layer.getImage(), 0, 0, null);
             }
         } catch (InterruptedException ex) {
@@ -171,7 +171,7 @@ public class Renderer {
     }
 
     public static void init() {
-        
+
         cm = getCompatibleColorModel();
         imageBuffer = createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         for (Layer layer : LAYERS) {
@@ -187,6 +187,15 @@ public class Renderer {
         temp.setAccelerationPriority(1);
         return temp;
     }
+
+//    public static VolatileImage createCompatibleVolatileImage(int width, int height) {
+//
+//        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//        GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
+//        VolatileImage temp = gc.createCompatibleVolatileImage(width, height, Transparency.TRANSLUCENT);
+//        temp.setAccelerationPriority(1);
+//        return temp;
+//    }
 
     public static void copySrcIntoDstAt(final BufferedImage src,
             final BufferedImage dst, final int dx, final int dy) {

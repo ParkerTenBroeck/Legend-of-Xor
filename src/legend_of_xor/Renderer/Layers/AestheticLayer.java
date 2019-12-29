@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import legend_of_xor.Game.BackgroundTile;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 
@@ -36,7 +36,7 @@ public class AestheticLayer extends Layer {
 
             for (int x = -1; x < Camera.getCameraTilesX(); x++) {
 
-                Tile temp = Level.getSafeAestheticTile(x + xTileOffset, y + yTileOffset);
+                Tile temp = Game.getSafeAestheticTile(x + xTileOffset, y + yTileOffset);
 
                 BufferedImage i = temp.getTileImage(x + xTileOffset, y + yTileOffset);
 

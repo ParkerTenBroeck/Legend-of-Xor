@@ -12,7 +12,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Physics.BasicFallingPhysics;
 import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -24,8 +24,6 @@ public class egg extends Entity {
     private final int eggType;
 
     private final Entity entity;
-
-    private final Physics phy = new BasicFallingPhysics(this, 0, 0, 0.01);
     private long start;
 
     @Override
@@ -33,6 +31,8 @@ public class egg extends Entity {
 
         TILESY = 4;
         ORIGIN = Origin.BOTTOM_CENTER;
+        
+        phy = new BasicFallingPhysics(this, 0, 0, 0.01);
     }
 
     public egg(double xPos, double yPos, Entity entity) {
@@ -47,15 +47,15 @@ public class egg extends Entity {
     @Override
     public boolean terminate() {
 
-        double disX = Math.abs(Level.getPlayer().getXPos() - xPos);
-        double disY = Math.abs(Level.getPlayer().getYPos() - yPos);
+        double disX = Math.abs(Game.getPlayer().getXPos() - xPos);
+        double disY = Math.abs(Game.getPlayer().getYPos() - yPos);
         long time = System.currentTimeMillis() - start;
 
         if (time > 10000) {
             entity.setXPos(xPos);
             entity.setYPos(yPos - 0.1);
             //Level.addEntity(new explosion(xPos, yPos, 1.5));
-            Level.addEntity(entity);
+            Game.addEntity(entity);
             return true;
         } else {
             return false;

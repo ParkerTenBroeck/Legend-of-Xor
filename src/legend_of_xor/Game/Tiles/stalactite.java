@@ -8,7 +8,7 @@ package legend_of_xor.Game.Tiles;
 import legend_of_xor.Game.Entitys.water_drop;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -33,7 +33,7 @@ public class stalactite extends Tile {
     @Override
     public void update(int xPos, int yPos) {
         if (Math.random() > 0.99) {
-            Level.addEntity(new water_drop(xPos, yPos + 2.75));
+            Game.addEntity(new water_drop(xPos, yPos + 2.75));
         }
     }
 }

@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -32,19 +32,21 @@ public class explosion extends Entity {
     }
 
     public explosion(double xPos, double yPos, double radius) {
+        image = Textures.getEntityTexture(this);
         START = System.currentTimeMillis();
         RAD = radius;
         this.xPos = xPos;
         this.yPos = yPos;
-        image = Textures.getEntityTexture(this);
     }
+
     @Override
-    public void setXPos(double xPos){
+    public void setXPos(double xPos) {
         this.xPos = xPos;
         START = System.currentTimeMillis();
     }
+
     @Override
-    public void setYPos(double yPos){
+    public void setYPos(double yPos) {
         this.yPos = yPos;
         START = System.currentTimeMillis();
     }
@@ -58,14 +60,32 @@ public class explosion extends Entity {
     public void update() {
         Random ran = new Random();
         if ((System.currentTimeMillis() - START) < 20) {
-            for(int i = 0; i < (int)(RAD * RAD * 60); i ++){
-            Level.setSmallTile(null, (int) (((ran.nextGaussian()) * RAD) + xPos), (int) (((ran.nextGaussian()) * RAD) + yPos));
+            for (int i = 0; i < (int) (RAD * RAD * 60); i++) {
+                Game.setSmallTile(null, (int) (((ran.nextGaussian()) * RAD) + xPos), (int) (((ran.nextGaussian()) * RAD) + yPos));
+            }
+
+            for (Entity entity : Game.getEntities()) {
+                if (entity.getPhysics() != null) {
+                    double dis = entity.distance(this);
+                    if (dis <= (RAD * 3)) {
+                        double xChange = entity.getXPos() - xPos;
+                        double yChange = entity.getYPos() - yPos;
+
+                        double th = Math.atan2(yChange, xChange);
+
+                        entity.getPhysics().changeXVel(Math.cos(th) * RAD / 2);
+
+                        entity.getPhysics().changeYVel(Math.sin(th) * RAD / 2);
+
+                    }
+                }
+
+            }
         }
     }
-}
 
-@Override
-        public BufferedImage getEntityImage() {
+    @Override
+    public BufferedImage getEntityImage() {
 
         int xSize = (int) (Textures.getTileWidth() * TILE_X_SCALE);
         int ySize = (int) (Textures.getTileHeight() * TILE_Y_SCALE);

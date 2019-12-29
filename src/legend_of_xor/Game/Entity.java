@@ -6,6 +6,8 @@
 package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
+import legend_of_xor.Game.Entitys.explosion;
+import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Camera.Origin;
 
 /**
@@ -27,7 +29,13 @@ public abstract class Entity {
     protected double xPos = 0;
     protected double yPos = 0;
 
+    protected Physics phy;
+
     protected BufferedImage image;
+
+    public Physics getPhysics() {
+        return phy;
+    }
 
     protected void init() {
     }
@@ -87,5 +95,13 @@ public abstract class Entity {
 
     public void changeYPos(double yOffset) {
         yPos += yOffset;
+    }
+
+    public double distance(Entity entity) {
+        
+        double xDifference = xPos - entity.getXPos();
+        double yDifference = yPos - entity.getYPos();
+        
+        return Math.sqrt((xDifference * xDifference) + (yDifference * yDifference));
     }
 }

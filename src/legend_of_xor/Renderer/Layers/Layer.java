@@ -25,6 +25,7 @@ public abstract class Layer {
     public void init() {
         CLEAR = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+        
         initThread();
 
     }

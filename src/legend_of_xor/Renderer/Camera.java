@@ -5,12 +5,20 @@
  */
 package legend_of_xor.Renderer;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import legend_of_xor.Controls;
 import static legend_of_xor.Controls.getMouseTileX;
 import static legend_of_xor.Controls.getMouseTileY;
 import static legend_of_xor.Controls.isLeftMousePressed;
 import static legend_of_xor.Controls.isRightMousePressed;
 
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Entitys.open_sign;
+import legend_of_xor.Game.Entitys.rope;
+import legend_of_xor.Game.Entitys.temp;
+import legend_of_xor.Game.Tile;
 
 import legend_of_xor.Game.Tiles.*;
 
@@ -19,6 +27,8 @@ import legend_of_xor.Game.Tiles.*;
  * @author parke
  */
 public class Camera {
+
+    private static String tileClassName = "legend_of_xor.Game.Tiles.sand";
 
     private static double xPos;
     private static double yPos;
@@ -80,20 +90,45 @@ public class Camera {
         }
         if (-xPos < 0) {
             xPos = 0;
-        } else if (-xPos + cameraTilesX > Level.getLevelTilesX()) {
-            xPos = -(Level.getLevelTilesX() - cameraTilesX);
+        } else if (-xPos + cameraTilesX > Game.getLevelTilesX()) {
+            xPos = -(Game.getLevelTilesX() - cameraTilesX);
         }
         if (-yPos < 0) {
             yPos = 0;
-        } else if (-yPos + cameraTilesY > Level.getLevelTilesY()) {
-            yPos = -(Level.getLevelTilesY() - cameraTilesY);
+        } else if (-yPos + cameraTilesY > Game.getLevelTilesY()) {
+            yPos = -(Game.getLevelTilesY() - cameraTilesY);
         }
 
         if (isLeftMousePressed()) {
-            Level.setSmallTile(new grass(), getMouseTileX(), getMouseTileY());
+            Game.addEntity(new rope(20, new temp(getMouseTileX(), getMouseTileY()), true));
+//            ArrayList<Entity> entities = Game.getEntities();
+//            Entity mouse = new open_sign(getMouseTileX(), getMouseTileY());
+//            boolean inside = false;
+//
+//            for (int i = Game.getEntities().size() - 1; i >= 0; i--) {
+//                try {
+//                    if (entities.get(i).distance(mouse) < 1.4) {
+//                        inside = true;
+//                        break;
+//                    }
+//                } catch (Exception e) {
+//
+//                }
+//            }
+//            if (!inside) {
+//                try {
+//                    Game.setSmallTile((Tile)Class.forName(tileClassName).newInstance(), getMouseTileX(), getMouseTileY());
+//                } catch (Exception e) {
+//                    Logger.getLogger(Camera.class.getName()).log(Level.SEVERE, null, e);
+//                }
+//            }
         }
         if (isRightMousePressed()) {
-            Level.setSmallTile(null, getMouseTileX(), getMouseTileY());
+            Game.setSmallTile(null, getMouseTileX(), getMouseTileY());
+        }
+        if (Controls.isMiddlePressed()) {
+            tileClassName = Game.getSafeSmallTile(getMouseTileX(), getMouseTileY()).getClass().getName();
+            System.out.println(tileClassName);
         }
 
     }

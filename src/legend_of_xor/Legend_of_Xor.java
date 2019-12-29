@@ -5,7 +5,8 @@ package legend_of_xor;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Levels.LevelLoader.LevelLoader;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
 import legend_of_xor.Veiwer.Veiwer;
@@ -20,13 +21,17 @@ public class Legend_of_Xor {
 
     public static void main(String[] args) {
 
+        System.setProperty("sun.java2d.translaccel", "true");
+        System.setProperty("sun.java2d.ddforcevram", "true");
+
         Veiwer frame = new Veiwer();
         Textures.setTileResolution(24, 24);
         //Textures.enableShit(0.5);
-        
+
         Renderer.init();
-        
-        Level.loadNewLevel("Main");
+
+        Game.loadNewLevel("Main");
+        LevelLoader.loadNewLevel("legend_of_xor.Game.Tiles.rainbow");
 
         Renderer.init();
 
@@ -39,7 +44,7 @@ public class Legend_of_Xor {
                     Renderer.DrawScreen();
                     long newt = System.nanoTime();
                     if (newt - last > 0.017 * 1_000_000_000) {
-                   //     System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                    //      System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
                     }
 
                     try {
@@ -61,11 +66,11 @@ public class Legend_of_Xor {
                     if (!pause) {
 
                         long last = System.nanoTime();
-                        Level.update();
+                        Game.update();
                         long newt = System.nanoTime();
-                        if (newt - last > 0.017 * 1_000_000_000) {
-                            System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
-                        }
+                       // if (newt - last > 0.017 * 1_000_000_000) {
+                           // System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                       // }
                         try {
                             Thread.sleep((int) ((1000 / 60) - (newt - last) / 1000000));
                         } catch (Exception e) {

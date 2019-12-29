@@ -5,8 +5,6 @@
  */
 package legend_of_xor.Game.Tiles;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Textures;

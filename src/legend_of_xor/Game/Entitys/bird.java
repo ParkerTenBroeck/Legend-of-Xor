@@ -22,8 +22,6 @@ public class bird extends Entity {
     protected enum STATE {
         left, right, leftFlying, rightFlying
     }
-
-    private final Physics phy = new BasicSmallTilePhysics(this, 0, 0, 0.001);
     private final AI ai = new AI<bird, STATE, Integer>(this) {
 
         private boolean flying = false;
@@ -49,9 +47,9 @@ public class bird extends Entity {
                 if (moving && !flying) {
                     phy.setGravity(0.007);
 
-                    if ( phy.onLeftWall()) {
+                    if (phy.onLeftWall()) {
                         phy.setYVelocity(-0.12);
-                    } else if ( phy.onRightWall()) {
+                    } else if (phy.onRightWall()) {
                         phy.setYVelocity(-0.12);
                     } else {
                         phy.setYVelocity(-0.05);
@@ -122,6 +120,8 @@ public class bird extends Entity {
 
         TILE_X_SCALE = 1;
         TILE_Y_SCALE = 1;
+
+        phy = new BasicSmallTilePhysics(this, 0, 0, 0.001);
     }
 
     public bird() {

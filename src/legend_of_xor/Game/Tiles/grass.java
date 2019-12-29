@@ -8,7 +8,7 @@ package legend_of_xor.Game.Tiles;
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Renderer.Camera.Origin;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -36,30 +36,30 @@ public class grass extends Tile {
 
         int offset = 0;
 
-            if (!Level.getSafeSmallTile(xPos, yPos - 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos, yPos - 1).isSolid()) {
                 offset += 1;
             }
-            if (!Level.getSafeSmallTile(xPos + 1, yPos).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos + 1, yPos).isSolid()) {
                 offset += 2;
             }
-            if (!Level.getSafeSmallTile(xPos, yPos + 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos, yPos + 1).isSolid()) {
                 offset += 4;
             }
-            if (!Level.getSafeSmallTile(xPos - 1, yPos).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos - 1, yPos).isSolid()) {
                 offset += 8;
             }
         offset *= 16;
 
-            if (!Level.getSafeSmallTile(xPos - 1, yPos - 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos - 1, yPos - 1).isSolid()) {
                 offset += 1;
             }
-            if (!Level.getSafeSmallTile(xPos + 1, yPos - 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos + 1, yPos - 1).isSolid()) {
                 offset += 2;
             }
-            if (!Level.getSafeSmallTile(xPos + 1, yPos + 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos + 1, yPos + 1).isSolid()) {
                 offset += 4;
             }
-            if (!Level.getSafeSmallTile(xPos - 1, yPos + 1).isSolid()) {
+            if (!Game.getSafeSmallTile(xPos - 1, yPos + 1).isSolid()) {
                 offset += 8;
             }
         

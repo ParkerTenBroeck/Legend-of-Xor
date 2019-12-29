@@ -9,7 +9,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Physics.BasicFallingPhysics;
 import legend_of_xor.Physics.Physics;
 import legend_of_xor.Renderer.Camera;
-import legend_of_xor.Renderer.Level;
+import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -17,8 +17,6 @@ import legend_of_xor.Renderer.Textures;
  * @author parke
  */
 public class bomb extends Entity {
-
-    private Physics phy;
 
     private boolean hit = false;
 
@@ -35,11 +33,12 @@ public class bomb extends Entity {
         TILE_Y_SCALE = 0.75;
 
         ORIGIN = Camera.Origin.TOP_CENTER;
+
     }
 
     public bomb(double xPos, double yPos, double xVel, double yVel) {
         image = Textures.getEntityTexture(this);
-        phy = new BasicFallingPhysics(this, yVel, xVel , 0.01);
+        phy = new BasicFallingPhysics(this, yVel, xVel, 0.01);
         this.xPos = xPos;
         this.yPos = yPos;
     }
@@ -51,11 +50,11 @@ public class bomb extends Entity {
 
     @Override
     public void update() {
-        
+
         phy.update();
 
         if (phy.onGround()) {
-            Level.addEntity(new explosion(xPos, yPos, 1.75));
+            Game.addEntity(new explosion(xPos, yPos, 1.75));
         }
     }
 }
