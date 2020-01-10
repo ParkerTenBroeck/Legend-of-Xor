@@ -7,6 +7,7 @@ package legend_of_xor.Renderer.Layers;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 import java.awt.image.VolatileImage;
 import legend_of_xor.Renderer.Renderer;
 import legend_of_xor.Renderer.Textures;
@@ -20,11 +21,11 @@ public abstract class Layer {
     protected Thread thread;
 
     protected BufferedImage image;
-    protected static BufferedImage CLEAR;
+    protected int[] raster;
 
     public void init() {
-        CLEAR = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
         image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+        raster = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         
         initThread();
 
@@ -53,6 +54,9 @@ public abstract class Layer {
 
     public void clearImage() {
         image = Renderer.createCompatibleImage(Textures.getXRes(), Textures.getYRes());
+//        for(int i = 0; i < raster.length; i ++){
+//            raster[i] = 0;
+//        }
     }
 
     public void startRender() {

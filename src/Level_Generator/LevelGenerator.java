@@ -128,7 +128,7 @@ public class LevelGenerator {
             Game.addEntity(new bunny(Math.random() * xSize, 0));
         }
         for(int i = 0; i < 1000; i ++){
-            Game.update();
+            //Game.update();
         }
     }
 }

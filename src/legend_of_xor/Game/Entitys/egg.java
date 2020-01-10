@@ -5,12 +5,9 @@
  */
 package legend_of_xor.Game.Entitys;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import legend_of_xor.Controls;
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Physics.BasicFallingPhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
@@ -26,13 +23,15 @@ public class egg extends Entity {
     private final Entity entity;
     private long start;
 
+    
+    
     @Override
     protected void init() {
 
         TILESY = 4;
         ORIGIN = Origin.BOTTOM_CENTER;
-        
-        phy = new BasicFallingPhysics(this, 0, 0, 0.01);
+        isSolid = true;
+        phy = new BasicTilePhysics(this, 0, 0, 0.01);
     }
 
     public egg(double xPos, double yPos, Entity entity) {
@@ -42,13 +41,12 @@ public class egg extends Entity {
         this.xPos = xPos;
         this.yPos = yPos;
         image = Textures.getEntityTexture(this);
+        System.out.println(hitbox.width());
     }
 
     @Override
     public boolean terminate() {
 
-        double disX = Math.abs(Game.getPlayer().getXPos() - xPos);
-        double disY = Math.abs(Game.getPlayer().getYPos() - yPos);
         long time = System.currentTimeMillis() - start;
 
         if (time > 10000) {

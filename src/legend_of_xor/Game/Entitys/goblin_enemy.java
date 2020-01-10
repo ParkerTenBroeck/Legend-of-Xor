@@ -8,8 +8,7 @@ package legend_of_xor.Game.Entitys;
 import legend_of_xor.AI.AI;
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Sound;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
@@ -65,7 +64,7 @@ public class goblin_enemy extends Entity {
 
     @Override
     protected void init() {
-        phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
+        phy = new BasicTilePhysics(this, 0, 0, 0.02);
     }
 
     public goblin_enemy() {

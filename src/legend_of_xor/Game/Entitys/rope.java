@@ -7,10 +7,6 @@ package legend_of_xor.Game.Entitys;
 
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Physics.BasicRopePhysics;
-import legend_of_xor.Physics.BasicFallingPhysics;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
-import legend_of_xor.Physics.Physics;
-import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 

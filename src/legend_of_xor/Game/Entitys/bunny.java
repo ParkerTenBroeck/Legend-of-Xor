@@ -8,11 +8,8 @@ package legend_of_xor.Game.Entitys;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import legend_of_xor.AI.AI;
-import legend_of_xor.AI.Playable;
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Physics.BasicFallingPhysics;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -31,13 +28,13 @@ public class bunny extends Entity {
             Random ran = new Random(System.currentTimeMillis());
 
             if (Math.random() > 0.993) {
-                if (phy.onGround()) {
+                if (phy.collidingDown()) {
                     phy.setYVelocity(-0.2);
                     rightLeft = Math.random() > 0.5;
                 }
 
             }
-            if (!phy.onGround()) {
+            if (!phy.collidingDown()) {
                 if (rightLeft) {
                     phy.setXVelocity(0.15);
                 } else {
@@ -61,7 +58,7 @@ public class bunny extends Entity {
         TILESY = 5;
         TILESX = 2;
 
-        phy = new BasicSmallTilePhysics(this, 0, 0, 0.01);
+        phy = new BasicTilePhysics(this, 0, 0, 0.01);
 
     }
 

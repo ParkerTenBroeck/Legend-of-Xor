@@ -7,7 +7,8 @@ package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entitys.explosion;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.HitBox;
+import legend_of_xor.Game.Physics.Physics;
 import legend_of_xor.Renderer.Camera.Origin;
 
 /**
@@ -30,11 +31,24 @@ public abstract class Entity {
     protected double yPos = 0;
 
     protected Physics phy;
+    protected HitBox hitbox;
+
+    protected boolean isSolid = false;
+
+    protected double weight = TILE_X_SCALE * TILE_Y_SCALE;
 
     protected BufferedImage image;
 
+    public boolean isSolid() {
+        return isSolid;
+    }
+
     public Physics getPhysics() {
         return phy;
+    }
+
+    public HitBox getHitBox() {
+        return hitbox;
     }
 
     protected void init() {
@@ -43,6 +57,14 @@ public abstract class Entity {
     public Entity() {
         init();
         NAMEID = this.getClass().getName().split("\\.")[3];//name of tile must be unique
+        hitbox = new HitBox(this);
+    }
+
+    public void delete() {
+        phy = null;
+        hitbox = null;
+        image = null;
+        ORIGIN = null;
     }
 
     public String getNameID() {
@@ -63,6 +85,12 @@ public abstract class Entity {
 
     public double getXScale() {
         return TILESX * TILE_X_SCALE;
+    }
+    public double getXTileScale(){
+        return TILE_X_SCALE;
+    }
+    public double getYTileScale(){
+        return TILE_Y_SCALE;
     }
 
     public double getYScale() {
@@ -98,10 +126,10 @@ public abstract class Entity {
     }
 
     public double distance(Entity entity) {
-        
+
         double xDifference = xPos - entity.getXPos();
         double yDifference = yPos - entity.getYPos();
-        
+
         return Math.sqrt((xDifference * xDifference) + (yDifference * yDifference));
     }
 }

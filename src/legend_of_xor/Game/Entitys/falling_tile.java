@@ -7,13 +7,10 @@ package legend_of_xor.Game.Entitys;
 
 import java.awt.image.BufferedImage;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Physics.BasicPhysics;
 import legend_of_xor.Game.Tile;
-import legend_of_xor.Physics.BasicFallingPhysics;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
 import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Game;
-import legend_of_xor.Renderer.Renderer;
-import legend_of_xor.Renderer.Textures;
 
 /**
  *
@@ -23,9 +20,14 @@ public class falling_tile extends Entity {
 
     Tile tile;
 
+    @Override
+    protected void init() {
+        isSolid = true;
+    }
+
     public falling_tile(Tile tile, int xPos, int yPos) {
         this.tile = tile;
-        phy = new BasicSmallTilePhysics(this, 0, 0, 0.01);
+        phy = new BasicPhysics(this, 0, 0, 0.0091);
         this.xPos = xPos + 0.5;
         this.yPos = yPos + 0.5;
     }
@@ -37,12 +39,12 @@ public class falling_tile extends Entity {
 
     @Override
     public BufferedImage getEntityImage() {
-        return tile.getTileImage((int) xPos, (int) (yPos ));
+        return tile.getTileImage((int) xPos, (int) (yPos));
     }
 
     @Override
     public boolean terminate() {
-        if (phy.onGround()) {
+        if (Game.getSafeSmallTile((int) Math.floor(hitbox.orgX()), (int)(hitbox.Bottom())).isSolid()) {
             Game.setSmallTile(tile, (int) xPos, (int) (yPos - 0.5));
             return true;
         } else {

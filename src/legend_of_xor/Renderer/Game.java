@@ -13,6 +13,7 @@ import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.rope;
 import legend_of_xor.Game.Level;
 import legend_of_xor.Game.Levels.main_level;
+import legend_of_xor.Game.Physics.HitBox;
 import legend_of_xor.Game.Tile;
 import legend_of_xor.Game.Tiles.air;
 import legend_of_xor.Veiwer.Veiwer;
@@ -22,6 +23,8 @@ import legend_of_xor.Veiwer.Veiwer;
  * @author parke
  */
 public class Game {
+
+    private static boolean pause = false;
 
     private static BackgroundTile[][] backgroundTiles = new BackgroundTile[1][1];
 
@@ -36,7 +39,7 @@ public class Game {
     private static int levelTilesY;
 
     private static Entity player;
-    
+
     private static long tick = 0;
 
     public static int getLevelTilesX() {
@@ -45,6 +48,42 @@ public class Game {
 
     public static int getLevelTilesY() {
         return levelTilesY;
+    }
+
+    public static void start() {
+
+        Game.loadNewLevel("Main");
+
+        Thread update = new Thread() {
+            public void run() {
+
+                while (true) {
+
+                    if (!pause) {
+
+                        long last = System.nanoTime();
+                        Game.update();
+                        long newt = System.nanoTime();
+                        // if (newt - last > 0.017 * 1_000_000_000) {
+                        // System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                        // }
+                        try {
+                            Thread.sleep((int) ((1000 / 60) - (newt - last) / 1000000));
+                        } catch (Exception e) {
+
+                        }
+                    } else {
+                        try {
+                            Thread.sleep(80);
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+            }
+        };
+        update.setName("update");
+        update.start();
     }
 
     public static synchronized void update() {
@@ -73,10 +112,15 @@ public class Game {
 
         if (entities.size() > 0 && entities != null) {
             for (int i = entities.size() - 1; i >= 0; i--) {
-                entities.get(i).update();
-                if (entities.get(i).terminate()) {
-                    entities.remove(i);
-                    //System.out.println(entities.size());
+                try {
+                    entities.get(i).update();
+                    if (entities.get(i).terminate()) {
+                        entities.get(i).delete();
+                        entities.remove(i);
+                        //System.out.println(entities.size());
+                    }
+                } catch (Exception e) {
+
                 }
             }
         }
@@ -86,10 +130,16 @@ public class Game {
         } catch (InterruptedException ex) {
             Logger.getLogger(Game.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        tick ++;
+        tick++;
     }
-    public static long getTick(){
+
+    public static long getTick() {
         return tick;
+    }
+
+    public static void load() {
+        Camera.init(40, 20);
+        loadNewLevel("menu");
     }
 
     public static void loadNewLevel(String name) {
@@ -97,7 +147,7 @@ public class Game {
         levelTilesX = 40 * 10;
         levelTilesY = 22 * 10;
 
-        Camera.init(0, 0, 40, 20);
+        Camera.init(40, 20);
 
         backgroundTiles = new BackgroundTile[1][2];
 
@@ -107,7 +157,7 @@ public class Game {
         LevelGenerator.makeLevel(levelTilesX, levelTilesY);
 
         Camera.followEntity(player);
-        
+
         entities.add(new rope(20, player, false));
 
         Veiwer.refreshImageSize();
@@ -123,6 +173,21 @@ public class Game {
 
     public static Entity getPlayer() {
         return player;
+    }
+
+    public static HitBox[] getSurroundingTileHitBoxes(Entity entity) {
+        int xPos = (int) entity.getXPos();
+        int yPos = (int) entity.getYPos();
+
+        HitBox[] temp = new HitBox[5];
+
+        temp[0] = Game.getSafeSmallTile(xPos, yPos).getHitBox(xPos, yPos);
+        temp[1] = Game.getSafeSmallTile(xPos + 1, yPos).getHitBox(xPos + 1, yPos);
+        temp[2] = Game.getSafeSmallTile(xPos, yPos + 1).getHitBox(xPos, yPos + 1);
+        temp[3] = Game.getSafeSmallTile(xPos - 1, yPos).getHitBox(xPos - 1, yPos);
+        temp[4] = Game.getSafeSmallTile(xPos, yPos - 1).getHitBox(xPos, yPos - 1);
+
+        return temp;
     }
 
     public static void setSmallTile(Tile tile, int xPos, int yPos) {
@@ -151,7 +216,8 @@ public class Game {
             return new air();
         }
     }
-    public static ArrayList<Entity> getEntities(){
+
+    public static ArrayList<Entity> getEntities() {
         return entities;
     }
 
@@ -197,7 +263,11 @@ public class Game {
         int temp = 0;
 
         for (int i = 0; i < backgroundTiles[0].length; i++) {
-            temp += getBackgroundTile(i, 0).getWidth();
+            try {
+                temp += getBackgroundTile(i, 0).getWidth();
+            } catch (Exception e) {
+                return 0;
+            }
         }
         return temp;
     }
@@ -206,7 +276,11 @@ public class Game {
         int temp = 0;
 
         for (int i = 0; i < backgroundTiles.length; i++) {
-            temp += getBackgroundTile(0, i).getHeight();
+            try {
+                temp += getBackgroundTile(0, i).getHeight();
+            } catch (Exception e) {
+                return 0;
+            }
         }
         return temp;
     }

@@ -61,7 +61,11 @@ public class Veiwer extends javax.swing.JFrame {
     }
 
     public static void setImage(BufferedImage image) {
+        try{
         Renderer.copySrcIntoDstAt(image, Veiwer.image, 0, 0);
+        }catch(Exception e){
+            
+        }
     }
 
     /**

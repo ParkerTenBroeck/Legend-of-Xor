@@ -23,7 +23,7 @@ public class EntityLayer extends Layer {
 
     @Override
     public void drawLayer() {
-                Graphics g2d =  image.getGraphics().create();
+        Graphics g2d = image.getGraphics().create();
 
         int xTileOffset = 0 - (int) Math.floor(Camera.getXPos());
         int yTileOffset = 0 - (int) Math.floor(Camera.getYPos());
@@ -35,15 +35,15 @@ public class EntityLayer extends Layer {
         for (Entity entity : Game.getEntitiesClone()) {
             try {
                 BufferedImage temp = entity.getEntityImage();
-                
+
                 g2d.drawImage(temp,
-                        (int) ((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + Renderer.calcEntityOrgX(entity.getOrigin(), temp)),
-                        (int) ((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + Renderer.calcEntityOrgY(entity.getOrigin(), temp)), null);
+                        (int) Math.round((entity.getXPos() - xTileOffset) * Textures.getTileWidth() + xPixelOffset + Renderer.calcEntityOrgX(entity.getOrigin(), temp)),
+                        (int) Math.round((entity.getYPos() - yTileOffset) * Textures.getTileHeight() + yPixelOffset + Renderer.calcEntityOrgY(entity.getOrigin(), temp)), null);
 
             } catch (Exception e) {
 
             }
         }
     }
-    
+
 }

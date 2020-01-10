@@ -16,8 +16,10 @@ import static legend_of_xor.Controls.isRightMousePressed;
 
 import legend_of_xor.Game.Entity;
 import legend_of_xor.Game.Entitys.open_sign;
+import legend_of_xor.Game.Entitys.pixel;
 import legend_of_xor.Game.Entitys.rope;
 import legend_of_xor.Game.Entitys.temp;
+import legend_of_xor.Game.Physics.HitBox;
 import legend_of_xor.Game.Tile;
 
 import legend_of_xor.Game.Tiles.*;
@@ -60,9 +62,7 @@ public class Camera {
         UPPER_LEFT, UPPER_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, BOTTOM_CENTER, TOP_CENTER, CENTER
     }
 
-    public static void init(int startingX, int startingY, int cameraTilesX, int cameraTilesY) {
-        Camera.xPos = startingX;
-        Camera.yPos = startingY;
+    public static void init(int cameraTilesX, int cameraTilesY) {
 
         Camera.cameraTilesX = cameraTilesX;
         Camera.cameraTilesY = cameraTilesY;
@@ -100,31 +100,32 @@ public class Camera {
         }
 
         if (isLeftMousePressed()) {
-            Game.addEntity(new rope(20, new temp(getMouseTileX(), getMouseTileY()), true));
-//            ArrayList<Entity> entities = Game.getEntities();
-//            Entity mouse = new open_sign(getMouseTileX(), getMouseTileY());
-//            boolean inside = false;
-//
-//            for (int i = Game.getEntities().size() - 1; i >= 0; i--) {
-//                try {
-//                    if (entities.get(i).distance(mouse) < 1.4) {
-//                        inside = true;
-//                        break;
-//                    }
-//                } catch (Exception e) {
-//
-//                }
-//            }
-//            if (!inside) {
-//                try {
-//                    Game.setSmallTile((Tile)Class.forName(tileClassName).newInstance(), getMouseTileX(), getMouseTileY());
-//                } catch (Exception e) {
-//                    Logger.getLogger(Camera.class.getName()).log(Level.SEVERE, null, e);
-//                }
-//            }
+            //Game.addEntity(new rope(20, new temp(getMouseTileX(), getMouseTileY()), true));
+            ArrayList<Entity> entities = Game.getEntities();
+            Entity mouse = new open_sign(getMouseTileX(), getMouseTileY());
+            boolean inside = false;
+
+            for (int i = Game.getEntities().size() - 1; i >= 0; i--) {
+                try {
+                    if (entities.get(i).distance(mouse) < 1.4) {
+                        inside = true;
+                        break;
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+            if (!inside) {
+                try {
+                    Game.setSmallTile((Tile) Class.forName(tileClassName).newInstance(), getMouseTileX(), getMouseTileY());
+                } catch (Exception e) {
+                    Logger.getLogger(Camera.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
         }
         if (isRightMousePressed()) {
-            Game.setSmallTile(null, getMouseTileX(), getMouseTileY());
+            //Game.setSmallTile(null, getMouseTileX(), getMouseTileY());
+            pixel.pixilateAndDestroy(getMouseTileX(), getMouseTileY(), 500000, 1000);
         }
         if (Controls.isMiddlePressed()) {
             tileClassName = Game.getSafeSmallTile(getMouseTileX(), getMouseTileY()).getClass().getName();

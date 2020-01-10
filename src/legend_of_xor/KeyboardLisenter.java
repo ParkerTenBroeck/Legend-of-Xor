@@ -106,11 +106,11 @@ public class KeyboardLisenter extends Controls {
                     inventoryActive = !inventoryActive;
                 }
                 if(ke.getKeyChar() == Controls.pauseKey){
-                    if(Legend_of_Xor.isPaused()){
-                        Legend_of_Xor.unpause();
-                    }else {
-                        Legend_of_Xor.pause();
-                    }
+//                    if(Legend_of_Xor.isPaused()){
+//                        Legend_of_Xor.unpause();
+//                    }else {
+//                        Legend_of_Xor.pause();
+//                    }
                 }
             }
 

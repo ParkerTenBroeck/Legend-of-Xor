@@ -5,7 +5,9 @@
  */
 package legend_of_xor.Game.Physics;
 
+import java.util.ArrayList;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Entitys.temp;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Game;
 
@@ -13,21 +15,22 @@ import legend_of_xor.Renderer.Game;
  *
  * @author parke
  */
-public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
+public class BasicRopePhysics extends Physics {
 
     Entity nextNode;
     Entity lastNode;
 
     boolean floating = false;
     double maxNodeDistance = 3.5;
-    double wantedNodeDistance = 0.3;
+    double wantedNodeDistance = 0.5;
     double elasticity = 1;
 
     double elasticXVel;
     double elasticYVel;
+    
 
     public BasicRopePhysics(Entity currentNode, Entity lastNode, Entity nextNode, double gravity, boolean floating) {
-        super(currentNode);
+        super(currentNode, true, false);
         this.yVel = 0;
         this.xVel = 0;
         this.grav = gravity;
@@ -36,30 +39,18 @@ public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
         this.floating = floating;
     }
 
-    @Override
-    public boolean onGround() {
-        if (entity.getOrigin() == Camera.Origin.UPPER_LEFT) {
-            return Game.getSafeSmallTile((int) entity.getXPos(), (int) (entity.getYPos() + 1)).isSolid();
-        } else if (entity.getOrigin() == Camera.Origin.CENTER) {
-            return Game.getSafeSmallTile((int) (entity.getXPos() - 0.5), (int) (entity.getYPos() + 0.5)).isSolid();
+    private void checkCollision() {
+
+        resetCollision();
+
+        HitBox[] temp = Game.getSurroundingTileHitBoxes(new temp(entity.getHitBox().orgX(), entity.getHitBox().orgY()));
+        for (int i = 0; i < temp.length; i++) {
+            try {
+                checkCollision(temp[i]);
+            } catch (Exception e) {
+
+            }
         }
-
-        return Game.getSafeSmallTile((int) entity.getXPos(), (int) entity.getYPos()).isSolid();
-    }
-
-    @Override
-    public boolean onCel() {
-        return Game.getSafeSmallTile((int) (entity.getXPos()), (int) entity.getYPos() - 1).isSolid();
-    }
-
-    @Override
-    public boolean onLeftWall() {
-        return Game.getSafeSmallTile((int) ((entity.getXPos() - 0.5)), (int) (entity.getYPos() - 0.2)).isSolid();
-    }
-
-    @Override
-    public boolean onRightWall() {
-        return Game.getSafeSmallTile((int) ((entity.getXPos() + 0.5)), (int) (entity.getYPos() - 0.2)).isSolid();
     }
 
     @Override
@@ -71,48 +62,18 @@ public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
 
         updateElasticVel();
 
-        if (onLeftWall()) {
-            if (xVel < 0) {
-                xVel = 0;
-            }
-            if (elasticXVel < 0) {
-                elasticYVel = lastNodeDistance() / (elasticity + wantedNodeDistance);
-                elasticXVel = 0;
-            }
-        }
-        if (onRightWall()) {
-            if (xVel > 0) {
-                xVel = 0;
-            }
-            if (elasticXVel > 0) {
-                elasticYVel = -lastNodeDistance() / (elasticity + wantedNodeDistance);
-                elasticXVel = 0;
-            }
-        }
-
-        if (onGround()) {
-            if (yVel > 0) {
-                yVel = 0;
-                entity.setYPos((int) entity.getYPos());
-            }
-            if (elasticYVel > 0) {
-                elasticYVel = 0;
-            }
-        } else if (onCel()) {
-            if (yVel < 0) {
-                yVel = 0;
-            }
-            if (elasticXVel < 0) {
-                elasticXVel = 0;
-            }
-            yVel += grav;
-        } else {
+        if (!collidingDown()) {
             yVel += grav;
         }
-        yVel *= 0.9;
         xVel *= 0.9;
-        entity.changeXPos(xVel + elasticXVel);
-        entity.changeYPos(yVel + elasticYVel);
+        yVel *= 0.9;
+
+        entity.changeXPos(elasticXVel);
+        entity.changeYPos(elasticYVel);
+        entity.changeXPos(xVel);
+        entity.changeYPos(yVel);
+
+        checkCollision();
     }
 
     public void updateElasticVel() {
@@ -122,11 +83,38 @@ public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
         } else {
             double angle = lastNodeAngle();
             double acc = dist - wantedNodeDistance;
-            if (acc < 0) {
+            //acc = acc * acc * acc * acc;
+            if (acc < 0.1) {
                 acc = 0;
             }
             elasticXVel = -acc * Math.sin(angle) * elasticity;
             elasticYVel = -acc * Math.cos(angle) * elasticity;
+            try {
+                //lastNode.changeXPos(acc * Math.sin(angle) * elasticity);
+                //lastNode.changeYPos(acc * Math.cos(angle) * elasticity);
+            } catch (Exception e) {
+
+            }
+
+        }
+        dist = nextNodeDistance();
+        if (dist > maxNodeDistance) {
+            nextNode = null;
+        } else {
+            double angle = nextNodeAngle();
+            double acc = dist - wantedNodeDistance;
+            if (acc < 0.1) {
+                acc = 0;
+            }
+            //elasticXVel += -acc * Math.sin(angle) * elasticity;
+            //elasticYVel += -acc * Math.cos(angle) * elasticity;
+
+            try {
+                nextNode.changeXPos(acc * Math.sin(angle) * elasticity);
+                nextNode.changeYPos(acc * Math.cos(angle) * elasticity);
+            } catch (Exception e) {
+
+            }
         }
 
     }
@@ -139,6 +127,14 @@ public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
         }
     }
 
+    private double nextNodeAngle() {
+        if (nextNode == null) {
+            return 0;
+        } else {
+            return Math.atan2(entity.getXPos() - nextNode.getXPos(), entity.getYPos() - nextNode.getYPos());
+        }
+    }
+
     private double lastNodeDistance() {
         if (lastNode == null) {
             return 0;
@@ -146,6 +142,56 @@ public class BasicRopePhysics extends legend_of_xor.Physics.Physics {
             double xDist = entity.getXPos() - lastNode.getXPos();
             double yDist = entity.getYPos() - lastNode.getYPos();
             return Math.sqrt((xDist * xDist) + (yDist * yDist));
+        }
+    }
+
+    private double nextNodeDistance() {
+        if (nextNode == null) {
+            return 0;
+        } else {
+            double xDist = entity.getXPos() - nextNode.getXPos();
+            double yDist = entity.getYPos() - nextNode.getYPos();
+            return Math.sqrt((xDist * xDist) + (yDist * yDist));
+        }
+    }
+
+    @Override
+    protected void leftCollision(HitBox hitbox) {
+        if (xVel < 0) {
+            xVel = 0;
+        }
+        if (elasticXVel < 0) {
+            elasticXVel = 0;
+        }
+    }
+
+    @Override
+    protected void rightCollision(HitBox hitbox) {
+        if (xVel > 0) {
+            xVel = 0;
+        }
+        if (elasticXVel > 0) {
+            elasticXVel = 0;
+        }
+    }
+
+    @Override
+    protected void topCollision(HitBox hitbox) {
+        if (yVel < 0) {
+            yVel = 0;
+        }
+        if (elasticXVel < 0) {
+            elasticXVel = 0;
+        }
+    }
+
+    @Override
+    protected void bottomCollision(HitBox hitbox) {
+        if (yVel > 0) {
+            yVel = 0;
+        }
+        if (elasticYVel > 0) {
+            elasticYVel = 0;
         }
     }
 }

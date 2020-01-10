@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import legend_of_xor.AI.Playable;
 import legend_of_xor.Controls;
 import legend_of_xor.Game.*;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicPhysics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
+import legend_of_xor.Game.Physics.HitBox;
+import legend_of_xor.Renderer.Camera;
+import legend_of_xor.Renderer.Camera.Origin;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
 
@@ -29,14 +32,17 @@ public class player extends Entity implements Playable {
         TILE_X_SCALE = 1.75;
         TILE_Y_SCALE = 1.75;
 
-        xPos = 0;
+        xPos = 10;
         yPos = 40;
+        
+        ORIGIN = Origin.BOTTOM_CENTER;
 
-        this.phy = new BasicSmallTilePhysics(this, 0, 0, 0.02);
+        this.phy = new BasicPhysics(this, 0, 0, 0.02);
     }
 
     public player() {
         image = Textures.getEntityTexture(this);
+        hitbox = new HitBox(0.5, 1, this);
     }
 
     @Override
@@ -55,9 +61,12 @@ public class player extends Entity implements Playable {
 
     @Override
     public synchronized void update() {
+       
 
         phy.setXVelocity(phy.getXVelocity() * 0.7);
         phy.update();
+        
+        //System.out.println("on cel " + phy.collidingUp() + " on ground " + phy.collidingDown() + " onleft " + phy.collidingLeft() + " on right " + phy.collidingRight());
 
         if (Controls.isLeftPressed()) {
             left();
@@ -65,7 +74,7 @@ public class player extends Entity implements Playable {
         if (Controls.isRightPressed()) {
             right();
         }
-        if (Controls.isUpPressed() && phy.onGround()) {
+        if (Controls.isUpPressed() && phy.collidingDown()) {
             up();
         }
         if (Controls.getAttackPress()) {

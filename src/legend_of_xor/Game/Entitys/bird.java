@@ -9,8 +9,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import java.awt.image.BufferedImage;
 import legend_of_xor.AI.AI;
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Physics.BasicSmallTilePhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Textures;
 
 /**
@@ -41,15 +40,15 @@ public class bird extends Entity {
                 }
                 phy.setGravity(0.001);
             }
-            if (phy.onGround()) {
+            if (phy.collidingDown()) {
                 phy.setXVelocity(0);
                 falling = false;
                 if (moving && !flying) {
                     phy.setGravity(0.007);
 
-                    if (phy.onLeftWall()) {
+                    if (phy.collidingLeft()) {
                         phy.setYVelocity(-0.12);
-                    } else if (phy.onRightWall()) {
+                    } else if (phy.collidingRight()) {
                         phy.setYVelocity(-0.12);
                     } else {
                         phy.setYVelocity(-0.05);
@@ -121,7 +120,7 @@ public class bird extends Entity {
         TILE_X_SCALE = 1;
         TILE_Y_SCALE = 1;
 
-        phy = new BasicSmallTilePhysics(this, 0, 0, 0.001);
+        phy = new BasicTilePhysics(this, 0, 0, 0.001);
     }
 
     public bird() {

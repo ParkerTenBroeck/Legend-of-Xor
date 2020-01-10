@@ -6,8 +6,7 @@
 package legend_of_xor.Game.Entitys;
 
 import legend_of_xor.Game.Entity;
-import legend_of_xor.Physics.BasicFallingPhysics;
-import legend_of_xor.Physics.Physics;
+import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Camera;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Textures;
@@ -38,14 +37,14 @@ public class bomb extends Entity {
 
     public bomb(double xPos, double yPos, double xVel, double yVel) {
         image = Textures.getEntityTexture(this);
-        phy = new BasicFallingPhysics(this, yVel, xVel, 0.01);
+        phy = new BasicTilePhysics(this, xVel, yVel, 0.01);
         this.xPos = xPos;
         this.yPos = yPos;
     }
 
     @Override
     public boolean terminate() {
-        return phy.onGround();
+        return phy.colliding();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class bomb extends Entity {
 
         phy.update();
 
-        if (phy.onGround()) {
+        if (phy.colliding()) {
             Game.addEntity(new explosion(xPos, yPos, 1.75));
         }
     }

@@ -17,7 +17,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferInt;
-import java.awt.image.VolatileImage;
+import legend_of_xor.Renderer.Layers.HitBoxLayer;
 import legend_of_xor.Renderer.Layers.Layer;
 import legend_of_xor.Renderer.Layers.SmallTileLayer;
 import legend_of_xor.Veiwer.Veiwer;
@@ -28,11 +28,35 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Renderer {
 
-    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer()};
+    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new HitBoxLayer()};
     // private static final Layer background = new BackgroundLayer();
 
     private static BufferedImage imageBuffer;
     private static ColorModel cm;
+
+    public static void start() {
+        Thread renderer = new Thread() {
+            public void run() {
+                while (true) {
+
+                    long last = System.nanoTime();
+                    Renderer.DrawScreen();
+                    long newt = System.nanoTime();
+                    if (newt - last > 0.017 * 1_000_000_000) {
+                        //      System.err.println((double) (newt - last) / 1_000_000_000 + " " + (newt - last));
+                    }
+
+                    try {
+                        Thread.sleep(16 - ((newt - last) / 1000000));
+                    } catch (Exception e) {
+
+                    }
+                }
+            }
+        };
+        renderer.setName("rendeer");
+        renderer.start();
+    }
 
     public static synchronized void DrawScreen() {
 
@@ -171,6 +195,12 @@ public class Renderer {
     }
 
     public static void init() {
+        
+        System.setProperty("sun.java2d.translaccel", "true");
+        System.setProperty("sun.java2d.ddforcevram", "true");
+
+        Veiwer frame = new Veiwer();
+        Textures.setTileResolution(24, 24);
 
         cm = getCompatibleColorModel();
         imageBuffer = createCompatibleImage(Textures.getXRes(), Textures.getYRes());
@@ -196,7 +226,6 @@ public class Renderer {
 //        temp.setAccelerationPriority(1);
 //        return temp;
 //    }
-
     public static void copySrcIntoDstAt(final BufferedImage src,
             final BufferedImage dst, final int dx, final int dy) {
         int[] srcbuf = ((DataBufferInt) src.getRaster().getDataBuffer()).getData();

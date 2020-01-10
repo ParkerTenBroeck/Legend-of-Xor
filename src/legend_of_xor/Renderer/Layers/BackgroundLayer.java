@@ -35,11 +35,14 @@ public class BackgroundLayer extends Layer {
             for (int x = 0; x < Game.getBackgroundTilesX(); x++) {
 
                 BackgroundTile tile = Game.getBackgroundTile(x, y);
-
+try{
                 graphics.drawImage(tile.getImage(),
                         tile.getXPos(x, y) + offsetX,
                         tile.getYPos(x, y) + offsetY,
                          null);
+}catch(Exception e){
+    
+}
 
 //                Renderer.copySrcIntoDstAt(tile.getImage(), image,
 //                        tile.getXPos(x, y) + offsetX,

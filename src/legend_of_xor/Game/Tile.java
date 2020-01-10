@@ -6,6 +6,7 @@
 package legend_of_xor.Game;
 
 import java.awt.image.BufferedImage;
+import legend_of_xor.Game.Physics.HitBox;
 import legend_of_xor.Renderer.Camera.Origin;
 
 /**
@@ -26,10 +27,20 @@ public abstract class Tile {
 
     protected boolean SOLID = true;
     protected boolean INVENTORY = false;
+    
+    protected int hardness = 1;
 
     protected BufferedImage image;
 
     protected void init() {
+    }
+    
+    public HitBox getHitBox(int xPos, int yPos){
+        if(SOLID){
+            return new HitBox(xPos, yPos, this);
+        }else{
+            return null;
+        }
     }
 
     public Tile() {
