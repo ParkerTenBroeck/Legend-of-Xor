@@ -31,7 +31,7 @@ public class pixel extends Entity {
 
     @Override
     protected void init() {
-        isSolid = false;
+        isSolid = true;
         ORIGIN = Origin.UPPER_LEFT;
     }
 
@@ -52,7 +52,7 @@ public class pixel extends Entity {
 
         pix = image.getSubimage(pixelX, pixelY, size, size);
 
-        phy = new BasicTilePhysics(this, 0, 0, 0.0091);
+        phy = new BasicPhysics(this, 0, 0, 0.0091);
     }
 
     @Override
