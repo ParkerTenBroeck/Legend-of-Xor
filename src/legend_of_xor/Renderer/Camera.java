@@ -124,8 +124,8 @@ public class Camera {
             }
         }
         if (isRightMousePressed()) {
-            //Game.setSmallTile(null, getMouseTileX(), getMouseTileY());
-            pixel.pixilateAndDestroy(getMouseTileX(), getMouseTileY(), 500000, 1000);
+            Game.setSmallTile(null, getMouseTileX(), getMouseTileY());
+            //pixel.pixilateAndDestroy(getMouseTileX(), getMouseTileY(), 500000, 1000);
         }
         if (Controls.isMiddlePressed()) {
             tileClassName = Game.getSafeSmallTile(getMouseTileX(), getMouseTileY()).getClass().getName();

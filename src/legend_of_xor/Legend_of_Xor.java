@@ -9,6 +9,7 @@ import legend_of_xor.Game.Entitys.temp;
 import legend_of_xor.Game.Physics.HitBox;
 import legend_of_xor.Renderer.Game;
 import legend_of_xor.Renderer.Renderer;
+import legend_of_xor.Renderer.Textures;
 
 /**
  *

@@ -28,7 +28,7 @@ import legend_of_xor.Veiwer.Veiwer;
  */
 public class Renderer {
 
-    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer(), new HitBoxLayer()};
+    private static final Layer[] LAYERS = new Layer[]{new BackgroundLayer(), new AestheticLayer(), new SmallTileLayer(), new EntityLayer()};
     // private static final Layer background = new BackgroundLayer();
 
     private static BufferedImage imageBuffer;
