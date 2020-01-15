@@ -9,6 +9,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import java.awt.image.BufferedImage;
 import legend_of_xor.AI.AI;
 import legend_of_xor.Game.Entity;
+import legend_of_xor.Game.Livable.LivableBasics;
 import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Renderer.Textures;
 
@@ -29,6 +30,9 @@ public class bird extends Entity {
         private boolean moving = false;
 
         private Direction direction = Direction.LEFT;
+        
+        private int birdMaxHealth = 100;
+        LivableBasics birdLivable = new LivableBasics(birdMaxHealth);
 
         @Override
         public void update() {

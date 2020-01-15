@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import legend_of_xor.AI.Playable;
 import legend_of_xor.Controls;
 import legend_of_xor.Game.*;
+import legend_of_xor.Game.Livable.LivableBasics;
 import legend_of_xor.Game.Physics.BasicPhysics;
 import legend_of_xor.Game.Physics.BasicTilePhysics;
 import legend_of_xor.Game.Physics.HitBox;
@@ -38,6 +39,9 @@ public class player extends Entity implements Playable {
         ORIGIN = Origin.BOTTOM_CENTER;
 
         this.phy = new BasicPhysics(this, 0, 0, 0.02);
+        
+        int playerMaxHealth = 10;
+        LivableBasics playerLivable = new LivableBasics(playerMaxHealth);
     }
 
     public player() {
