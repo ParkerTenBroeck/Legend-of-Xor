@@ -41,7 +41,7 @@ public class LivableBasics {
     }
     
     public boolean isDead(){
-        return currentHealth > 0 ? false : true;
+        return currentHealth <= 0;
     }
     
     public void setMaxHealth(int maxHealth){
